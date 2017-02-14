@@ -1,0 +1,70 @@
+2017-01-23 오전 11:26:25:241 : AMT Vision DLL MainForm Load
+2017-01-23 오전 11:26:25:242 : Camera Mode = 1 Load Start
+2017-01-23 오전 11:30:02:774 : AMT Vision DLL MainForm Load
+2017-01-23 오전 11:30:02:774 : Camera Mode = 1 Load Start
+2017-01-23 오전 11:32:49:645 : AMT Vision DLL MainForm Load
+2017-01-23 오전 11:32:49:645 : Camera Mode = 1 Load Start
+2017-01-23 오전 11:39:50:415 : AMT Vision DLL MainForm Load
+2017-01-23 오전 11:39:50:416 : Camera Mode = 1 Load Start
+2017-01-23 오전 11:55:50:616 : AMT Vision DLL MainForm Load
+2017-01-23 오전 11:55:50:616 : Camera Mode = 1 Load Start
+2017-01-23 오후 12:00:20:963 : AMT Vision DLL MainForm Load
+2017-01-23 오후 12:00:20:964 : Camera Mode = 1 Load Start
+2017-01-23 오후 2:04:44:307 : AMT Vision DLL MainForm Load
+2017-01-23 오후 2:04:44:349 : Camera Mode = 1 Load Start
+2017-01-23 오후 2:31:20:824 : AMT Vision DLL MainForm Load
+2017-01-23 오후 2:31:20:860 : Camera Mode = 1 Load Start
+2017-01-23 오후 2:41:19:341 : AMT Vision DLL MainForm Load
+2017-01-23 오후 2:41:19:341 : Camera Mode = 1 Load Start
+2017-01-23 오후 2:49:46:722 : AMT Vision DLL MainForm Load
+2017-01-23 오후 2:49:46:722 : Camera Mode = 1 Load Start
+2017-01-23 오후 3:00:11:936 : AMT Vision DLL MainForm Load
+2017-01-23 오후 3:00:11:936 : Camera Mode = 1 Load Start
+2017-01-23 오후 3:10:12:406 : AMT Vision DLL MainForm Load
+2017-01-23 오후 3:10:12:406 : Camera Mode = 1 Load Start
+2017-01-23 오후 3:25:54:723 : AMT Vision DLL MainForm Load
+2017-01-23 오후 3:25:54:724 : Camera Mode = 1 Load Start
+2017-01-23 오후 3:37:45:996 : AMT Vision DLL MainForm Load
+2017-01-23 오후 3:37:45:996 : Camera Mode = 1 Load Start
+2017-01-23 오후 3:44:29:232 : AMT Vision DLL MainForm Load
+2017-01-23 오후 3:44:29:232 : Camera Mode = 1 Load Start
+2017-01-23 오후 3:55:34:917 : AMT Vision DLL MainForm Load
+2017-01-23 오후 3:55:34:918 : Camera Mode = 1 Load Start
+2017-01-23 오후 4:13:28:54 : AMT Vision DLL MainForm Load
+2017-01-23 오후 4:13:28:54 : Camera Mode = 1 Load Start
+2017-01-23 오후 4:15:32:206 : AMT Vision DLL MainForm Load
+2017-01-23 오후 4:15:32:207 : Camera Mode = 1 Load Start
+2017-01-23 오후 4:30:10:292 : AMT Vision DLL MainForm Load
+2017-01-23 오후 4:30:10:292 : Camera Mode = 1 Load Start
+2017-01-23 오후 4:42:38:670 : AMT Vision DLL MainForm Load
+2017-01-23 오후 4:42:38:670 : Camera Mode = 1 Load Start
+2017-01-23 오후 4:52:20:622 : AMT Vision DLL MainForm Load
+2017-01-23 오후 4:52:20:622 : Camera Mode = 1 Load Start
+2017-01-23 오후 5:08:41:432 : AMT Vision DLL MainForm Load
+2017-01-23 오후 5:08:41:433 : Camera Mode = 1 Load Start
+2017-01-23 오후 5:21:18:76 : AMT Vision DLL MainForm Load
+2017-01-23 오후 5:21:18:77 : Camera Mode = 1 Load Start
+2017-01-23 오후 5:30:04:908 : AMT Vision DLL MainForm Load
+2017-01-23 오후 5:30:04:908 : Camera Mode = 1 Load Start
+2017-01-23 오후 6:42:50:486 : AMT Vision DLL MainForm Load
+2017-01-23 오후 6:42:50:486 : Camera Mode = 1 Load Start
+2017-01-23 오후 7:05:43:805 : AMT Vision DLL MainForm Load
+2017-01-23 오후 7:05:43:806 : Camera Mode = 1 Load Start
+2017-01-23 오후 7:14:15:923 : AMT Vision DLL MainForm Load
+2017-01-23 오후 7:14:15:923 : Camera Mode = 1 Load Start
+2017-01-23 오후 7:22:29:55 : AMT Vision DLL MainForm Load
+2017-01-23 오후 7:22:29:55 : Camera Mode = 1 Load Start
+2017-01-23 오후 7:39:20:760 : AMT Vision DLL MainForm Load
+2017-01-23 오후 7:39:20:760 : Camera Mode = 1 Load Start
+2017-01-23 오후 8:04:24:802 : AMT Vision DLL MainForm Load
+2017-01-23 오후 8:04:24:802 : Camera Mode = 1 Load Start
+2017-01-23 오후 8:22:36:12 : AMT Vision DLL MainForm Load
+2017-01-23 오후 8:22:36:12 : Camera Mode = 1 Load Start
+2017-01-23 오후 11:16:19:842 : AMT Vision DLL MainForm Load
+2017-01-23 오후 11:16:19:868 : Camera Mode = 1 Load Start
+2017-01-23 오후 11:20:26:218 : AMT Vision DLL MainForm Load
+2017-01-23 오후 11:20:26:219 : Camera Mode = 1 Load Start
+2017-01-23 오후 11:28:41:477 : AMT Vision DLL MainForm Load
+2017-01-23 오후 11:28:41:477 : Camera Mode = 1 Load Start
+2017-01-23 오후 11:54:13:54 : AMT Vision DLL MainForm Load
+2017-01-23 오후 11:54:13:54 : Camera Mode = 1 Load Start

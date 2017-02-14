@@ -1,0 +1,95 @@
+2016-12-07 오후 1:21:58:833 : AMT Vision DLL MainForm Load
+2016-12-07 오후 1:21:58:833 : Camera Mode = 1 Load Start
+2016-12-07 오후 1:22:05:423 : Camera Mode = 1 Load Complete
+2016-12-07 오후 1:22:05:427 : Camera Mode = 1 ChangeChennel Combo 0
+2016-12-07 오후 1:22:05:429 : AMT Vision DLL MainForm Load Complete
+2016-12-07 오후 1:22:57:660 : AMT Vision DLL MainForm Load
+2016-12-07 오후 1:22:57:660 : Camera Mode = 1 Load Start
+2016-12-07 오후 1:23:00:654 : Camera Mode = 1 Load Complete
+2016-12-07 오후 1:23:00:662 : Camera Mode = 1 ChangeChennel Combo 0
+2016-12-07 오후 1:23:00:665 : AMT Vision DLL MainForm Load Complete
+2016-12-07 오후 1:24:43:675 : AMT Vision DLL MainForm Load
+2016-12-07 오후 1:24:43:676 : Camera Mode = 1 Load Start
+2016-12-07 오후 1:24:46:675 : Camera Mode = 1 Load Complete
+2016-12-07 오후 1:24:46:683 : Camera Mode = 1 ChangeChennel Combo 0
+2016-12-07 오후 1:24:46:686 : AMT Vision DLL MainForm Load Complete
+2016-12-07 오후 1:25:12:555 : Camera Mode = 0/1 CrossLine Check True
+2016-12-07 오후 1:25:13:75 : Camera Mode = 0/1 CrossLine Check False
+2016-12-07 오후 1:25:13:627 : Result Check True
+2016-12-07 오후 1:25:14:19 : Result Check False
+2016-12-07 오후 1:28:10:328 : AMT Vision DLL MainForm Load
+2016-12-07 오후 1:28:10:329 : Camera Mode = 1 Load Start
+2016-12-07 오후 1:28:13:920 : Camera Mode = 1 Load Complete
+2016-12-07 오후 1:28:13:928 : Camera Mode = 1 ChangeChennel Combo 0
+2016-12-07 오후 1:28:13:932 : AMT Vision DLL MainForm Load Complete
+2016-12-07 오후 1:28:33:293 : AMT Vision DLL MainForm Load
+2016-12-07 오후 1:28:33:293 : Camera Mode = 1 Load Start
+2016-12-07 오후 1:28:36:408 : Camera Mode = 1 Load Complete
+2016-12-07 오후 1:28:36:413 : Camera Mode = 1 ChangeChennel Combo 0
+2016-12-07 오후 1:28:36:415 : AMT Vision DLL MainForm Load Complete
+2016-12-07 오후 1:30:03:662 : Camera Mode = 1 ChangeChennel Combo 0
+2016-12-07 오후 1:30:04:846 : Camera Mode = 0/1 CrossLine Check True
+2016-12-07 오후 1:30:05:262 : Camera Mode = 0/1 CrossLine Check False
+2016-12-07 오후 1:30:17:454 : Sobel Button Click
+2016-12-07 오후 1:30:17:455 : EdgeScore = -1
+2016-12-07 오후 1:30:18:206 : Sobel Button Click
+2016-12-07 오후 1:30:18:206 : EdgeScore = -1
+2016-12-07 오후 1:30:18:702 : Sobel Button Click
+2016-12-07 오후 1:30:18:702 : EdgeScore = -1
+2016-12-07 오후 1:45:28:239 : AMT Vision DLL MainForm Load
+2016-12-07 오후 1:45:28:240 : Camera Mode = 1 Load Start
+2016-12-07 오후 1:45:31:310 : Camera Mode = 1 Load Complete
+2016-12-07 오후 1:45:31:317 : Camera Mode = 1 ChangeChennel Combo 0
+2016-12-07 오후 1:45:31:320 : AMT Vision DLL MainForm Load Complete
+2016-12-07 오후 1:47:56:641 : AMT Vision DLL MainForm Load
+2016-12-07 오후 1:47:56:642 : Camera Mode = 1 Load Start
+2016-12-07 오후 1:47:59:640 : Camera Mode = 1 Load Complete
+2016-12-07 오후 1:47:59:647 : Camera Mode = 1 ChangeChennel Combo 0
+2016-12-07 오후 1:47:59:649 : AMT Vision DLL MainForm Load Complete
+2016-12-07 오후 1:50:29:494 : AMT Vision DLL MainForm Load
+2016-12-07 오후 1:50:29:494 : Camera Mode = 1 Load Start
+2016-12-07 오후 1:50:32:482 : Camera Mode = 1 Load Complete
+2016-12-07 오후 1:50:32:489 : Camera Mode = 1 ChangeChennel Combo 0
+2016-12-07 오후 1:50:32:492 : AMT Vision DLL MainForm Load Complete
+2016-12-07 오후 2:18:24:90 : AMT Vision DLL MainForm Load
+2016-12-07 오후 2:18:24:90 : Camera Mode = 1 Load Start
+2016-12-07 오후 2:18:27:133 : Camera Mode = 1 Load Complete
+2016-12-07 오후 2:18:27:140 : Camera Mode = 1 ChangeChennel Combo 0
+2016-12-07 오후 2:18:27:143 : AMT Vision DLL MainForm Load Complete
+2016-12-07 오후 4:08:26:234 : AMT Vision DLL MainForm Load
+2016-12-07 오후 4:08:26:234 : Camera Mode = 1 Load Start
+2016-12-07 오후 4:08:29:699 : Camera Mode = 1 Load Complete
+2016-12-07 오후 4:08:29:703 : Camera Mode = 1 ChangeChennel Combo 0
+2016-12-07 오후 4:08:29:705 : AMT Vision DLL MainForm Load Complete
+2016-12-07 오후 5:14:46:258 : AMTV_Result Start
+2016-12-07 오후 5:14:46:258 : X=-999
+2016-12-07 오후 5:14:46:259 : Y=-999
+2016-12-07 오후 5:14:46:259 : AMTV_Result End
+2016-12-07 오후 5:14:56:538 : AMTV_getEdgeScore Start
+2016-12-07 오후 5:14:56:539 : EdgeScore = -1
+2016-12-07 오후 5:14:56:540 : AMTV_getEdgeScore End
+2016-12-07 오후 5:15:27:378 : AMTV_Result Start
+2016-12-07 오후 5:15:27:378 : X=-999
+2016-12-07 오후 5:15:27:378 : Y=-999
+2016-12-07 오후 5:15:27:378 : AMTV_Result End
+2016-12-07 오후 5:15:27:874 : AMTV_Result Start
+2016-12-07 오후 5:15:27:874 : X=-999
+2016-12-07 오후 5:15:27:874 : Y=-999
+2016-12-07 오후 5:15:27:874 : AMTV_Result End
+2016-12-07 오후 5:15:38:293 : AMTV_getEdgeScore Start
+2016-12-07 오후 5:15:38:293 : EdgeScore = -1
+2016-12-07 오후 5:15:38:294 : AMTV_getEdgeScore End
+2016-12-07 오후 5:33:07:401 : AMTV_Result Start
+2016-12-07 오후 5:33:07:402 : X=-999
+2016-12-07 오후 5:33:07:402 : Y=-999
+2016-12-07 오후 5:33:07:402 : AMTV_Result End
+2016-12-07 오후 5:33:08:506 : AMTV_getEdgeScore Start
+2016-12-07 오후 5:33:08:507 : EdgeScore = -1
+2016-12-07 오후 5:33:08:507 : AMTV_getEdgeScore End
+2016-12-07 오후 5:33:09:594 : AMTV_Result Start
+2016-12-07 오후 5:33:09:595 : X=-999
+2016-12-07 오후 5:33:09:595 : Y=-999
+2016-12-07 오후 5:33:09:595 : AMTV_Result End
+2016-12-07 오후 5:33:09:962 : AMTV_getEdgeScore Start
+2016-12-07 오후 5:33:09:963 : EdgeScore = -1
+2016-12-07 오후 5:33:09:963 : AMTV_getEdgeScore End
