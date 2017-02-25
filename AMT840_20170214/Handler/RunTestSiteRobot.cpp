@@ -884,10 +884,33 @@ void CRunTestSiteRobot::OnRunMove()
 							}  
 						}//for
 
-						m_nRunStep = 5000;//retest buffer자재을 집어 테스트 사이트에 인서트한다
-						strTemp.Format(_T("[RETEST BUFFER1] %d"), m_nRunStep);
-						clsMem.OnNormalMessageWrite(strTemp);
-						break;
+						//m_nRunStep = 5000;//retest buffer자재을 집어 테스트 사이트에 인서트한다
+						//strTemp.Format(_T("[RETEST BUFFER1] %d"), m_nRunStep);
+						//clsMem.OnNormalMessageWrite(strTemp);
+						//break;	
+						//2017.0224
+						////////////////////////////////////////////////////////////////////////////////////////////////////////
+						nRet_1 = clsFunc.Find_RetestBuffer_PickPlace_WorkPos_Check(WORK_PICK, nTHD_ID, nFixPos, st_sync_info.nRetestBuff_Traget_THD_Work_Site, m_npPicker_YesNo, m_npFindWorkPosYXCPB, m_np_BuffInfo_Count);
+						if(nRet_1 == RET_ABORT)
+						{
+							/*nCount*/ = 0; 
+							for(i = 0; i < TEST_PICKER_PARA; i++)//st_picker[THD_TEST_RBT].st_pcb_info[i].nYesNo == n_DvcYesNO && (n_DvcYesNO == CTL_YES && (n_DvcYesNO == CTL_YES || (n_PickerYesNO == CTL_NO && st_picker[THD_TEST_RBT].st_pcb_info[i].nEnable == CTL_YES)) ) )
+							{
+								if(st_picker[THD_TEST_RBT].st_pcb_info[i].nYesNo == CTL_YES)
+								{
+									nCount++;
+								}
+							}
+
+							if( nCount > 0 )
+							{
+								m_nRunStep = 5000;//retest buffer자재을 집어 테스트 사이트에 인서트한다
+								strTemp.Format(_T("[RETEST BUFFER1] %d"), m_nRunStep);
+								clsMem.OnNormalMessageWrite(strTemp);
+								break;	
+							}							 
+						}
+						////////////////////////////////////////////////////////////////////////////////////////////////////////
 					}//if( m_npFindWorkPosYXCPB[2] >= 7 || nCoun == 0)
 				}//if
 				else
@@ -2333,8 +2356,17 @@ void CRunTestSiteRobot::OnRunMove()
 						nCount++;
 					}
 				}
-				 
-				m_nRunStep = 7000;
+				//m_nRunStep = 7000;
+				//2017.02214
+				if( nCount > 0 )
+				{
+					m_nRunStep = 7000;
+				}
+				else
+				{
+					//2017.0224
+					m_nRunStep = 1000;
+				}
 			}
 			else if(nRet_1 == RET_SKIP)  
 			{	//피커 정보와 딱 맞는 리테스트 버퍼의 자재 정보가 없다 	

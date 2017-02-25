@@ -1098,6 +1098,16 @@ void CRunLdUldRobot::OnRunMove()
 				m_nLoadBuff_Job_Continue_Flag = CTL_NO; //clear
 				m_nRunStep = 2700; //1000;  
 
+				//2017.0220
+				for ( i = 0; i < 4; i++)
+				{
+					if(st_buffer_info[THD_LD_BUFF].st_pcb_info[i].nYesNo == CTL_YES )
+					{
+						m_strPartNo[0] = st_buffer_info[THD_LD_BUFF].st_pcb_info[i].strLotNo;
+						m_strPartNo[0] = st_buffer_info[THD_LD_BUFF].st_pcb_info[i].strPartNo;
+						break;
+					}
+				}
 
 				////////////////////////////////////////////////////////////////////////////////
 				//2016.1203
