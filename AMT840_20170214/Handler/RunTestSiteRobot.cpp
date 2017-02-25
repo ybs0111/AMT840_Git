@@ -855,6 +855,7 @@ void CRunTestSiteRobot::OnRunMove()
 						nTHD_ID = st_sync_info.nTestRbt_Dvc_Req[st_sync_info.nRetestBuff_Traget_THD_Work_Site][4];
 						nFixPos = st_sync_info.nTestRbt_Dvc_Req[st_sync_info.nRetestBuff_Traget_THD_Work_Site][3];
 
+						bool bETest = false;
 						//사용할 피커 정보 셋팅 
 						for(i=0; i< 4; i++) //retest 버퍼 수량 4개 공간 확인  
 						{
@@ -864,6 +865,7 @@ void CRunTestSiteRobot::OnRunMove()
 								if(st_test_site_info[nTHD_ID].st_pcb_info[nPos].nEnable == CTL_YES) //socket ON
 								{								 
 									st_picker[THD_TEST_RBT].st_pcb_info[i].nEnable = CTL_YES;
+									bETest = true;
 								}
 								else //if(st_test_site_info[nTHD_ID].st_pcb_info[nPos].nEnable  == CTL_NO)//Socket OFF
 								{								 
@@ -876,6 +878,7 @@ void CRunTestSiteRobot::OnRunMove()
 								if(st_test_site_info[nTHD_ID].st_pcb_info[nPos].nEnable  == CTL_YES) //socket ON
 								{								 
 									st_picker[THD_TEST_RBT].st_pcb_info[i].nEnable = CTL_YES;
+									bETest = true;
 								}
 								else //if(st_test_site_info[nTHD_ID].st_pcb_info[nPos].nEnable == CTL_NO)//Socket OFF
 								{								 
@@ -890,26 +893,38 @@ void CRunTestSiteRobot::OnRunMove()
 						//break;	
 						//2017.0224
 						////////////////////////////////////////////////////////////////////////////////////////////////////////
-						nRet_1 = clsFunc.Find_RetestBuffer_PickPlace_WorkPos_Check(WORK_PICK, nTHD_ID, nFixPos, st_sync_info.nRetestBuff_Traget_THD_Work_Site, m_npPicker_YesNo, m_npFindWorkPosYXCPB, m_np_BuffInfo_Count);
-						if(nRet_1 == RET_ABORT)
+						if(bETest == true )
 						{
-							nCount = 0;
-							for(i = 0; i < TEST_PICKER_PARA; i++)//st_picker[THD_TEST_RBT].st_pcb_info[i].nYesNo == n_DvcYesNO && (n_DvcYesNO == CTL_YES && (n_DvcYesNO == CTL_YES || (n_PickerYesNO == CTL_NO && st_picker[THD_TEST_RBT].st_pcb_info[i].nEnable == CTL_YES)) ) )
-							{
-								if(st_picker[THD_TEST_RBT].st_pcb_info[i].nYesNo == CTL_YES)
-								{
-									nCount++;
-								}
-							}
-
-							if( nCount > 0 )
-							{
-								m_nRunStep = 5000;//retest buffer자재을 집어 테스트 사이트에 인서트한다
-								strTemp.Format(_T("[RETEST BUFFER1] %d"), m_nRunStep);
-								clsMem.OnNormalMessageWrite(strTemp);
-								break; 
-							}
+							m_nRunStep = 5000;//retest buffer자재을 집어 테스트 사이트에 인서트한다
+							strTemp.Format(_T("[RETEST BUFFER1] %d"), m_nRunStep);
+							clsMem.OnNormalMessageWrite(strTemp);
 						}
+//						nRet_1 = clsFunc.Find_RetestBuffer_PickPlace_WorkPos_Check(WORK_PICK, nTHD_ID, nFixPos, st_sync_info.nRetestBuff_Traget_THD_Work_Site, m_npPicker_YesNo, m_npFindWorkPosYXCPB, m_np_BuffInfo_Count);
+//						if(nRet_1 == RET_GOOD)
+//						{
+//							m_nRunStep = 5000;//retest buffer자재을 집어 테스트 사이트에 인서트한다
+//							strTemp.Format(_T("[RETEST BUFFER1] %d"), m_nRunStep);
+//							clsMem.OnNormalMessageWrite(strTemp);
+//						}
+// 						if(nRet_1 == RET_ABORT)
+// 						{
+// 							nCount = 0;
+// 							for(i = 0; i < TEST_PICKER_PARA; i++)//st_picker[THD_TEST_RBT].st_pcb_info[i].nYesNo == n_DvcYesNO && (n_DvcYesNO == CTL_YES && (n_DvcYesNO == CTL_YES || (n_PickerYesNO == CTL_NO && st_picker[THD_TEST_RBT].st_pcb_info[i].nEnable == CTL_YES)) ) )
+// 							{
+// 								if(st_picker[THD_TEST_RBT].st_pcb_info[i].nYesNo == CTL_YES)
+// 								{
+// 									nCount++;
+// 								}
+// 							}
+// 
+// 							if( nCount > 0 )
+// 							{
+// 								m_nRunStep = 5000;//retest buffer자재을 집어 테스트 사이트에 인서트한다
+// 								strTemp.Format(_T("[RETEST BUFFER1] %d"), m_nRunStep);
+// 								clsMem.OnNormalMessageWrite(strTemp);
+// 								break; 
+// 							}
+// 						}
 					}//if( m_npFindWorkPosYXCPB[2] >= 7 || nCoun == 0)
 				}//if
 				else
@@ -2351,31 +2366,17 @@ void CRunTestSiteRobot::OnRunMove()
 						nCount++;
 					}
 				}
-<<<<<<< HEAD
+
 				//m_nRunStep = 7000;
-				//2017.02214
+				//2017.0224
 				if( nCount > 0 )
 				{
 					m_nRunStep = 7000;
-=======
-				 
-				//m_nRunStep = 7000;
-				//2017.0224
-				if(nCount > 0)
-				{
-					m_nRunStep = 7000;
-					strTemp.Format(_T("Insert Move Retest Buff to TestSite"));
-					clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
->>>>>>> ed06a327f8b37ceefe311c2beb398a4a8911aebb
 				}
 				else
 				{
-					//2017.0224
-<<<<<<< HEAD
-=======
-					strTemp.Format(_T("Can not FInd Insert to TestSite"));
+					strTemp.Format(_T("Can not Find Insert to TestSite"));
 					clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
->>>>>>> ed06a327f8b37ceefe311c2beb398a4a8911aebb
 					m_nRunStep = 1000;
 				}
 			}

@@ -4054,7 +4054,7 @@ int CPublicFunction::Find_TrayWork_Pos(int nMode, int nSite, int nDVCYesNO, int 
 
 	nFuncRet = RET_SKIP;
 
-	 npFindPosYXCPB[0] = 0;npFindPosYXCPB[1] = 0;npFindPosYXCPB[2] = 0;npFindPosYXCPB[3] = 0;npFindPosYXCPB[4] = 0; //clear
+	 npFindPosYXCPB[0] =npFindPosYXCPB[1] = npFindPosYXCPB[2] = npFindPosYXCPB[3] = npFindPosYXCPB[4] = 0; //clear
 	 nFlag = CTL_NO;
 
 	 switch(nSite)

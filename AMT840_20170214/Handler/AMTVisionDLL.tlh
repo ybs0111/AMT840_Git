@@ -1,0 +1,313 @@
+// Created by Microsoft (R) C/C++ Compiler Version 12.00.9782.0 (5dacb49f).
+//
+// AMTVisionDLL.tlh
+//
+// C++ source equivalent of Win32 type library AMTVisionDLL.tlb
+// compiler-generated file created 09/05/16 at 06:32:35 - DO NOT EDIT!
+
+#pragma once
+#pragma pack(push, 8)
+
+#include <comdef.h>
+
+//
+// Forward references and typedefs
+//
+
+struct /* coclass */ MainForm;
+struct /* coclass */ PaintDelegate;
+struct /* coclass */ UpdateStatusBarDelegate;
+struct /* coclass */ MC;
+struct /* coclass */ SignalCALLBACK;
+struct SIGNALINFO;
+struct /* coclass */ Graber;
+struct /* coclass */ CapEventArgs;
+struct /* coclass */ CapCallBack;
+struct /* coclass */ OpenCVLib;
+struct __declspec(uuid("46d3f99b-0de9-439d-8826-af177a11f47d"))
+/* dual interface */ IVisionClass;
+struct /* coclass */ VisionClassImp;
+struct __declspec(uuid("7f1fcbea-846d-30b6-b27d-42744cf8b48a"))
+/* dual interface */ _MainForm;
+struct __declspec(uuid("94eaf423-bbe6-3245-9cc7-630ff712299d"))
+/* dual interface */ _PaintDelegate;
+struct __declspec(uuid("013d8e5a-7ca5-3a15-a1b9-808f0d62f0f3"))
+/* dual interface */ _UpdateStatusBarDelegate;
+struct __declspec(uuid("f3b54502-53c7-3322-96cb-317feff886c9"))
+/* dual interface */ _MC;
+struct __declspec(uuid("eb25fedc-5bfb-3096-adca-ba3000d32f8b"))
+/* dual interface */ _SignalCALLBACK;
+struct __declspec(uuid("179854d8-b83d-3e10-b560-98f5d7813a90"))
+/* dual interface */ _Graber;
+struct __declspec(uuid("443e4f75-12d5-3d59-ae44-1e4c6aa49f7c"))
+/* dual interface */ _CapEventArgs;
+struct __declspec(uuid("b2774bd1-930e-3a3a-b63b-bf636323878d"))
+/* dual interface */ _CapCallBack;
+struct __declspec(uuid("e322fd1f-e2dd-3c7b-8cce-9c8105ed4f65"))
+/* dual interface */ _OpenCVLib;
+struct __declspec(uuid("48752c99-5e96-3910-9d45-8a8e9bcfd64c"))
+/* dual interface */ _VisionClassImp;
+
+//
+// Smart pointer typedef declarations
+//
+
+_COM_SMARTPTR_TYPEDEF(IVisionClass, __uuidof(IVisionClass));
+_COM_SMARTPTR_TYPEDEF(_MainForm, __uuidof(_MainForm));
+_COM_SMARTPTR_TYPEDEF(_PaintDelegate, __uuidof(_PaintDelegate));
+_COM_SMARTPTR_TYPEDEF(_UpdateStatusBarDelegate, __uuidof(_UpdateStatusBarDelegate));
+_COM_SMARTPTR_TYPEDEF(_MC, __uuidof(_MC));
+_COM_SMARTPTR_TYPEDEF(_SignalCALLBACK, __uuidof(_SignalCALLBACK));
+_COM_SMARTPTR_TYPEDEF(_Graber, __uuidof(_Graber));
+_COM_SMARTPTR_TYPEDEF(_CapEventArgs, __uuidof(_CapEventArgs));
+_COM_SMARTPTR_TYPEDEF(_CapCallBack, __uuidof(_CapCallBack));
+_COM_SMARTPTR_TYPEDEF(_OpenCVLib, __uuidof(_OpenCVLib));
+_COM_SMARTPTR_TYPEDEF(_VisionClassImp, __uuidof(_VisionClassImp));
+
+//
+// Type library items
+//
+
+struct __declspec(uuid("fe5cc26f-ee4a-3edc-bbda-058e7e8517cf"))
+MainForm;
+    // [ default ] interface _MainForm
+    // interface _Object
+    // interface IComponent
+    // interface IDisposable
+    // interface IWin32Window
+
+struct __declspec(uuid("6534bcac-7613-3934-9bc0-d513bb085066"))
+PaintDelegate;
+    // [ default ] interface _PaintDelegate
+    // interface _Delegate
+    // interface _Object
+    // interface ICloneable
+    // interface ISerializable
+
+struct __declspec(uuid("5ba2d6ff-4f74-346e-a5df-1cbecde23929"))
+UpdateStatusBarDelegate;
+    // [ default ] interface _UpdateStatusBarDelegate
+    // interface _Delegate
+    // interface _Object
+    // interface ICloneable
+    // interface ISerializable
+
+enum CamNo
+{
+    CamNo_DEV_0 = 0,
+    CamNo_DEV_1 = 1,
+    CamNo_DEV_2 = 2,
+    CamNo_DEV_3 = 3,
+    CamNo_DEV_4 = 4,
+    CamNo_DEV_5 = 5,
+    CamNo_DEV_6 = 6,
+    CamNo_DEV_7 = 7,
+    CamNo_DEV_8 = 8,
+    CamNo_DEV_9 = 9
+};
+
+struct __declspec(uuid("e9286734-4aa6-340f-8641-c71e8e6f85ed"))
+MC;
+    // [ default ] interface _MC
+    // interface _Object
+
+struct __declspec(uuid("c6b013c4-d368-333f-8ccc-8616dd7b4b9b"))
+SignalCALLBACK;
+    // [ default ] interface _SignalCALLBACK
+    // interface _Delegate
+    // interface _Object
+    // interface ICloneable
+    // interface ISerializable
+
+struct SIGNALINFO
+{
+    long Context;
+    unsigned long Instance;
+    long Signal;
+    unsigned long nSignalInfo;
+    unsigned long SignalContext;
+};
+
+struct __declspec(uuid("02760503-0d0d-33bb-be76-406cc40e6814"))
+Graber;
+    // [ default ] interface _Graber
+    // interface _Object
+
+struct __declspec(uuid("e0932e28-704d-36ca-ae22-7d72508dd403"))
+CapEventArgs;
+    // [ default ] interface _CapEventArgs
+    // interface _Object
+
+struct __declspec(uuid("899ea303-2845-31c9-a046-0c0924a2a333"))
+CapCallBack;
+    // [ default ] interface _CapCallBack
+    // interface _Delegate
+    // interface _Object
+    // interface ICloneable
+    // interface ISerializable
+
+struct __declspec(uuid("0718bd42-1d60-32e7-9956-9efa73111cca"))
+OpenCVLib;
+    // [ default ] interface _OpenCVLib
+    // interface _Object
+
+struct __declspec(uuid("46d3f99b-0de9-439d-8826-af177a11f47d"))
+IVisionClass : IDispatch
+{
+    //
+    // Wrapper methods for error-handling
+    //
+
+    HRESULT AMTV_ShowForm ( );
+    HRESULT AMTV_HideForm ( );
+    VARIANT_BOOL AMTV_ChangeChannel (
+        long ChannelNum );
+    VARIANT_BOOL AMTV_Result (
+        double * OffsetX,
+        double * OffsetY );
+    VARIANT_BOOL AMTV_EdgeScore (
+        double * lEdgeScore );
+    VARIANT_BOOL AMTV_PatternMatching (
+        long nNum,
+        double * OffsetX,
+        double * OffsetY );
+
+    //
+    // Raw methods provided by interface
+    //
+
+    virtual HRESULT __stdcall raw_AMTV_ShowForm ( ) = 0;
+    virtual HRESULT __stdcall raw_AMTV_HideForm ( ) = 0;
+    virtual HRESULT __stdcall raw_AMTV_ChangeChannel (
+        long ChannelNum,
+        VARIANT_BOOL * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_AMTV_Result (
+        double * OffsetX,
+        double * OffsetY,
+        VARIANT_BOOL * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_AMTV_EdgeScore (
+        double * lEdgeScore,
+        VARIANT_BOOL * pRetVal ) = 0;
+    virtual HRESULT __stdcall raw_AMTV_PatternMatching (
+        long nNum,
+        double * OffsetX,
+        double * OffsetY,
+        VARIANT_BOOL * pRetVal ) = 0;
+};
+
+struct __declspec(uuid("7508c9c2-ca20-4af2-8760-ee525dbfa535"))
+VisionClassImp;
+    // [ default ] interface _VisionClassImp
+    // interface _Object
+    // interface IVisionClass
+
+enum CamNo_2
+{
+    CamNo_2_DEV_0 = 0,
+    CamNo_2_DEV_1 = 1,
+    CamNo_2_DEV_2 = 2,
+    CamNo_2_DEV_3 = 3,
+    CamNo_2_DEV_4 = 4,
+    CamNo_2_DEV_5 = 5,
+    CamNo_2_DEV_6 = 6,
+    CamNo_2_DEV_7 = 7,
+    CamNo_2_DEV_8 = 8,
+    CamNo_2_DEV_9 = 9
+};
+
+struct __declspec(uuid("7f1fcbea-846d-30b6-b27d-42744cf8b48a"))
+_MainForm : IDispatch
+{};
+
+struct __declspec(uuid("94eaf423-bbe6-3245-9cc7-630ff712299d"))
+_PaintDelegate : IDispatch
+{};
+
+struct __declspec(uuid("013d8e5a-7ca5-3a15-a1b9-808f0d62f0f3"))
+_UpdateStatusBarDelegate : IDispatch
+{};
+
+struct __declspec(uuid("f3b54502-53c7-3322-96cb-317feff886c9"))
+_MC : IDispatch
+{};
+
+struct __declspec(uuid("eb25fedc-5bfb-3096-adca-ba3000d32f8b"))
+_SignalCALLBACK : IDispatch
+{};
+
+struct __declspec(uuid("179854d8-b83d-3e10-b560-98f5d7813a90"))
+_Graber : IDispatch
+{};
+
+struct __declspec(uuid("443e4f75-12d5-3d59-ae44-1e4c6aa49f7c"))
+_CapEventArgs : IDispatch
+{};
+
+struct __declspec(uuid("b2774bd1-930e-3a3a-b63b-bf636323878d"))
+_CapCallBack : IDispatch
+{};
+
+struct __declspec(uuid("e322fd1f-e2dd-3c7b-8cce-9c8105ed4f65"))
+_OpenCVLib : IDispatch
+{};
+
+struct __declspec(uuid("48752c99-5e96-3910-9d45-8a8e9bcfd64c"))
+_VisionClassImp : IDispatch
+{};
+
+//
+// Named GUID constants initializations
+//
+
+extern "C" const GUID __declspec(selectany) LIBID_AMTVisionDLL =
+    {0x583daf67,0xb280,0x42b8,{0xa9,0x7d,0x16,0xbd,0x98,0x62,0x8d,0xd3}};
+extern "C" const GUID __declspec(selectany) CLSID_MainForm =
+    {0xfe5cc26f,0xee4a,0x3edc,{0xbb,0xda,0x05,0x8e,0x7e,0x85,0x17,0xcf}};
+extern "C" const GUID __declspec(selectany) CLSID_PaintDelegate =
+    {0x6534bcac,0x7613,0x3934,{0x9b,0xc0,0xd5,0x13,0xbb,0x08,0x50,0x66}};
+extern "C" const GUID __declspec(selectany) CLSID_UpdateStatusBarDelegate =
+    {0x5ba2d6ff,0x4f74,0x346e,{0xa5,0xdf,0x1c,0xbe,0xcd,0xe2,0x39,0x29}};
+extern "C" const GUID __declspec(selectany) CLSID_MC =
+    {0xe9286734,0x4aa6,0x340f,{0x86,0x41,0xc7,0x1e,0x8e,0x6f,0x85,0xed}};
+extern "C" const GUID __declspec(selectany) CLSID_SignalCALLBACK =
+    {0xc6b013c4,0xd368,0x333f,{0x8c,0xcc,0x86,0x16,0xdd,0x7b,0x4b,0x9b}};
+extern "C" const GUID __declspec(selectany) CLSID_Graber =
+    {0x02760503,0x0d0d,0x33bb,{0xbe,0x76,0x40,0x6c,0xc4,0x0e,0x68,0x14}};
+extern "C" const GUID __declspec(selectany) CLSID_CapEventArgs =
+    {0xe0932e28,0x704d,0x36ca,{0xae,0x22,0x7d,0x72,0x50,0x8d,0xd4,0x03}};
+extern "C" const GUID __declspec(selectany) CLSID_CapCallBack =
+    {0x899ea303,0x2845,0x31c9,{0xa0,0x46,0x0c,0x09,0x24,0xa2,0xa3,0x33}};
+extern "C" const GUID __declspec(selectany) CLSID_OpenCVLib =
+    {0x0718bd42,0x1d60,0x32e7,{0x99,0x56,0x9e,0xfa,0x73,0x11,0x1c,0xca}};
+extern "C" const GUID __declspec(selectany) IID_IVisionClass =
+    {0x46d3f99b,0x0de9,0x439d,{0x88,0x26,0xaf,0x17,0x7a,0x11,0xf4,0x7d}};
+extern "C" const GUID __declspec(selectany) CLSID_VisionClassImp =
+    {0x7508c9c2,0xca20,0x4af2,{0x87,0x60,0xee,0x52,0x5d,0xbf,0xa5,0x35}};
+extern "C" const GUID __declspec(selectany) IID__MainForm =
+    {0x7f1fcbea,0x846d,0x30b6,{0xb2,0x7d,0x42,0x74,0x4c,0xf8,0xb4,0x8a}};
+extern "C" const GUID __declspec(selectany) IID__PaintDelegate =
+    {0x94eaf423,0xbbe6,0x3245,{0x9c,0xc7,0x63,0x0f,0xf7,0x12,0x29,0x9d}};
+extern "C" const GUID __declspec(selectany) IID__UpdateStatusBarDelegate =
+    {0x013d8e5a,0x7ca5,0x3a15,{0xa1,0xb9,0x80,0x8f,0x0d,0x62,0xf0,0xf3}};
+extern "C" const GUID __declspec(selectany) IID__MC =
+    {0xf3b54502,0x53c7,0x3322,{0x96,0xcb,0x31,0x7f,0xef,0xf8,0x86,0xc9}};
+extern "C" const GUID __declspec(selectany) IID__SignalCALLBACK =
+    {0xeb25fedc,0x5bfb,0x3096,{0xad,0xca,0xba,0x30,0x00,0xd3,0x2f,0x8b}};
+extern "C" const GUID __declspec(selectany) IID__Graber =
+    {0x179854d8,0xb83d,0x3e10,{0xb5,0x60,0x98,0xf5,0xd7,0x81,0x3a,0x90}};
+extern "C" const GUID __declspec(selectany) IID__CapEventArgs =
+    {0x443e4f75,0x12d5,0x3d59,{0xae,0x44,0x1e,0x4c,0x6a,0xa4,0x9f,0x7c}};
+extern "C" const GUID __declspec(selectany) IID__CapCallBack =
+    {0xb2774bd1,0x930e,0x3a3a,{0xb6,0x3b,0xbf,0x63,0x63,0x23,0x87,0x8d}};
+extern "C" const GUID __declspec(selectany) IID__OpenCVLib =
+    {0xe322fd1f,0xe2dd,0x3c7b,{0x8c,0xce,0x9c,0x81,0x05,0xed,0x4f,0x65}};
+extern "C" const GUID __declspec(selectany) IID__VisionClassImp =
+    {0x48752c99,0x5e96,0x3910,{0x9d,0x45,0x8a,0x8e,0x9b,0xcf,0xd6,0x4c}};
+
+//
+// Wrapper method implementations
+//
+
+#include "AMTVisionDLL.tli"
+
+#pragma pack(pop)
