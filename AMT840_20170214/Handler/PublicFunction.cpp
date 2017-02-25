@@ -6490,7 +6490,9 @@ int CPublicFunction::Find_TestSite_Work_Pos(int nMode, CString strLotNo, int Pic
 
 		if(nToTalCnt > 0 ) //작업할 소켓이 있다 
 		{
-			if(n_Fix_03_Count >= n_Fix_03_Enable_Count && n_Fix_47_Count >= n_Fix_47_Enable_Count) //선택된 테스트 사이트는 전체 소켓이 작업가능한 상태
+			//if(n_Fix_03_Count >= n_Fix_03_Enable_Count && n_Fix_47_Count >= n_Fix_47_Enable_Count) //선택된 테스트 사이트는 전체 소켓이 작업가능한 상태
+			//kwlee 2017.0224
+			if(n_Fix_03_Count > 0 && n_Fix_03_Count >= n_Fix_03_Enable_Count && n_Fix_47_Count >= n_Fix_47_Enable_Count) //선택된 테스트 사이트는 전체 소켓이 작업가능한 상태
 			{//소켓 left(1,2,3,4) 와 right(5,6,7,8)가 모두 요구된 작업이 가능한 사이트이면 물리적인 left site가 우선.
 			
 				//npGetWork_SiteInfo[0] = i; //작업할 테스트 사이트 정보 
@@ -6513,7 +6515,9 @@ int CPublicFunction::Find_TestSite_Work_Pos(int nMode, CString strLotNo, int Pic
 					nFuncRet = RET_GOOD;
 				}
 			}
-			else if(n_Fix_03_Count >= n_Fix_03_Enable_Count)//2015.0906 0) //8개 소켓중 좌측 4개 소켓(0 ~ 3)
+			//else if(n_Fix_03_Count >= n_Fix_03_Enable_Count)//2015.0906 0) //8개 소켓중 좌측 4개 소켓(0 ~ 3)
+			//kwlee 2017.0224
+			else if(n_Fix_03_Count > 0 && n_Fix_03_Count >= n_Fix_03_Enable_Count)//2015.0906 0) //8개 소켓중 좌측 4개 소켓(0 ~ 3)
 			{
 				if(PickPlace_Mode == WORK_PLACE) //Test site에 자재를 놓을 수 있는 위치 체크
 				{
@@ -6535,7 +6539,9 @@ int CPublicFunction::Find_TestSite_Work_Pos(int nMode, CString strLotNo, int Pic
 				}
 					
 			}
-			else if(n_Fix_47_Count >= n_Fix_47_Enable_Count)// 0) //8개 소켓중 우측 4개 소켓(4 ~ 7)
+			//else if(n_Fix_47_Count >= n_Fix_47_Enable_Count)// 0) //8개 소켓중 우측 4개 소켓(4 ~ 7)
+			//kwlee 2017.0224
+			else if( n_Fix_47_Count > 0 && n_Fix_47_Count >= n_Fix_47_Enable_Count)// 0) //8개 소켓중 우측 4개 소켓(4 ~ 7)
 			{
 				//소켓 left(1,2,3,4) 또는 right(5,6,7,8)가 어느한쪽이라도  작업이 가능한 사이트이면 이 사이트가 우선.
 				if(PickPlace_Mode == WORK_PLACE) //Test site에 자재를 놓을 수 있는 위치 체크
@@ -8139,3 +8145,4 @@ void CPublicFunction::SendRegPartID()
 	
 	delete st_copydata;	
 }
+

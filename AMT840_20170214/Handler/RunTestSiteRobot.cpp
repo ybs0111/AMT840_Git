@@ -884,10 +884,32 @@ void CRunTestSiteRobot::OnRunMove()
 							}  
 						}//for
 
-						m_nRunStep = 5000;//retest buffer자재을 집어 테스트 사이트에 인서트한다
-						strTemp.Format(_T("[RETEST BUFFER1] %d"), m_nRunStep);
-						clsMem.OnNormalMessageWrite(strTemp);
-						break;
+// 						m_nRunStep = 5000;//retest buffer자재을 집어 테스트 사이트에 인서트한다
+// 						strTemp.Format(_T("[RETEST BUFFER1] %d"), m_nRunStep);
+// 						clsMem.OnNormalMessageWrite(strTemp);
+// 						break;
+						//2017.0224
+						nRet_1 = clsFunc.Find_RetestBuffer_PickPlace_WorkPos_Check(WORK_PICK, nTHD_ID, nFixPos, st_sync_info.nRetestBuff_Traget_THD_Work_Site, m_npPicker_YesNo, m_npFindWorkPosYXCPB, m_np_BuffInfo_Count);
+						if (nRet_1 == RET_ABORT)
+						{
+							nCount = 0;
+							for(i = 0; i < TEST_PICKER_PARA; i++)//st_picker[THD_TEST_RBT].st_pcb_info[i].nYesNo == n_DvcYesNO && (n_DvcYesNO == CTL_YES && (n_DvcYesNO == CTL_YES || (n_PickerYesNO == CTL_NO && st_picker[THD_TEST_RBT].st_pcb_info[i].nEnable == CTL_YES)) ) )
+							{
+								if(st_picker[THD_TEST_RBT].st_pcb_info[i].nYesNo == CTL_YES)
+								{
+									nCount++;
+								}
+							}
+
+							if( nCount > 0 )
+							{
+								m_nRunStep = 5000;//retest buffer자재을 집어 테스트 사이트에 인서트한다
+								strTemp.Format(_T("[RETEST BUFFER1] %d"), m_nRunStep);
+								clsMem.OnNormalMessageWrite(strTemp);
+								break; 
+							}
+						}
+
 					}//if( m_npFindWorkPosYXCPB[2] >= 7 || nCoun == 0)
 				}//if
 				else
@@ -1063,7 +1085,6 @@ void CRunTestSiteRobot::OnRunMove()
 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] = CTL_REQ;
 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][1] = WORK_PICK; //자재를 집을 수 있게 요청 
 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][2] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][2]; //st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].nSite_Pos; //1:TESTSITE_LEFT, 2:TESTSITE_RIGHT , //로딩 버퍼의 테스터에 맞는 회전 각도를 정한다
-
 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]; //james 2016.0924 추가 
 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][4] = st_sync_info.nTestSite_Target_THD_Work_Site[1]; //james 2016.0924 추가
 					}
@@ -1074,19 +1095,17 @@ void CRunTestSiteRobot::OnRunMove()
 							st_other_info.nBuzYesNo = YES;
 							if(st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 >= 0 )
 							{
-								st_other_info.strBoxMsg.Format(_T("It have to enable 1over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
+								st_other_info.strBoxMsg.Format(_T("It have to enable 1 over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
 							}
 							else
 							{
-								st_other_info.strBoxMsg = _T("It have to enable 1over per socket. \r\n Please enable socket.");
+								st_other_info.strBoxMsg = _T("It have to enable 1 over per socket. \r\n Please enable socket.");
 							}
 							st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_MESSAGE_BOX_CREATE_REQ, 0);
 						}
 					}
 				}
 			}//james 2016.0926 조건 변경 
-			 
-		 
 			m_nRunStep = 2000;
 			break;
 
@@ -1301,18 +1320,17 @@ void CRunTestSiteRobot::OnRunMove()
 							st_other_info.nBuzYesNo = YES;
 							if(st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 >= 0 )
 							{
-								st_other_info.strBoxMsg.Format(_T("It have to enable 1over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
+								st_other_info.strBoxMsg.Format(_T("It have to enable 1 over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
 							}
 							else
 							{
-								st_other_info.strBoxMsg = _T("It have to enable 1over per socket. \r\n Please enable socket.");
+								st_other_info.strBoxMsg = _T("It have to enable 1 over per socket. \r\n Please enable socket.");
 							}
 							st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_MESSAGE_BOX_CREATE_REQ, 0);
 						}
 						break;
 					}
 				}
-
 				 m_nRunStep = 6000;
 			}
 			else
@@ -2334,7 +2352,21 @@ void CRunTestSiteRobot::OnRunMove()
 					}
 				}
 				 
-				m_nRunStep = 7000;
+				//m_nRunStep = 7000;
+				//2017.0224
+				if(nCount > 0)
+				{
+					m_nRunStep = 7000;
+					strTemp.Format(_T("Insert Move Retest Buff to TestSite"));
+					clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
+				}
+				else
+				{
+					//2017.0224
+					strTemp.Format(_T("Can not FInd Insert to TestSite"));
+					clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
+					m_nRunStep = 1000;
+				}
 			}
 			else if(nRet_1 == RET_SKIP)  
 			{	//피커 정보와 딱 맞는 리테스트 버퍼의 자재 정보가 없다 	

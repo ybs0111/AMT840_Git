@@ -699,7 +699,6 @@ void CClientInterface3::OnDataAnalysis(CString strMsg)
 				m_strErrorMsg	= strData.Mid(1, strData.GetLength()-1);
 			}
 			m_nRpyBin[INTER_TOTAL] = m_nCommBin = BD_DATA_REJECT;
-
 			//2016.1101				
 			st_handler_info.mstr_event_msg[0].Format(_T("%d site %s,엔지니어 호출 해주세요"), 3, m_strErrorMsg );
 			clsMem.OnAbNormalMessagWrite(st_handler_info.mstr_event_msg[0]);//로그 저장

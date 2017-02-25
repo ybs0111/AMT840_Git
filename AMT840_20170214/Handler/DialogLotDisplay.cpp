@@ -2257,6 +2257,7 @@ int	CDialogLotDisplay::OnLotCancelReq()
 int CDialogLotDisplay::OnLotEnd()
 {
 	CString strTemp;
+	CDialog_Message dlgMsg;
 	switch (m_nLotEndStep)
 	{
 		case 0:
@@ -2339,15 +2340,16 @@ int CDialogLotDisplay::OnLotEnd()
 
 		case 1000:
 			// 작업중인 모드체크
-			if (st_basic_info.nModeInterface == EQP_ON_LINE)
+			if (st_basic_info.nModeInterface == EQP_ON_LINE && st_basic_info.nLotEndSkipMode == NO)
 			{
 				// 작업모드가 on line 모드이면
 				m_nLotEndStep = 1100;
+				
 			}
 			else
 			{
 				// off line 모드이면 
-				m_nLotEndStep = 2000;
+				m_nLotEndStep = 2000; //온라인이 아니거나 랏엔드 스킵 모드 시 랏엔드 됨 2017.0225
 			}
 			break;
 
@@ -2408,6 +2410,7 @@ int CDialogLotDisplay::OnLotEnd()
 
 			if (st_track_info.nCumPass + st_track_info.nCumReject == st_lot_display_info[1].nQty)
 			{
+				
 				clsEcSecond.OnEcLotEnd(st_lot_display_info[1].strLotNo, _T(""), _T(""), st_track_info.nCumPass, st_track_info.tStart, st_track_info.nBdTime, st_track_info.nBdTimeCount, st_lot_display_info[1]);
 				m_nLotEndStep = 1200;
 			}
@@ -2692,7 +2695,10 @@ void CDialogLotDisplay::OnMessageDisplay(int nBin, CString strMsg)
 
 void CDialogLotDisplay::OnBnClickedBtnDialogLotDisplayEnd()
 {
+	CDialog_Message dlgMsg;
+	CString strTemp;
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	
 	if (st_handler_info.nMenuLock == TRUE) return;
 
 	if (m_strLotNo == _T("") && 0) return;
@@ -2702,10 +2708,34 @@ void CDialogLotDisplay::OnBnClickedBtnDialogLotDisplayEnd()
 	m_nRetry		= 0;
 	m_nTrackOutStep = 0;
 	if (m_nLotEndStep == -1) m_nLotEndStep = 0;
+	//kwlee 2017.0225
+	if (st_basic_info.nLotEndSkipMode == YES)
+	{
+		dlgMsg.m_nMessageType	= 1;
+		dlgMsg.m_strMessage = _T("Lot End Skip Mode 사용중 입니다. 서버랑 통신 않하고 Lot End 하시겠습니까?");
+
+		if (dlgMsg.DoModal() == IDOK)
+		{
+			strTemp.Format(_T("Lot End Skip."));
+			clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
+			SetTimer(TM_TRACK, 100, NULL);
+		}
+		else
+		{
+			AfxMessageBox(_T("서버랑 통신하여 Lot end를 하려면 Basic LotEndSkip Mode를 확인하세요."));
+			st_handler_info.nMenuLock = FALSE;
+			return;
+		}
+	}
+	else
+	{
+		SetTimer(TM_TRACK, 100, NULL);
+	}
 
 	m_btnLotEnd.EnableWindow(FALSE);
 
-	SetTimer(TM_TRACK, 100, NULL);
+	//SetTimer(TM_TRACK, 100, NULL);
+
 }
 
 

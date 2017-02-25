@@ -1449,6 +1449,7 @@ void CScreenMain::OnMainLotDisplay()
 	if (st_tray_info[THD_ULD_1_STACKER].strLotNo != _T(""))
 	{
 		m_pGridUnLdTrayFirst.SetItemText(0, 0, st_tray_info[THD_ULD_1_STACKER].strLotNo);
+		
 	}
 
 	if (st_tray_info[THD_ULD_2_STACKER].strLotNo != _T(""))
@@ -1534,6 +1535,9 @@ void CScreenMain::OnLdTrayCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 		if (dlgMsg.DoModal() == IDOK)
 		{
 			st_tray_info[THD_LD_TRAY_PLATE].st_pcb_info[2 - nRow][nCol].nYesNo = NO;
+			//kwlee 2017.0224
+			strMsg.Format(_T("Ld_Tray %d Device Skip"),(2 - nRow) + 1);
+			clsMem.OnAbNormalMessagWrite(strMsg);//로그 저장
 		}
 	}
 	else
@@ -1570,6 +1574,9 @@ void CScreenMain::OnTrayRobotCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 		if (dlgMsg.DoModal() == IDOK)
 		{
 			st_picker[THD_WORK_RBT].st_pcb_info[nRow].nYesNo = CTL_NO;
+			//kwlee 2017.0224
+			strMsg.Format(_T("Work Robot %d Device Skip"),nRow + 1);
+			clsMem.OnAbNormalMessagWrite(strMsg);//로그 저장
 		}
 	}
 	else
@@ -1606,6 +1613,9 @@ void CScreenMain::OnUnLdTrayFirstCellClick(NMHDR *pNotifyStruct, LRESULT* pResul
 		if (dlgMsg.DoModal() == IDOK)
 		{
 			st_tray_info[THD_ULD_1_STACKER].st_pcb_info[nRow -2][nCol].nYesNo = NO;
+			//kwlee 2017.0224
+			strMsg.Format(_T("Unload#1 %d Device Skip"),(nRow - 2) + 1);
+			clsMem.OnAbNormalMessagWrite(strMsg);//로그 저장
 		}
 	}
 	else
@@ -1642,6 +1652,9 @@ void CScreenMain::OnUnLdTraySecondCellClick(NMHDR *pNotifyStruct, LRESULT* pResu
 
 		if (dlgMsg.DoModal() == IDOK)
 		{
+			//kwlee 2017.0224
+			strMsg.Format(_T("Unload#2 %d Device Skip"),(nRow - 2) + 1);
+			clsMem.OnAbNormalMessagWrite(strMsg);//로그 저장
 			st_tray_info[THD_ULD_2_STACKER].st_pcb_info[nRow -2][nCol].nYesNo = NO;
 		}
 	}
@@ -1676,6 +1689,9 @@ void CScreenMain::OnLdBufCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 		if (dlgMsg.DoModal() == IDOK)
 		{
 			st_buffer_info[THD_LD_BUFF].st_pcb_info[nCol].nYesNo = NO;
+			//kwlee 2017.0224
+			strMsg.Format(_T("Ld_Buff %d Device Skip"),nCol + 1);
+			clsMem.OnAbNormalMessagWrite(strMsg);//로그 저장
 		}
 	}
 	else
@@ -1707,6 +1723,9 @@ void CScreenMain::OnUnLdBufCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 		if (dlgMsg.DoModal() == IDOK)
 		{
 			st_buffer_info[THD_ULD_BUFF].st_pcb_info[nCol].nYesNo = NO;
+			//kwlee 2017.0224
+			strMsg.Format(_T("ULd_Buff %d Device Skip"),nCol + 1);
+			clsMem.OnAbNormalMessagWrite(strMsg);//로그 저장
 		}
 	}
 	else
@@ -4987,7 +5006,6 @@ void CScreenMain::OnMainLdTray()
 		{
 			if(st_tray_info[THD_LD_TRAY_PLATE].st_pcb_info[y][x].nYesNo == CTL_YES)
 			{
-				
 				//strTemp = st_tray_info[THD_LD_TRAY_PLATE].st_pcb_info[y][x].strBarcode1D[0].Right(4);// Mid(0, 4);
 				//kwlee 2016.1214
 				strTemp.Format(_T("%s"),st_tray_info[THD_LD_TRAY_PLATE].st_pcb_info[y][x].strBarcode1D[0].Right(4));

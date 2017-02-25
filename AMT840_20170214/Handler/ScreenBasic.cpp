@@ -112,6 +112,8 @@ void CScreenBasic::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BTN_DIRECTION, m_btnDirection);
 	DDX_Control(pDX, IDC_GROUP_AUTOLOAD, m_groupAutoLoad);
 	DDX_Control(pDX, IDC_BTN_AUTOLOAD, m_btnAutoLoad);
+	DDX_Control(pDX, IDC_GROUP_LOTEND_USE, m_groupLotEndUse);
+	DDX_Control(pDX, IDC_BTN_LOTEND_USE, m_btnLotendUse);
 }
 
 BEGIN_MESSAGE_MAP(CScreenBasic, CFormView)
@@ -162,6 +164,7 @@ BEGIN_MESSAGE_MAP(CScreenBasic, CFormView)
 	ON_BN_CLICKED(IDC_BTN_DIRECTION, &CScreenBasic::OnBnClickedBtnDirection)
 	ON_STN_CLICKED(IDC_DGT_ALARM_DELAY_CNT, &CScreenBasic::OnStnClickedDgtAlarmDelayCnt)
 	ON_BN_CLICKED(IDC_BTN_AUTOLOAD, &CScreenBasic::OnBnClickedBtnAutoload)
+	ON_BN_CLICKED(IDC_BTN_LOTEND_USE, &CScreenBasic::OnBnClickedBtnLotendUse)
 END_MESSAGE_MAP()
 
 
@@ -720,6 +723,16 @@ void CScreenBasic::OnInitButton()
 	m_btnAutoLoad.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, BLUE_C);
 	m_btnAutoLoad.SetFont(clsFunc.m_pFont[3]);
 
+	//kwlee 2016.0225
+	m_btnLotendUse.SetBitmaps(IDC_BTN_LOTEND_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+	m_btnLotendUse.SetColor(CButtonST::BTNST_COLOR_BK_IN, WINDOW_DN);
+	m_btnLotendUse.SetColor(CButtonST::BTNST_COLOR_BK_OUT, WINDOW_UP);
+	m_btnLotendUse.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, WINDOW_UP);
+	m_btnLotendUse.SetColor(CButtonST::BTNST_COLOR_FG_IN, BLACK_C);
+	m_btnLotendUse.SetColor(CButtonST::BTNST_COLOR_FG_OUT, BLUE_C);
+	m_btnLotendUse.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, BLUE_C);
+	m_btnLotendUse.SetFont(clsFunc.m_pFont[3]);
+
 	// kwlee 20160929
 	if (st_handler_info.nAutoMode == YES)
 	{
@@ -762,6 +775,19 @@ void CScreenBasic::OnInitButton()
 		m_btnAutoLoad.SetBitmaps(IDC_BTN_AUTOLOAD, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
 		m_btnAutoLoad.SetWindowTextW(_T("Auto Load Skip"));
 
+	}
+
+
+	//kwlee 2016.0225
+	if (st_basic_info.nLotEndSkipMode == YES)
+	{
+		m_btnLotendUse.SetBitmaps(IDC_BTN_LOTEND_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);;
+		m_btnLotendUse.SetWindowTextW(_T("Lot End Skip(서버랑 통신 않함)"));
+	}
+	else
+	{
+		m_btnLotendUse.SetBitmaps(IDC_BTN_LOTEND_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+		m_btnLotendUse.SetWindowTextW(_T("Lot End Use(서버랑 통신 함)"));
 	}
 }
 //kwlee 2016.0809
@@ -2308,6 +2334,19 @@ void CScreenBasic::OnDataApply()
 
 		clsLog.LogConfig(_T("BASIC"), _T("CHANGE"), st_basic_info.strDeviceName, 3, m_strLogKey, m_strLogData);
 	}
+
+	//kwlee 2017.0225
+	if (st_basic_info.nLotEndSkipMode	!= m_nLotEndMode[1])
+	{
+		m_strLogKey[0]	= _T("TYPE");
+		m_strLogData[0]	= _T("LOT END MODE");
+		m_strLogKey[1]	= _T("OLD");
+		m_strLogData[1].Format(_T("%d"), st_basic_info.nLotEndSkipMode);
+		m_strLogKey[2]	= _T("NEW");
+		m_strLogData[2].Format(_T("%d"), m_nLotEndMode[1]);
+
+		clsLog.LogConfig(_T("BASIC"), _T("CHANGE"), st_basic_info.strDeviceName, 3, m_strLogKey, m_strLogData);
+	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	st_basic_info.nModeDevice		= m_nModeDevice[1];;	// [Title Bar 상태 표시] < WHIT/WHIT OUT ㅡ MODE 표시	>
@@ -2350,6 +2389,7 @@ void CScreenBasic::OnDataApply()
 	st_basic_info.nModeTestInterface = m_nModeTestInterface[1];
 	st_basic_info.nDirectionCheckSkip = m_nDirectionCheck[1]; //kwlee 2016.1124
 	st_basic_info.nAutoLoadMode = m_nAutoLoadMode[1]; //kwlee 2016.1201
+	st_basic_info.nLotEndSkipMode = m_nLotEndMode[1]; //kwlee 2017.0225
 
 }
 
@@ -2421,6 +2461,7 @@ void CScreenBasic::OnDataInit()
 	m_nAlarmDelayCnt[1]                = st_basic_info.nAlarmDelayCnt; //kwlee 2016.1124
 	m_nDirectionCheck[1]                = st_basic_info.nDirectionCheckSkip; //kwlee 2016.1124
 	m_nAutoLoadMode[1]                = st_basic_info.nAutoLoadMode; //kwlee 2016.1201
+	m_nLotEndMode[1]                = st_basic_info.nLotEndSkipMode; //kwlee 2016.1201
 	OnDataBackup();
 }
 
@@ -3722,6 +3763,24 @@ void CScreenBasic::OnBnClickedBtnAutoload()
 		m_btnAutoLoad.SetBitmaps(IDC_BTN_DIRECTION, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
 		m_btnAutoLoad.SetWindowTextW(_T("Auto Load Use"));
 
+	}
+	Invalidate(FALSE);
+}
+
+
+void CScreenBasic::OnBnClickedBtnLotendUse()
+{
+	if (m_nLotEndMode[1] == YES)
+	{	
+		m_nLotEndMode[1] = NO;
+		m_btnLotendUse.SetBitmaps(IDC_BTN_LOTEND_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+		m_btnLotendUse.SetWindowTextW(_T("Lot End Use(서버랑 통신 함)"));
+	}
+	else
+	{
+		m_nLotEndMode[1] = YES;
+		m_btnLotendUse.SetBitmaps(IDC_BTN_LOTEND_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+		m_btnLotendUse.SetWindowTextW(_T("Lot End Skip(서버랑 통신 않함)"));
 	}
 	Invalidate(FALSE);
 }
