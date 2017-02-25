@@ -1105,6 +1105,7 @@ struct tagBASIC_INFO
 	// jtkim 20151229
 	int nRetestCount;
 	int nAutoLoadMode; //kwlee 2016.1201
+	int nLotEndSkipMode;//kwlee 2017.0224
 	/////////////////////
 	CString strGmeMsg[10];
 	int nPort[10];

@@ -54,6 +54,8 @@ public:
 	int                 m_nAlarmDelayCnt[2];
 	//kwlee 2016.1201
 	int                 m_nAutoLoadMode[2]; 
+	//kwlee 2017.0225
+	int                m_nLotEndMode[2];
 	//
 
 	bool                m_bTimerCheck;
@@ -245,6 +247,9 @@ public:
 	CXPGroupBox m_groupAutoLoad;
 	CButtonST m_btnAutoLoad;
 	afx_msg void OnBnClickedBtnAutoload();
+	CXPGroupBox m_groupLotEndUse;
+	afx_msg void OnBnClickedBtnLotendUse();
+	CButtonST m_btnLotendUse;
 };
 
 
