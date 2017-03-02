@@ -130,6 +130,8 @@ public:
 	void			OnCycleTime(int nMode, CString strLotNo, CString strPartNo, DWORD dwTime1, DWORD dwTime2, DWORD dwTime3);
 	void			OnLotCycleData(CString strLotNo, CString strPartNo,int nCount, DWORD dwTray, DWORD dwLot);
 
+	int				Check_LastSiteCurrentSite( CString strLotNo );
+	bool			CheckCurrLotEndNextLot();
 
 public:
 		CString m_strModel[100][500];

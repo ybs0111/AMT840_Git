@@ -478,6 +478,7 @@ void CServerInterface1::OnDataAnalysis(CString strMsg)
  									st_test_site_info[nSite].st_pcb_info[i].nFailCount++;
  									if(st_test_site_info[nSite].st_pcb_info[i].nFailCount > st_recipe_info.nFailCnt)
  									{
+										//2017.0302//멀리랏일떄 마지막 사이트가 테스트중일떄는 연속 fail을 skip해야 소켓이 전부 disable되는 경우를 막을 수 있다 소켓 가능을 5개 이하는 안된다.,
  										st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
 										st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_CONTINUE_FAIL; //kwlee 2017.0125
 										//kwlee 2017.0105
