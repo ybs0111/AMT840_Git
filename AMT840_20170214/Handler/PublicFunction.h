@@ -131,7 +131,7 @@ public:
 	void			OnLotCycleData(CString strLotNo, CString strPartNo,int nCount, DWORD dwTray, DWORD dwLot);
 
 	int				Check_LastSiteCurrentSite( CString strLotNo );
-	bool			CheckCurrLotEndNextLot();
+	int				CheckCurrLotEndNextLot( bool& bNeedOneMoreSite );
 
 public:
 		CString m_strModel[100][500];

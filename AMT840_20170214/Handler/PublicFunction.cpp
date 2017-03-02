@@ -8186,116 +8186,106 @@ int CPublicFunction::Check_LastSiteCurrentSite( CString strLotNo )
 	return nFuncRet;
 }
 
-bool CPublicFunction::CheckCurrLotEndNextLot()
+int CPublicFunction::CheckCurrLotEndNextLot( bool& bNeedOneMoreSite )
 {
 	int i=0,nCount = 0, nRetestExistCnt = 0, nSiteExistCnt = 0, nDvcCount = 0, nUseSocket = 0, nUseLotSocket = 0, nSite = 0;
 	int nEnableSokPerSite[TEST_SOCKET_PARA] = {0,};
-	bool nNextLotPlaceSite = true;
+	int nNextLotPlaceSite = RET_PROCEED;
 	bool nNeedOneMoreSite = false;
 	CString strTemp;
 
-	if(st_lot_info[LOT_CURR].nLot_THD_Status[THD_TEST_RBT] >=  LOT_END_START && st_lot_info[LOT_NEXT].nLotStatus >= LOT_START)		
+	//이 테스트 사이트는  자재가 하나도 남아있지않다, 비어있는 상태 
+		
+	for(i = 0 ; i < st_recipe_info.nRetestBuffer_Num; i++) //15
 	{
-		if(st_sync_info.nTestSite_Target_THD_Work_Site[1] >= THD_TESTSITE_1 && st_sync_info.nTestSite_Target_THD_Work_Site[1] <= THD_TESTSITE_8)
-		{//해당 테스트 사이트에 자재가 모두 없으면 
-			for(i = 0; i < TEST_SOCKET_PARA; i++) //x 방향 소켓 수량 정보(8개, 0~7개)룰 수집한다 
+		if(st_buffer_info[st_lot_info[LOT_CURR].nBuffer_Retest_THD_Num].st_pcb_info[i].nYesNo == CTL_YES)
+		{
+			nRetestExistCnt++;
+		}
+	} 
+
+	for(i = 0; i < 4; i++)
+	{
+		if(st_lot_info[LOT_CURR].strLotNo == st_picker[THD_TEST_RBT].st_pcb_info[i].strLotNo
+			&& st_picker[THD_TEST_RBT].st_pcb_info[i].nYesNo == CTL_YES
+			&& (st_picker[THD_TEST_RBT].st_pcb_info[i].nBin == BD_DATA_RETEST || st_picker[THD_TEST_RBT].st_pcb_info[i].nBin == BD_DATA_CONTINUE_FAIL) )
+		{
+			nRetestExistCnt++;
+		}
+	}
+
+	for( nSite = THD_TESTSITE_1; nSite <= THD_TESTSITE_8; nSite++)
+	{
+		nEnableSokPerSite[nSite-THD_TESTSITE_1] = 0;
+		for(i = 0; i < TEST_SOCKET_PARA; i++)
+		{
+			if(st_lot_info[LOT_CURR].strLotNo == st_test_site_info[nSite].strLotNo
+				&& st_test_site_info[nSite].st_pcb_info[i].nYesNo == CTL_YES)
 			{
-				if(st_lot_info[LOT_CURR].strLotNo ==  st_test_site_info[ st_sync_info.nTestSite_Target_THD_Work_Site[1]].strLotNo
-					&& st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].st_pcb_info[i].nYesNo == CTL_YES)
-				{
-					nCount++;
-				}
+				nDvcCount++;//현재 랏의 디바이스가 소켓에 꽂혀있는 개수
 			}
-			if(nCount == 0) //이 테스트 사이트는  자재가 하나도 남아있지않다, 비어있는 상태 
+			if(st_lot_info[LOT_CURR].strLotNo == st_test_site_info[nSite].strLotNo &&
+				st_test_site_info[nSite].st_pcb_info[i].nEnable == YES )
 			{
-				for(i = 0 ; i < st_recipe_info.nRetestBuffer_Num; i++) //15
-				{
-					if(st_buffer_info[st_lot_info[LOT_CURR].nBuffer_Retest_THD_Num].st_pcb_info[i].nYesNo == CTL_YES)
-					{
-						nRetestExistCnt++;
-					}
-				} 
-
-				for(i = 0; i < 4; i++)
-				{
-					if(st_lot_info[LOT_CURR].strLotNo == st_picker[THD_TEST_RBT].st_pcb_info[i].strLotNo
-						&& st_picker[THD_TEST_RBT].st_pcb_info[i].nYesNo == CTL_YES
-						&& (st_picker[THD_TEST_RBT].st_pcb_info[i].nBin == BD_DATA_RETEST || st_picker[THD_TEST_RBT].st_pcb_info[i].nBin == BD_DATA_CONTINUE_FAIL) )
-					{
-						nRetestExistCnt++;
-					}
-				}
-
-				for( nSite = THD_TESTSITE_1; nSite <= THD_TESTSITE_8; nSite++)
-				{
-					nEnableSokPerSite[nSite-THD_TESTSITE_1] = 0;
-					for(i = 0; i < TEST_SOCKET_PARA; i++)
-					{
-						if(st_lot_info[LOT_CURR].strLotNo == st_test_site_info[nSite].strLotNo
-							&& st_test_site_info[nSite].st_pcb_info[i].nYesNo == CTL_YES)
-						{
-							nDvcCount++;//현재 랏의 디바이스가 소켓에 꽂혀있는 개수
-						}
-						if(st_lot_info[LOT_CURR].strLotNo == st_test_site_info[nSite].strLotNo &&
-							st_test_site_info[nSite].st_pcb_info[i].nEnable == YES )
-						{
-							nSiteExistCnt++;//현재랏이 사용가능한 테스트 사이트
-							nEnableSokPerSite[nSite-THD_TESTSITE_1]++;
-						}
-					}
-				}
-
-				if(  ( nDvcCount + nRetestExistCnt ) >= nSiteExistCnt  )
-				{						
-					nNextLotPlaceSite = false;
-				}
-				if( nNextLotPlaceSite == true )
-				{
-					if( ( nDvcCount + nRetestExistCnt ) < nSiteExistCnt )
-					{
-						for( int nSiteNum = THD_TESTSITE_1; nSiteNum <= THD_TESTSITE_8; nSiteNum++)
-						{
-							nCount = 0;
-							for(i = 0; i < TEST_SOCKET_PARA; i++) //x 방향 소켓 수량 정보(8개, 0~7개)룰 수집한다 
-							{
-								if( st_lot_info[LOT_CURR].strLotNo == st_test_site_info[nSiteNum].strLotNo && st_test_site_info[nSiteNum].st_pcb_info[i].nYesNo == CTL_YES )
-								{
-									nCount++;
-								}
-							}
-							//동일랏으로 소켓사용중이고 존재하지 않는 사이트가 있는가를 알아보기 위해
-							//동일랏 사용가능한 소켓 개수를 구하고 
-							//구한 사이트에 디바이스가 잇는체크하여 없는 부분이 존재하는지와 리테스트가 들어갈 1개사이트를 비워두고 작업한다.
-							if( nEnableSokPerSite[nSiteNum-THD_TESTSITE_1] > 0 )
-							{
-								nUseLotSocket++;//동일랏 사용가느한 사이트 수
-							}
-							if( nEnableSokPerSite[nSiteNum] > 0 && nCount > 0)
-							{
-								//현재 사용중인 사이트 수
-								nUseSocket++;//동일랏으로 사용중인 소켓
-							}
-						}
-
-						if( nRetestExistCnt >= 4) //불량이 4개 이상 발생할때만 여분을 하나더 갖고 간다.
-						{//동일랏 사용가능한 사이트 수가 리테스존재할때 와 현재 동작하는 사이트 수에서 1개 이상의 여분이 존재하면 true 하여 사이트를 후랏으로 변경한다.
-							if( nUseLotSocket <= (nUseSocket + 1) )//1은 리테스트 자재가 있으면 최대 1개 사이트가 더 필요하다
-								nNextLotPlaceSite = false;	
-							else
-								nNeedOneMoreSite = true;
-						}
-						else
-						{
-							if( nUseLotSocket <= nUseSocket  )
-								nNextLotPlaceSite = false;
-						}
-						if( nUseSocket > 0 && nUseLotSocket <= nUseSocket && nUseLotSocket <= 1 )//같은랏 사용가능한 사이트가 1군데만 있고 리테스트가 1개이상 존재하나면 최소 1개 이상 사이트를 사용한다.
-							nNextLotPlaceSite = false;	
-					}
-				}
+				nSiteExistCnt++;//현재랏이 사용가능한 테스트 사이트
+				nEnableSokPerSite[nSite-THD_TESTSITE_1]++;
 			}
 		}
 	}
 
+	nNextLotPlaceSite = RET_GOOD;
+	if(  ( nDvcCount + nRetestExistCnt ) >= nSiteExistCnt  )
+	{						
+		nNextLotPlaceSite = RET_ERROR;
+	}
+	if( nNextLotPlaceSite == RET_GOOD )
+	{
+		if( ( nDvcCount + nRetestExistCnt ) < nSiteExistCnt )
+		{
+			for( int nSiteNum = THD_TESTSITE_1; nSiteNum <= THD_TESTSITE_8; nSiteNum++)
+			{
+				nCount = 0;
+				for(i = 0; i < TEST_SOCKET_PARA; i++) //x 방향 소켓 수량 정보(8개, 0~7개)룰 수집한다 
+				{
+					if( st_lot_info[LOT_CURR].strLotNo == st_test_site_info[nSiteNum].strLotNo && st_test_site_info[nSiteNum].st_pcb_info[i].nYesNo == CTL_YES )
+					{
+						nCount++;
+					}
+				}
+				//동일랏으로 소켓사용중이고 존재하지 않는 사이트가 있는가를 알아보기 위해
+				//동일랏 사용가능한 소켓 개수를 구하고 
+				//구한 사이트에 디바이스가 잇는체크하여 없는 부분이 존재하는지와 리테스트가 들어갈 1개사이트를 비워두고 작업한다.
+				if( nEnableSokPerSite[nSiteNum-THD_TESTSITE_1] > 0 )
+				{
+					nUseLotSocket++;//동일랏 사용가느한 사이트 수
+				}
+				if( nEnableSokPerSite[nSiteNum] > 0 && nCount > 0)
+				{
+					//현재 사용중인 사이트 수
+					nUseSocket++;//동일랏으로 사용중인 소켓
+				}
+			}
+
+			if( nRetestExistCnt >= 4) //불량이 4개 이상 발생할때만 여분을 하나더 갖고 간다.
+			{//동일랏 사용가능한 사이트 수가 리테스존재할때 와 현재 동작하는 사이트 수에서 1개 이상의 여분이 존재하면 true 하여 사이트를 후랏으로 변경한다.
+				if( nUseLotSocket <= (nUseSocket + 1) )//1은 리테스트 자재가 있으면 최대 1개 사이트가 더 필요하다
+					nNextLotPlaceSite = RET_ERROR;	
+				else
+					nNeedOneMoreSite = true;
+			}
+			else
+			{
+				if( nUseLotSocket <= nUseSocket  )
+					nNextLotPlaceSite = RET_ERROR;
+			}
+			if( nUseSocket > 0 && nUseLotSocket <= nUseSocket && nUseLotSocket <= 1 )//같은랏 사용가능한 사이트가 1군데만 있고 리테스트가 1개이상 존재하나면 최소 1개 이상 사이트를 사용한다.
+				nNextLotPlaceSite = RET_ERROR;	
+		}
+	}
+
+	
+
+
+	bNeedOneMoreSite = nNeedOneMoreSite;
 	return nNextLotPlaceSite;
 }
