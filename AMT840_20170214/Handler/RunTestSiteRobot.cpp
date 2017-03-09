@@ -79,6 +79,7 @@ void CRunTestSiteRobot::OnThreadRun()
 	int nRet_1 = 0;
 
 
+
 	m_nRetestBuffer_PickPlace_Mode = 1; //james 2016.0929 
 
 	if (st_handler_info.nSystemLock != FALSE)  return;	// 현재 시스템 Lock 상태인 경우 리턴  
@@ -612,6 +613,7 @@ void CRunTestSiteRobot::OnRunMove()
  						{//해당 테스트 사이트에 자재가 모두 없으면
 
  							nCount = 0;
+							nRet_2 = 0;
  							for(i = 0; i < TEST_SOCKET_PARA; i++) //x 방향 소켓 수량 정보(8개, 0~7개)룰 수집한다 
  							{
  								if(st_lot_info[LOT_CURR].strLotNo ==  st_test_site_info[nSiteNum].strLotNo
@@ -619,8 +621,13 @@ void CRunTestSiteRobot::OnRunMove()
  								{
  									nCount++;//현재 랏의 디바이스가 소켓에 꽂혀있는 개수
  								}
+								if(st_lot_info[LOT_CURR].strLotNo ==  st_test_site_info[nSiteNum].strLotNo &&
+									st_test_site_info[nSiteNum].st_pcb_info[i].nEnable == YES)
+								{
+									nRet_2++; 
+								}
 							}
-							if( nCount == 0 )
+							if( nCount == 0 && nRet_2 > 0)
 							{
 								//리테스트자재가 있어서 여분으로 하나의 사이트를 더 가지고 갈 필요가 있을 떄 사이트 하나를 여분으로 남겨 놓는다.
 								if( nNeedOneMoreSite == true)
@@ -897,6 +904,7 @@ void CRunTestSiteRobot::OnRunMove()
 							m_nRunStep = 5000;//retest buffer자재을 집어 테스트 사이트에 인서트한다
 							strTemp.Format(_T("[RETEST BUFFER1] %d"), m_nRunStep);
 							clsMem.OnNormalMessageWrite(strTemp);
+							break;
 						}
 //						nRet_1 = clsFunc.Find_RetestBuffer_PickPlace_WorkPos_Check(WORK_PICK, nTHD_ID, nFixPos, st_sync_info.nRetestBuff_Traget_THD_Work_Site, m_npPicker_YesNo, m_npFindWorkPosYXCPB, m_np_BuffInfo_Count);
 //						if(nRet_1 == RET_GOOD)
@@ -990,11 +998,23 @@ void CRunTestSiteRobot::OnRunMove()
 					//2017.0302
 					//LOTEND_START일때 리테스트 자재가 1개라도 있으면 무조건 가지고 가면서 소켓 LOSS가 발생하는 데 좀 모으고 동작하자
 					//혹시 동작 중인( 같은 랏으로 동작중인 사이트가 2개 이하라면
-
 					nCount = 0;
+
 					for(nTHD_i = THD_TESTSITE_1; nTHD_i <= THD_TESTSITE_8; nTHD_i++)
 					{
-						if(st_test_site_info[nTHD_i].strLotNo == m_strFindLotNo) //WORK_PICK 할 수 있는 자재가 있으면 이 자재를 있으면 
+						nSiteYesCnt = 0;
+						//현재 사용가능한 사이트가 하나라도 있어야 한다 전부 disable 될 수 있으므로
+						for(i = 0; i < TEST_SOCKET_PARA; i++)
+						{
+							if(	st_test_site_info[nTHD_i].st_pcb_info[i].nEnable == YES )
+							{
+								nSiteYesCnt++;
+								break;
+							}
+						}
+
+
+						if(st_test_site_info[nTHD_i].strLotNo == m_strFindLotNo && nSiteYesCnt > 0 ) //WORK_PICK 할 수 있는 자재가 있으면 이 자재를 있으면 
 						{
 							nCount++;
 						}
@@ -1431,6 +1451,7 @@ void CRunTestSiteRobot::OnRunMove()
 								nCount++;
 							}
 						}
+
 
 						nRetestExistCnt = 0;
 						if(nCount == 0) //이 테스트 사이트는  자재가 하나도 남아있지않다, 비어있는 상태 

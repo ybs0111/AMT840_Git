@@ -2349,7 +2349,7 @@ void CScreenBasic::OnDataApply()
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	st_basic_info.nModeDevice		= m_nModeDevice[1];;	// [Title Bar 상태 표시] < WHIT/WHIT OUT ㅡ MODE 표시	>
+	st_basic_info.nModeDevice		= m_nModeDevice[1];	// [Title Bar 상태 표시] < WHIT/WHIT OUT ㅡ MODE 표시	>
 	st_basic_info.nModeInterface	= m_nModeInterface[1];
 //	st_basic_info.nModeSecsGem		= m_nModeSecsGem[1];
 	st_basic_info.nModeWork			= m_nModeWork[1];
@@ -2705,6 +2705,7 @@ void CScreenBasic::OnClickedBtnReload()
 void CScreenBasic::OnClickedBtnApply()
 {
 	CDialog_Message dlgMsg;
+	CString strTemp, strErr;
 	int nResponse;
 	
 	dlgMsg.m_nMessageType	= 1;
@@ -2714,6 +2715,56 @@ void CScreenBasic::OnClickedBtnApply()
 
 	if (nResponse == IDOK)
 	{
+		//2017.0309
+// 		//초기화 후에는 무조건 interface,with 타임아웃 설정 시간 모드로 
+// 		st_basic_info.nModeDevice = WITH_DVC;
+// 		st_basic_info.nModeInterface = EQP_ON_LINE;
+// 		st_basic_info.nModeTestInterface = EQP_ON_LINE;
+// 		//처음 로딩시에는 무조건 타임아웃설정
+// 		st_recipe_info.nAbortTime = 15000;
+		strTemp.Empty();
+		strErr.Empty();
+		if( m_nModeDevice[1] != WITH_DVC || m_nModeInterface[1] != EQP_ON_LINE || m_nModeTestInterface[1] != EQP_ON_LINE || m_nAbortTime[1] < 12000) 
+		{
+			if( m_nModeDevice[1] != WITH_DVC )
+			{
+				dlgMsg.m_strMessage = _T("디바이스 없이 동작합니다. WITHOUT 모드가 맞습니까?");		
+				strErr = _T(" 디바이스 없이 동적합니다. 유의하세요");
+			}
+			else if( m_nModeInterface[1] != EQP_ON_LINE )
+			{
+				dlgMsg.m_strMessage = _T("OnLine 모드가 아닙니다. Offline 모드가 맞습니까?");	
+				strErr = _T("OnLine 모드가 아닙니다. 유의하세요");
+			}
+			else if( m_nModeTestInterface[1] != EQP_ON_LINE )
+			{
+				dlgMsg.m_strMessage = _T("테스터와 핸들러가 OnLine 모드가 아닙니다. Offline 모드가 맞습니까?");
+				strErr = _T("테스터와핸들러가 OnLine 모드가 아닙니다. 유의하세요");
+			}
+			else if( m_nAbortTime[1] < 10000) 
+			{
+				dlgMsg.m_strMessage = _T("Abort Time이 너무 작습니다.맞습니까?");
+				strErr = _T("Abort Time이 너무 작습니다. 유의하세요");
+			}
+
+			if (dlgMsg.DoModal() == IDOK)
+			{
+				strTemp.Format(_T("Basic 메유: %s"),dlgMsg.m_strMessage);
+				clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
+				st_handler_info.mstr_event_msg[0] = strErr;
+				::PostMessage(st_handler_info.hWnd, WM_MAIN_EVENT, CTL_YES, 0);
+				clsMem.OnAbNormalMessagWrite(strErr);
+			}
+			else
+			{
+				strErr = _T("Basic 메뉴가 저장되지 않았습니다. 수정 후 다시 Apply 해주세요");
+				st_handler_info.mstr_event_msg[0] = strErr;
+				::PostMessage(st_handler_info.hWnd, WM_MAIN_EVENT, CTL_YES, 0);
+				return;
+			}
+		}
+
+
 		OnDataHistoryLog();
 		OnDataApply();
 		OnDataBackup();

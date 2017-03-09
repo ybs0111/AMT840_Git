@@ -8188,7 +8188,7 @@ int CPublicFunction::Check_LastSiteCurrentSite( CString strLotNo )
 
 int CPublicFunction::CheckCurrLotEndNextLot( bool& bNeedOneMoreSite )
 {
-	int i=0,nCount = 0, nRetestExistCnt = 0, nSiteExistCnt = 0, nDvcCount = 0, nUseSocket = 0, nUseLotSocket = 0, nSite = 0;
+	int i=0,nCount = 0, nRetestExistCnt = 0, nSiteExistCnt = 0, nDvcCount = 0, nUseSocket = 0, nUseLotSocket = 0, nSite = 0, nSiteYesCnt = 0;
 	int nEnableSokPerSite[TEST_SOCKET_PARA] = {0,};
 	int nNextLotPlaceSite = RET_PROCEED;
 	bool nNeedOneMoreSite = false;
@@ -8245,6 +8245,7 @@ int CPublicFunction::CheckCurrLotEndNextLot( bool& bNeedOneMoreSite )
 			for( int nSiteNum = THD_TESTSITE_1; nSiteNum <= THD_TESTSITE_8; nSiteNum++)
 			{
 				nCount = 0;
+				nSiteYesCnt = 0;
 				for(i = 0; i < TEST_SOCKET_PARA; i++) //x 방향 소켓 수량 정보(8개, 0~7개)룰 수집한다 
 				{
 					if( st_lot_info[LOT_CURR].strLotNo == st_test_site_info[nSiteNum].strLotNo && st_test_site_info[nSiteNum].st_pcb_info[i].nYesNo == CTL_YES )
@@ -8257,29 +8258,36 @@ int CPublicFunction::CheckCurrLotEndNextLot( bool& bNeedOneMoreSite )
 				//구한 사이트에 디바이스가 잇는체크하여 없는 부분이 존재하는지와 리테스트가 들어갈 1개사이트를 비워두고 작업한다.
 				if( nEnableSokPerSite[nSiteNum-THD_TESTSITE_1] > 0 )
 				{
-					nUseLotSocket++;//동일랏 사용가느한 사이트 수
+					nUseLotSocket++;//동일랏 사용가능한 사이트 수
 				}
-				if( nEnableSokPerSite[nSiteNum] > 0 && nCount > 0)
+				if( nEnableSokPerSite[nSiteNum-THD_TESTSITE_1] > 0 && nCount == 0 )//동일한 랏이고 현재 자재가 없는 사이트
 				{
 					//현재 사용중인 사이트 수
-					nUseSocket++;//동일랏으로 사용중인 소켓
+					nUseSocket++;//동일랏으로 사용중인 소켓의 개수
 				}
 			}
 
 			if( nRetestExistCnt >= 4) //불량이 4개 이상 발생할때만 여분을 하나더 갖고 간다.
 			{//동일랏 사용가능한 사이트 수가 리테스존재할때 와 현재 동작하는 사이트 수에서 1개 이상의 여분이 존재하면 true 하여 사이트를 후랏으로 변경한다.
-				if( nUseLotSocket <= (nUseSocket + 1) )//1은 리테스트 자재가 있으면 최대 1개 사이트가 더 필요하다
+				if( nUseSocket <= 1 )//비어 있는 사이트가 1개이면 랏너버를 바꾸지 않는다 리테스트를 위해서
 					nNextLotPlaceSite = RET_ERROR;	
 				else
 					nNeedOneMoreSite = true;
 			}
 			else
 			{
-				if( nUseLotSocket <= nUseSocket  )
+
+				if( nUseLotSocket <= 3 && nRetestExistCnt > 0 )//LOTEND이면서 사용 사이트가 3개보다 작으면 RETEST할 수 있도록 사이트를 비워둔다.
+				{
+					if( nUseSocket <= 1)////비어 있는 사이트가 1개이면 랏너버를 바꾸지 않는다 리테스트를 위해서
+						nNextLotPlaceSite = RET_ERROR;
+				}
+
+				if( nUseLotSocket <= 1)//불량자재가 존재하면 최소 하나사이트는 남겨둔다
+					nNextLotPlaceSite = RET_ERROR;
+				else if( nUseSocket < 0 )
 					nNextLotPlaceSite = RET_ERROR;
 			}
-			if( nUseSocket > 0 && nUseLotSocket <= nUseSocket && nUseLotSocket <= 1 )//같은랏 사용가능한 사이트가 1군데만 있고 리테스트가 1개이상 존재하나면 최소 1개 이상 사이트를 사용한다.
-				nNextLotPlaceSite = RET_ERROR;	
 		}
 	}
 

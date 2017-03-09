@@ -15,6 +15,7 @@
 #include "CtlBd_Library.h"
 #include "AlgMemory.h"
 #include "LogFromat.h"
+#include "Dialog_Message.h"
 // CDialogLotStart 대화 상자입니다.
 #define TM_DISPLAY		100
 #define TM_START		200
@@ -1041,6 +1042,33 @@ void CDialogLotStart::OnBnClickedBtnLotDisplay1()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	if (st_handler_info.nMenuLock) return;
+
+	//2016.0309
+	CDialog_Message dlgMsg;
+	CString strTemp;
+
+	if (st_basic_info.nModeInterface != EQP_ON_LINE || st_basic_info.nModeTestInterface != EQP_ON_LINE)
+	{
+		dlgMsg.m_nMessageType	= 1;
+		if (st_basic_info.nModeInterface != EQP_ON_LINE )
+			dlgMsg.m_strMessage = _T("서버통신을 않하는 모드가 동작중입니다. 서버랑 통신 않하는 모드는 더미테스트 모드입니다. 더미테스트 모드를 진생하시겠습니까?");
+		else
+			dlgMsg.m_strMessage = _T("테스터와 헨들러가 통신을 않하는 모드가 작동중입니다. 핸들러가 테스터와 통신 않하고 basic메뉴의 timeout 설정시간이 되면 Pass나 Fail을 보냅니다.하시겠습니까?");
+
+		if (dlgMsg.DoModal() != IDOK)
+		{
+			AfxMessageBox(_T("서버랑 통신하고 테스터와 통신할려면 Basic의 MODE를 with로  Tester Interface를 On line인지를 확인하세요."));
+
+			strTemp.Format(_T("LotDisplay: %s."), dlgMsg.m_strMessage);
+			clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
+			st_handler_info.nMenuLock = FALSE;
+			return;
+		}
+	}
+
+
+
+
 	if (m_strLotNo == _T(""))
 	{
 		st_other_info.strBoxMsg = _T("Lot No 입력되지 않았습니다. 확인해 주세요.");

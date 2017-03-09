@@ -1426,10 +1426,22 @@ void CMainFrame::OnConfigLoad()
 	clsBasic.OnMaintenance_Data_Load();
 	clsBasic.OnInterface_Data_Load();
 	clsBasic.OnRecipe_Data_Load();
+
+
 	clsBasic.OnRecoveryDataLoad();
 	clsBasic.OnAnimateDataLoad();
 
 	clsBasic.OnVision_Data_Load(); //kwlee 2017.0111
+
+
+	//2017.0309
+	//초기화 후에는 무조건 interface,with 타임아웃 설정 시간 모드로 
+	st_basic_info.nModeDevice = WITH_DVC;
+	st_basic_info.nModeInterface = EQP_ON_LINE;
+	st_basic_info.nModeTestInterface = EQP_ON_LINE;
+	//처음 로딩시에는 무조건 타임아웃설정
+	st_recipe_info.nAbortTime = 15000;
+
 }
 
 void CMainFrame::OnThreadDelete()

@@ -1143,6 +1143,7 @@ void CMyBasicData::OnBasic_Data_Load(int nMode)
 		}
 		else  st_basic_info.nModeInterface = mn_chk;
 
+;
 
 		GetPrivateProfileString(_T("BASIC_SCREEN"), _T("nModeTestInterface"), _T("1"), chr_data, sizeof(chr_data), st_path_info.strFileBasic);
 		str_temp.Format(_T("%s"), chr_data);
@@ -1152,6 +1153,8 @@ void CMyBasicData::OnBasic_Data_Load(int nMode)
 			st_basic_info.nModeTestInterface = 1;
 		}
 		else  st_basic_info.nModeTestInterface = mn_chk;
+
+
 
 
 		GetPrivateProfileString(_T("BASIC_SCREEN"), _T("nModeXgem"), _T("1"), chr_data, sizeof(chr_data), st_path_info.strFileBasic);
@@ -1198,6 +1201,11 @@ void CMyBasicData::OnBasic_Data_Load(int nMode)
 			st_basic_info.nModeWork = 1;
 		}
 		else  st_basic_info.nModeWork = mn_chk;
+
+		//2017.0309
+		//초기화 후에는 무조건 interface,with 타임아웃 설정 시간 모드로 
+		st_basic_info.nModeInterface = 1;
+
 	}
 
 	//kwlee 2016.0809
@@ -1211,9 +1219,10 @@ void CMyBasicData::OnBasic_Data_Load(int nMode)
 		{
 			st_test_site_info[i].nInterface = 0;
 		}
-		else  st_test_site_info[i].nInterface = mn_chk;
-		
+		else  st_test_site_info[i].nInterface = mn_chk;		
 	}
+
+
 
 
 	GetPrivateProfileString(_T("BASIC_SCREEN"), _T("nModeJigStack"), _T("1"), chr_data, sizeof(chr_data), st_path_info.strFileBasic);
