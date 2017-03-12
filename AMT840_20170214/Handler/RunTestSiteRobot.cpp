@@ -1020,12 +1020,26 @@ void CRunTestSiteRobot::OnRunMove()
 						}
 					}  
 
-					if(nRet_1 == RET_GOOD && (m_npFindWorkPosYXCPB[2] >= 4 || ( m_npFindWorkPosYXCPB[2] > 0  && nCount <=3 ) ) )
+					//2017.0312
+					//1. 멀티 랏인경우 ( m_npFindWorkPosYXCPB[2] > 0  && nCount <=3 ) 멀티 랏인경우
+					//2. 랏이 하나일때 m_npFindWorkPosYXCPB[2] > 0
+					if(st_lot_info[LOT_CURR].nLot_THD_Status[THD_TEST_RBT] >=  LOT_END_START && st_lot_info[LOT_NEXT].nLotStatus >= LOT_START)
 					{
-						//2016.1107
-						m_nSort_Count = 1000;
-						break;//james 2016.0926 
+						if( nRet_1 == RET_GOOD && ( m_npFindWorkPosYXCPB[2] >= 4 || ( m_npFindWorkPosYXCPB[2] > 0  && nCount <=3 )  ) )
+						{
+							m_nSort_Count = 1000;
+							break;
+						}
 					}
+					else
+					{
+						if( nRet_1 == RET_GOOD &&  m_npFindWorkPosYXCPB[2] > 0  )  
+						{
+							m_nSort_Count = 1000;
+							break;
+						}
+					}
+
 					//james 2016.0926 break;
 				}
 
