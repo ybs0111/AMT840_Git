@@ -6052,7 +6052,7 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 				m_dwWaitUntil[1] = GetCurrentTime();
 				m_dwWaitUntil[2] = m_dwWaitUntil[1] - m_dwWaitUntil[0];
 				if(m_dwWaitUntil[2] < IO_STABLE_WAIT) break;
-//				CTL_Lib.Alarm_Error_Occurrence(2601, dWARNING, clsFunc.m_strAlarmCode);
+				CTL_Lib.Alarm_Error_Occurrence(2698, dWARNING, clsFunc.m_strAlarmCode);//2017.0313
 				break;
 			}
 		}

@@ -2479,7 +2479,8 @@ int CRunLdUldRobot::Process_DVC_Pick(int nMode, int nWork_Site)
 				if(m_dwWaitUntil[2] < IO_STABLE_WAIT) break;
 
 				//2017.0312 이상한데 왜 알람이 없었을까> 그냥 데이타가 이동하면 안되는데..
-				CTL_Lib.Alarm_Error_Occurrence(7920, dWARNING, clsFunc.m_strAlarmCode);
+				CTL_Lib.Alarm_Error_Occurrence(7927, dWARNING, clsFunc.m_strAlarmCode);
+				break;
 			}
 		}
 
@@ -3716,6 +3717,9 @@ int CRunLdUldRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTestSite_P
 				m_dwWaitUntil[1] = GetCurrentTime();
 				m_dwWaitUntil[2] = m_dwWaitUntil[1] - m_dwWaitUntil[0];
 				if(m_dwWaitUntil[2] < IO_STABLE_WAIT) break;
+
+				CTL_Lib.Alarm_Error_Occurrence(1255, dWARNING, clsFunc.m_strAlarmCode);//2017.0313
+				break;
 			}
 		}
 

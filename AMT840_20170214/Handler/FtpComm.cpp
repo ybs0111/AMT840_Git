@@ -109,7 +109,7 @@ void CFtpComm::OnScrapCodeFind(int nMode, CString strLoadFile)
 	CString strHead;
 	CString strData;
 
-	GetPrivateProfileString(_T("SIT-07"), _T("Total"), _T("0"), chData, sizeof(chData), strLoadFile);
+	GetPrivateProfileString(_T("IBMH-01"), _T("Total"), _T("0"), chData, sizeof(chData), strLoadFile);
 	strTemp.Format(_T("%s"), chData);
 	nCount = _wtoi(strTemp);
 
@@ -118,7 +118,7 @@ void CFtpComm::OnScrapCodeFind(int nMode, CString strLoadFile)
 		for (i=0; i<nCount; i++)
 		{
 			strHead.Format(_T("%d"), i+1);
-			GetPrivateProfileString(_T("SIT-07"), strHead, _T("0"), chData, sizeof(chData), strLoadFile);
+			GetPrivateProfileString(_T("IBMH-01"), strHead, _T("0"), chData, sizeof(chData), strLoadFile);
 			strData.Format(_T("%s"), chData);
 			
 			nCode = -1;
@@ -140,14 +140,14 @@ void CFtpComm::OnScrapCodeFind(int nMode, CString strLoadFile)
 	}
 	else
 	{
-		GetPrivateProfileString(_T("SIT-07"), _T("Total"), _T("0"), chData, sizeof(chData), strDefaultLoadFile);
+		GetPrivateProfileString(_T("IBMH-01"), _T("Total"), _T("0"), chData, sizeof(chData), strDefaultLoadFile);
 		strTemp.Format(_T("%s"), chData);
 		nCount = _wtoi(strTemp);
 
 		for (i=0; i<nCount; i++)
 		{
 			strHead.Format(_T("%d"), i+1);
-			GetPrivateProfileString(_T("SIT-07"), strHead, _T("0"), chData, sizeof(chData), strDefaultLoadFile);
+			GetPrivateProfileString(_T("IBMH-01"), strHead, _T("0"), chData, sizeof(chData), strDefaultLoadFile);
 			strData.Format(_T("%s"), chData);
 
 			nCode = _wtoi(strData.Mid(0, 4));
@@ -165,14 +165,14 @@ void CFtpComm::OnScrapCodeFind(int nMode, CString strLoadFile)
 
 	if (bFind == FALSE)
 	{
-		GetPrivateProfileString(_T("SIT-07"), _T("Total"), _T("0"), chData, sizeof(chData), strDefaultLoadFile);
+		GetPrivateProfileString(_T("IBMH-01"), _T("Total"), _T("0"), chData, sizeof(chData), strDefaultLoadFile);
 		strTemp.Format(_T("%s"), chData);
 		nCount = _wtoi(strTemp);
 
 		for (i=0; i<nCount; i++)
 		{
 			strHead.Format(_T("%d"), i+1);
-			GetPrivateProfileString(_T("SIT-07"), strHead, _T("0"), chData, sizeof(chData), strDefaultLoadFile);
+			GetPrivateProfileString(_T("IBMH-01"), strHead, _T("0"), chData, sizeof(chData), strDefaultLoadFile);
 			strData.Format(_T("%s"), chData);
 
 			nCode = _wtoi(strData.Mid(0, 4));
