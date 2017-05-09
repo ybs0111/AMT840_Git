@@ -3136,6 +3136,8 @@ void CScreenBasic::OnBnClickedBtnAuto()
 			st_handler_info.nAutoMode = NO;
 			m_btnAuto.SetBitmaps(IDC_BTN_AUTO, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
 			m_btnAuto.SetWindowTextW(_T("Manual Mode"));
+
+			clsFunc.OnLogFileAdd(0, _T("Manual Mode"));
 		}
 		else
 		{
@@ -3144,6 +3146,8 @@ void CScreenBasic::OnBnClickedBtnAuto()
 
 			nResponse = (int)dlgMsg.DoModal();
 			if(nResponse != IDOK) return;
+
+			clsFunc.OnLogFileAdd(0, dlgMsg.m_strMessage);
 		}
 
 		
@@ -3168,6 +3172,8 @@ void CScreenBasic::OnBnClickedBtnAuto()
 				st_handler_info.nAutoMode = YES;
 				m_btnAuto.SetBitmaps(IDC_BTN_AUTO, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
 				m_btnAuto.SetWindowTextW(_T("Auto Mode"));
+
+				clsFunc.OnLogFileAdd(0, _T("Auto Mode"));
 			//}
 		//}
 	}

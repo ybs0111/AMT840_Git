@@ -42,6 +42,8 @@ public:
 
 	int				m_nTransfer_WaitPosMove_Flag; //대기 위치로 이송시킨 플레그 
 
+	int				m_nEmptyToReject;
+
 };
 
 extern CRunEmptyTrayTransfer clsRunEmptyTrayTransfer;

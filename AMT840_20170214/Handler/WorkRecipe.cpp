@@ -815,6 +815,22 @@ void CWorkRecipe::OnDataApply()
 		m_strLogData[2].Format(_T("%d"), m_nRetCnt[1]);
 
 		clsLog.LogConfig(_T("WORKRECIPE"), _T("CHANGE"), st_basic_info.strDeviceName, 3, m_strLogKey, m_strLogData);
+
+		//////////////////////////////////////////////////////////////////////////
+		//2017.0321
+		int i = 0, j = 0;
+		for (i=0; i<10000; i++)
+		{
+			for (j=0; j<2; j++)
+			{
+				st_code_info[0].m_nScrapCode[i][j] = st_recipe_info.nTestRetest_Count;
+				st_code_info[1].m_nScrapCode[i][j] = st_recipe_info.nTestRetest_Count;
+			}
+		}
+		if( st_recipe_info.nTestRetest_Count > 0)
+			clsFunc.OnScrapCodeFind(0, _T("C:\\AMT840\\File\\RETEST_RULE.TXT"));
+		//////////////////////////////////////////////////////////////////////////
+
 	}
 	if (st_recipe_info.nFailCnt				!= m_nFailCnt[1])
 	{

@@ -21,7 +21,8 @@ CRunEmptyTrayTransfer clsRunEmptyTrayTransfer;
 CRunEmptyTrayTransfer::CRunEmptyTrayTransfer()
 {
 	m_nRunStep	= -1;
-	m_nInitStep	= -1;	 
+	m_nInitStep	= -1;	
+	m_nEmptyToReject = 0;
 
 	m_nAxisNum = M_WORKTRAY_TRANSFER;
 }
@@ -177,6 +178,30 @@ void CRunEmptyTrayTransfer::OnRunMove(void)
 //				st_handler_info.mn_removetray = NO; //kwlee 2017.0117
 				m_nRunStep = 100;
 			}
+
+			//////////////////////////////////////////////////////////////////////////////////////////////
+			//랏을 투입과 동시에 자동으로 empty 트레이를 제거하자.
+			//2017.0430
+			if( ( st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )  || ( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") ) )
+			{
+				if( st_handler_info.mn_removetray == CTL_REQ && st_handler_info.mn_uldnum == 1 )
+				{
+					if( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )
+					{
+						m_nRunStep = 100;	
+					}
+					else if( st_count_info.nInCount[0][0] <= 0 && st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") && st_handler_info.mn_uldnum == 1)
+					{
+						m_nRunStep = 100;
+					}
+					else
+					{
+						st_handler_info.mn_removetray = CTL_NO;
+					}
+				}				
+			}
+
+			//////////////////////////////////////////////////////////////////////////////////////////////
 			//2017.0116
 			//if( st_lot_info[LOT_CURR].strLotNo !=_T("") || st_lot_info[LOT_NEXT].strLotNo !=_T("")	)
 			if( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T(""))
@@ -284,7 +309,7 @@ void CRunEmptyTrayTransfer::OnRunMove(void)
 				//}
 			}
 			else
-			{
+			{			
 				if(st_sync_info.nWorkTransfer_Req[THD_LD_TRAY_PLATE][0] == CTL_REQ) //Load Tray Plate트레이의 빈 트,레이 교체를 요청 
 				{
 					nJobFlag += (int) pow((double)2, 0);// 작업할 위치 계산; //1
@@ -296,7 +321,7 @@ void CRunEmptyTrayTransfer::OnRunMove(void)
 				if(st_sync_info.nWorkTransfer_Req[THD_ULD_2_STACKER][0] == CTL_REQ) //언로딩 #2 에 빈 트레이 공급을 요청 받았다 
 				{
 					nJobFlag += (int) pow((double)2, 2);// 작업할 위치 계산; //4
-				}
+				}				
 			}
 			////
 
@@ -451,15 +476,26 @@ void CRunEmptyTrayTransfer::OnRunMove(void)
 					m_strAlarmCode.Format(_T("8%d%04d"), IO_OFF, st_io_info.i_TrayTrsfVacChk); 
 					CTL_Lib.Alarm_Error_Occurrence(4640, dWARNING, m_strAlarmCode);
 					break;
-				}	
+				}
 
-				if(nJobFlag == 1 || nJobFlag == 3 || nJobFlag == 5 || nJobFlag == 7) //오직 로딩트레만 먼저 집어가서 처리한 후 다음작업한다  
+// 				///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 				//2017.0430
+				if( st_handler_info.mn_auto_empty_tray == YES  && st_handler_info.mn_out_empty == YES )
+				{
+					m_nTransferJobFlag[0] = THD_EMPTY_STACKER; 
+					m_nTransferJobFlag[1] = WORK_PICK; 
+					st_sync_info.nWorkTransfer_Req[THD_EMPTY_STACKER][0] = CTL_REQ;
+					st_sync_info.nWorkTransfer_Req[THD_EMPTY_STACKER][1] = WORK_PICK;
+					nJobFlag = 100;
+				}
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////
+				else if(nJobFlag == 1 || nJobFlag == 3 || nJobFlag == 5 || nJobFlag == 7) //오직 로딩트레만 먼저 집어가서 처리한 후 다음작업한다  
 				{ // 로딩 빈 트레이를 집으러 이동한다 
 					//m_nTransferJobFlag[2]; //work 트랜스퍼에 동작을 요청한다 , [0]:요청정보, [1]:1:트레이를 집기, 2:트레이를 놓기	
 					m_nTransferJobFlag[0] = THD_LD_TRAY_PLATE; 
 					m_nTransferJobFlag[1] = WORK_PICK; 
 				}
-				else //if((nJobFlag == 2 || nJobFlag == 4 || nJobFlag == 6)// 언로딩 스태커 1,2 위치 
+				else //if((nJobFlag == 2 || nJobFlag == 4 || nJobFlag == 6)// 언로딩 스태커 1,2 위치   nJobFlag == 8
 				{//언로딩 스태커 사이트에서 트레이 공급을 요청한 상태
  
 					m_nTransferJobFlag[0] = THD_EMPTY_STACKER; 
@@ -606,6 +642,13 @@ void CRunEmptyTrayTransfer::OnRunMove(void)
 			else if(m_nTransferJobFlag[0] == THD_EMPTY_STACKER)
 			{
 				m_dpTargetPos = st_motor_info[m_nAxisNum].d_pos[P_WORKTRANS_EMPTY_STACKER];
+				///////////////////////////////////////////////////////////////////////
+				//2017.0430
+				if( st_handler_info.mn_auto_empty_tray == YES  && st_handler_info.mn_out_empty == YES )
+				{
+					m_dpTargetPos = st_motor_info[m_nAxisNum].d_pos[P_WORKTRANS_REJECT_STACK];
+				}
+				///////////////////////////////////////////////////////////////////////
 			}
 			else if(m_nTransferJobFlag[0] == THD_ULD_1_STACKER)
 			{
@@ -693,7 +736,7 @@ void CRunEmptyTrayTransfer::OnRunMove(void)
 			{ //스테커의 상태를 체크할 필요도 있음 	
 				if(st_sync_info.nWorkTransfer_Req[THD_ULD_1_STACKER][0] != CTL_REQ) //빈 트레이 공급을 욫어했어야 한다 
 				{
-					break;;
+					break;
 				}
 			}
 			else if(m_nTransferJobFlag[0] == THD_ULD_2_STACKER)
@@ -701,12 +744,11 @@ void CRunEmptyTrayTransfer::OnRunMove(void)
 				 //스테커의 상태를 체크할 필요도 있음 	
 				if(st_sync_info.nWorkTransfer_Req[THD_ULD_2_STACKER][0] != CTL_REQ) //빈 트레이 공급을 욫어했어야 한다 
 				{
-					break;;
+					break;
 				}
 			}
-
 			m_nRunStep = 3100;
-			break;
+			break;		
 
 		case 3100:
 			nRet_1 = COMI.Check_MotPosRange(m_nAxisNum, m_dpTargetPos, st_motor_info[m_nAxisNum].d_allow); 			
@@ -896,10 +938,34 @@ void CRunEmptyTrayTransfer::OnRunMove(void)
 			{				
 				if(m_nTransferJobFlag[0] == THD_EMPTY_STACKER)
 				{
-					clsFunc.Handler_Tray_DataInfo_Shift(1, CTL_YES, THD_WORK_TRANSFER, THD_EMPTY_STACKER); //트레이 정보를 transfer -> empty stacker로 쉬프트 한다 
+// 					clsFunc.Handler_Tray_DataInfo_Shift(1, CTL_YES, THD_WORK_TRANSFER, THD_EMPTY_STACKER); //트레이 정보를 transfer -> empty stacker로 쉬프트 한다 
+// 
+// 					st_sync_info.nWorkTransfer_Req[THD_EMPTY_STACKER][0] = CTL_FREE; //놓았다 
+// 					st_tray_info[THD_WORK_TRANSFER].nTrayExist =  CTL_NO;
 
-					st_sync_info.nWorkTransfer_Req[THD_EMPTY_STACKER][0] = CTL_FREE; //놓았다 
-					st_tray_info[THD_WORK_TRANSFER].nTrayExist =  CTL_NO;
+					////////////////////////////////////////////////////////////////////////////////////////////////////////
+					//2017.0430
+					if( st_handler_info.mn_auto_empty_tray == YES && st_handler_info.mn_out_empty == YES)
+					{
+						clsFunc.Handler_Tray_DataInfo_Shift(1, CTL_YES, THD_WORK_TRANSFER, THD_REJECT_BUFFER_STACK);
+
+						st_sync_info.nWorkTransfer_Req[THD_EMPTY_STACKER][0] = CTL_FREE; //놓았다 
+						st_tray_info[THD_WORK_TRANSFER].nTrayExist =  CTL_NO;
+
+						m_nEmptyToReject++;
+						if( m_nEmptyToReject > 6 )//6장정도를 미리 버린다. 한번은 empty tray stacker에 놓을 수도 있다.
+						{
+							st_handler_info.mn_out_empty = NO;
+							m_nEmptyToReject = 0;
+						}
+					}
+					////////////////////////////////////////////////////////////////////////////////////////////////////////	
+					else
+					{
+						clsFunc.Handler_Tray_DataInfo_Shift(1, CTL_YES, THD_WORK_TRANSFER, THD_EMPTY_STACKER); //트레이 정보를 transfer -> empty stacker로 쉬프트 한다 
+						st_sync_info.nWorkTransfer_Req[THD_EMPTY_STACKER][0] = CTL_FREE; //놓았다 
+						st_tray_info[THD_WORK_TRANSFER].nTrayExist =  CTL_NO;	
+					}
 				}
 				else if(m_nTransferJobFlag[0] == THD_ULD_1_STACKER)  
 				{
@@ -982,7 +1048,7 @@ void CRunEmptyTrayTransfer::OnRunMove(void)
 										1, 
 										st_tray_info[THD_WORK_TRANSFER].strLogKey,
 										st_tray_info[THD_WORK_TRANSFER].strLogData);
-				}
+				}	
 			}
 			m_nRunStep = 1000; 			 
 			break;

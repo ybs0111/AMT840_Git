@@ -672,6 +672,7 @@
     <ClInclude Include="RunLdTrayStackerElevator.h" />
     <ClInclude Include="RunLdUldRobot.h" />
     <ClInclude Include="RunReadIO.h" />
+    <ClInclude Include="RunRejectTrayBuffer.h" />
     <ClInclude Include="RunRejectTrayFrontOutputConveyor.h" />
     <ClInclude Include="RunRejectTrayFrontStackerElevator.h" />
     <ClInclude Include="RunRejectTrayInputConveyor.h" />
@@ -854,6 +855,7 @@
     <ClCompile Include="RunLdTrayStackerElevator.cpp" />
     <ClCompile Include="RunLdUldRobot.cpp" />
     <ClCompile Include="RunReadIO.cpp" />
+    <ClCompile Include="RunRejectTrayBuffer.cpp" />
     <ClCompile Include="RunRejectTrayFrontOutputConveyor.cpp" />
     <ClCompile Include="RunRejectTrayFrontStackerElevator.cpp" />
     <ClCompile Include="RunRejectTrayInputConveyor.cpp" />

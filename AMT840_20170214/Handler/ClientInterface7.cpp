@@ -701,6 +701,7 @@ void CClientInterface7::OnDataAnalysis(CString strMsg)
 			//2016.1101				
 			st_handler_info.mstr_event_msg[0].Format(_T("%d site %s,엔지니어 호출 해주세요"), 7, m_strErrorMsg );
 			clsMem.OnAbNormalMessagWrite(st_handler_info.mstr_event_msg[0]);//로그 저장
+			//2017.0324 에러 스킵 의미 없다
 			::PostMessage(st_handler_info.hWnd, WM_MAIN_EVENT, YES, 0);	
 			st_test_site_info[nSite].nTestBdStart = BD_END;
 		}

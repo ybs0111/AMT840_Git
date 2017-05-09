@@ -400,7 +400,9 @@ void CRunLdUldRobot::OnRunMove()
 				st_track_info.nTestEndBin		= NO;
 				st_track_info.strLotNo			= st_lot_info[LOT_NEXT].strLotNo;
 				st_track_info.strPartNo			= st_lot_info[LOT_NEXT].strPartNo;
-				st_track_info.nIn				= st_count_info.nInCount[1][0];
+				//st_track_info.nIn				= st_count_info.nInCount[1][0];
+				//2017.0416
+				st_track_info.nIn				= st_count_info.nInCount[0][1];
 				st_track_info.nPrimePass		= st_count_info.nPrimeCount[1][0];
 				st_track_info.nPrimeReject		= st_count_info.nPrimeRejectCount[1][0];
 				st_track_info.nCumPass			= st_count_info.nPassCount[1][0];
@@ -2482,6 +2484,7 @@ int CRunLdUldRobot::Process_DVC_Pick(int nMode, int nWork_Site)
 				CTL_Lib.Alarm_Error_Occurrence(7927, dWARNING, clsFunc.m_strAlarmCode);
 				break;
 			}
+			//CTL_Lib.Alarm_Error_Occurrence(1220, dWARNING, clsFunc.m_strAlarmCode); //kwlee 2017.0313
 		}
 
 		for (i = m_n_FirstPicker_Num; i < m_nPickerPara; i++)
@@ -4996,7 +4999,7 @@ int CRunLdUldRobot::Process_Barcode2D(int nWork_site, int nX, int nY)
 			// 바코드 읽기 요청 
 			clsBcr2D.m_nCommand = BD_NONE;
 			::SendMessage(st_handler_info.hWnd, WM_BARCODE_MSG_2, BARCODE_TRIGGER_1, 1);
-
+			m_dwWaitUntil[0] = GetCurrentTime();
 			m_nBarcode2dStep = 1300;
 			break;
 
@@ -5135,6 +5138,24 @@ int CRunLdUldRobot::Process_Barcode2D(int nWork_site, int nX, int nY)
 					m_nBarcode2dStep = 2000;
 				}*/
 			}
+			else
+			{
+				m_dwWaitUntil[1] = GetCurrentTime();
+				m_dwWaitUntil[2] = m_dwWaitUntil[1] - m_dwWaitUntil[0];
+				if( m_dwWaitUntil[2] <= 0 ) m_dwWaitUntil[0] = GetCurrentTime();
+				if( m_dwWaitUntil[2] > 5000)
+				{
+					m_nRetry++;
+					m_nBarcode2dStep = 1200;
+					if( m_nRetry >= 3 )
+					{
+						m_nRetry = 0;
+						//900102 0 0 "BARCODE_IS_TIME_OUT."
+						CTL_Lib.Alarm_Error_Occurrence(1529, dWARNING, _T("900102"));
+					}
+				}
+			}
+
 			break;
 
 		case 1400:
@@ -5172,7 +5193,7 @@ int CRunLdUldRobot::Process_Barcode2D(int nWork_site, int nX, int nY)
 			// 바코드 읽기 요청 
 			clsBcr2D.m_nCommand = BD_NONE;
 			::SendMessage(st_handler_info.hWnd, WM_BARCODE_MSG_2, BARCODE_TRIGGER_1, 1);
-
+			m_dwWaitUntil[0] = GetCurrentTime();
 			m_nBarcode2dStep = 1420;
 			break;
 
@@ -5205,6 +5226,23 @@ int CRunLdUldRobot::Process_Barcode2D(int nWork_site, int nX, int nY)
 				else
 				{
 					m_nBarcode2dStep = 1300;
+				}
+			}
+			else
+			{
+				m_dwWaitUntil[1] = GetCurrentTime();
+				m_dwWaitUntil[2] = m_dwWaitUntil[1] - m_dwWaitUntil[0];
+				if( m_dwWaitUntil[2] <= 0 ) m_dwWaitUntil[0] = GetCurrentTime();
+				if( m_dwWaitUntil[2] > 5000)
+				{
+					m_nRetry++;
+					m_nBarcode2dStep = 1410;
+					if( m_nRetry >= 3 )
+					{
+						m_nRetry = 0;
+						//900102 0 0 "BARCODE_IS_TIME_OUT."
+						CTL_Lib.Alarm_Error_Occurrence(1529, dWARNING, _T("900102"));
+					}
 				}
 			}
 			break;

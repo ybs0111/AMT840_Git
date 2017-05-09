@@ -145,6 +145,7 @@ UINT OnThreadTestSiteRetestBuffer_Left(LPVOID lParam);			// m_thread[26]
 UINT OnThreadTestSiteRetestBuffer_Right(LPVOID lParam);			// m_thread[27]
 UINT OnThreadTestSiteTop(LPVOID	lParam);						// m_thread[28]
 UINT OnThreadTestSiteBottom(LPVOID lParam);						// m_thread[29]
+// UINT	OnThreadRejectTrayBuffer(LPVOID lParam);						// m_thread[30]
 
 //------------------------------------------------------------------//
 
@@ -788,3 +789,22 @@ UINT OnThreadTestSiteBottom(LPVOID lParam)		// m_thread[29]
 	m_thrHandle[29] = NULL;
 	return TRUE;
 }
+
+
+// UINT OnThreadRejectTrayBuffer(LPVOID lParam)		// m_thread[30]
+// {
+// 	CSingleLock sing(&mutex);
+// 
+// 	while(!AllStop[0])
+// 	{
+// 		sing.Lock();
+// 
+// 		clsRunRejectTrayBuffer.OnThreadRun();
+// 
+// 		Sleep(0);
+// 		sing.Unlock();
+// 	}
+// 
+// 	m_thrHandle[30] = NULL;
+// 	return TRUE;
+// }

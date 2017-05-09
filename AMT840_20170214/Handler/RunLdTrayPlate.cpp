@@ -393,15 +393,14 @@ void CRunLdTrayPlate::OnRunMove(void) //0816
 					}
 				}
 
-				st_sync_info.nWorkRbt_Dvc_Req[THD_LD_TRAY_PLATE][0] = CTL_READY; //현재 트레이의 작업이 가능하다 
-
-				m_nRunStep = 5000;
+ 				st_sync_info.nWorkRbt_Dvc_Req[THD_LD_TRAY_PLATE][0] = CTL_READY; //현재 트레이의 작업이 가능하다 
+ 				m_nRunStep = 5000;
 			}
 			else if(nRet_1 == RET_SKIP) //더이상 자재가 없다
 			{	//계속 진행할 수 없다
 				m_nRunStep = 6000;
 			}
-			break;		
+			break;
 
 		case 6000: //트랜스퍼가 작업이 끝난 트레이를 empty에 버린다 
 			Set_LdTrayPlater_FwdBwd(IO_OFF); 

@@ -873,6 +873,12 @@ struct tagHANDLER_INFO
 	//2017.0116
 	int mn_removetray;
 	int mn_uldnum;
+
+	///////////////////////////////////////////////////
+	//2017.0430
+	int mn_auto_empty_tray;
+	int mn_out_empty; //일단 강제로 5장을 버리자. 버리고 난뒤 라셋
+	///////////////////////////////////////////////////
 };
 extern  tagHANDLER_INFO  st_handler_info;
 // *****************************************************************************
@@ -1782,7 +1788,10 @@ struct tagIO_INFO
 	int i_TsiteDoorChk[8];
 	int i_TsiteSmokeChk[4];
 
-
+	//////////////////////////////////////////////////////////////////////
+	//2017.0430
+	int i_EmptyRejFull;
+	//////////////////////////////////////////////////////////////////////
 
 };
 extern  tagIO_INFO  st_io_info;
@@ -2067,6 +2076,9 @@ enum THREAD_SYNC_VARIBLE_SITE_INFO  //위치별 트레이 존재 유무를 위치별로 정의해 
 
 	THD_SERVER_START_NETWORK_SITE					,	// lot 시작전 처음 서버에서 받아온 정보 
 	THD_SERVER_END_NETWORK_SITE						,   // lot end시 서버에 전송하는 정보
+
+
+	THD_REJECT_BUFFER_STACK        ,//2017.0430 reject tray
 
 	THREAD_MAX_SITE									,
 //
@@ -3790,6 +3802,7 @@ enum M_WORKTRAY_TRANSFER //18
 	P_WORKTRANS_EMPTY_STACKER	   , 
 	P_WORKTRANS_ULD_1_STACKER	   ,
 	P_WORKTRANS_ULD_2_STACKER	   ,
+	P_WORKTRANS_REJECT_STACK	   ,//2017.0430
 };
 
 enum M_REJECTTRAY_TRANSFER //19

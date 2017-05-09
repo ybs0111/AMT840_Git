@@ -77,6 +77,8 @@ extern UINT	OnThreadTestSiteRetestBuffer_Right(LPVOID lParam);			// m_thread[27]
 extern UINT OnThreadTestSiteTop(LPVOID	lParam);						// m_thread[28]
 extern UINT OnThreadTestSiteBottom(LPVOID lParam);						// m_thread[29]
 
+//extern UINT OnThreadRejectTrayBuffer(LPVOID lParam);              // m_thread[30]
+
 
 
 

@@ -2416,7 +2416,7 @@ int CDialogLotDisplay::OnLotEnd()
 			}
 			else
 			{
-				OnMessageDisplay(BIN_REJECTBIN, _T("Lot End error. Lot num is different. Do lot cancle please"));
+				OnMessageDisplay(BIN_REJECTBIN, _T("Lot end error. Lot Count is different. Do Lot cancle please"));
 				m_nLotEndStep = 0;
 			}
 			break;

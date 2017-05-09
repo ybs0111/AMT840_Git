@@ -20,6 +20,7 @@ public:
 	bool            m_bEmptyTrayCheck; //kwlee 2016.1221
 	// jtkim 20160902
 	int				m_nRetry;
+
 public:
 	CString m_strAlarmCode;
 	DWORD m_dwWaitTime[3];

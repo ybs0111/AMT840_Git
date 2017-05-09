@@ -178,6 +178,7 @@
     <ClCompile Include="AMTVClassWrapper.cpp" />
     <ClCompile Include="DialogBarcode.cpp" />
     <ClCompile Include="LogFromat.cpp" />
+    <ClCompile Include="RunRejectTrayBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="32bit\FAS_HSSI.h" />
@@ -373,6 +374,7 @@
     <ClInclude Include="AMTVClassWrapper.h" />
     <ClInclude Include="DialogBarcode.h" />
     <ClInclude Include="LogFromat.h" />
+    <ClInclude Include="RunRejectTrayBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Handler.rc" />

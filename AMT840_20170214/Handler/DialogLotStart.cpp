@@ -16,6 +16,7 @@
 #include "AlgMemory.h"
 #include "LogFromat.h"
 #include "Dialog_Message.h"
+#include "Ctlbd_Variable.h"
 // CDialogLotStart 대화 상자입니다.
 #define TM_DISPLAY		100
 #define TM_START		200
@@ -407,6 +408,9 @@ void CDialogLotStart::OnBnClickedBtnLotStart()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	if (st_handler_info.nMenuLock) return;
+
+	CString strMsg =_T("");
+
 	if (m_strLotNo == _T(""))
 	{
 		st_other_info.strBoxMsg = _T("Lot No 입력되지 않았습니다. 확인해 주세요.");
@@ -516,6 +520,48 @@ void CDialogLotStart::OnBnClickedBtnLotStart()
 		}
 	}
 
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//2017.0430
+	if( st_handler_info.mn_removetray >= CTL_REQ )
+	{
+		if( st_handler_info.cWndList != NULL)
+		{
+			strMsg.Format( _T(" 현재 랏(%s) 시작전 빈트레이 제거중입니다.") , m_strLotNo );
+			clsMem.OnNormalMessageWrite(strMsg);
+		}
+	}
+	else
+	{
+		//2017.0430 발주 후 살릴것
+// 		if( ( st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )  || ( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") ) )
+// 		{
+// 			if( st_handler_info.mn_removetray == CTL_NO )
+// 			{
+// 				if( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )//나올수 없다.ㅋ
+// 				{
+// 					st_handler_info.mn_removetray = CTL_REQ;
+// 					st_handler_info.mn_uldnum = 1;
+// 					if( st_handler_info.cWndList != NULL)
+// 					{
+// 						strMsg.Format( _T(" 현재 랏(%s) 시작전 빈트레이 제거할려는데. 나올 수 없다.") , m_strLotNo );
+// 						clsMem.OnNormalMessageWrite(strMsg);
+// 					}
+// 				}
+// 				else if( st_count_info.nInCount[0][0] <= 0 && st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )
+// 				{
+// 					st_handler_info.mn_removetray = CTL_REQ;
+// 					st_handler_info.mn_uldnum = 1;
+// 					if( st_handler_info.cWndList != NULL)
+// 					{
+// 						strMsg.Format( _T(" 현재 랏(%s) 시작전 빈트레이 제거할려는데. 나올 수 없다.") , m_strLotNo );
+// 						clsMem.OnNormalMessageWrite(strMsg);
+// 					}
+// 				}
+// 			}				
+// 		}
+	}
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//st_handler_info.mn_removetray = NO; //kwlee 2017.0117
 	m_nLotStartStep = 0;

@@ -273,6 +273,29 @@ void CRunUldGoodTrayLeftOutputElevator::OnRunMove(void)
 					m_nRunStep = 100;
 				}
 			}
+
+			//////////////////////////////////////////////////////////////////////////////////////////////
+			//랏을 투입과 동시에 자동으로 empty 트레이를 제거하자.
+			//2017.0430
+			if( ( st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )  || ( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") ) )
+			{
+				if( st_handler_info.mn_removetray == CTL_REQ  && st_handler_info.mn_uldnum==1 )
+				{
+					if( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )
+					{
+						m_nRunStep = 100;	
+					}
+					else if( st_count_info.nInCount[0][0] <= 0 && st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )
+					{
+						m_nRunStep = 100;
+					}
+					else
+					{
+						st_handler_info.mn_removetray = CTL_NO;
+					}
+				}				
+			}
+			//////////////////////////////////////////////////////////////////////////////////////////////
 			//2017.0116
 			//if( st_lot_info[LOT_CURR].strLotNo !=_T("") || st_lot_info[LOT_NEXT].strLotNo !=_T("")	)
 			if( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("")	)
@@ -432,9 +455,22 @@ void CRunUldGoodTrayLeftOutputElevator::OnRunMove(void)
 
 		case 1100:
 			//2017.0116
-			if( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T(""))
+// 			if( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T(""))
+// 			{
+// 				if( st_handler_info.mn_removetray == CTL_REQ )
+// 				{
+// 					if( st_handler_info.mn_uldnum != 1)		return;
+// 					st_sync_info.nWorkRbt_Dvc_Req[THD_ULD_1_STACKER][0] = CTL_REQ;
+// 				}
+// 				else if (st_handler_info.mn_removetray == CTL_CHANGE) //kwlee 2017.0117
+// 				{
+// 					m_nRunStep = 2000;
+// 				}
+// 			}
+			//2017.0508
+			if( st_handler_info.mn_removetray == CTL_REQ || st_handler_info.mn_removetray == CTL_CHANGE)
 			{
-				if( st_handler_info.mn_removetray == CTL_REQ )
+				if(st_lot_info[LOT_NEXT].strLotNo ==_T(""))
 				{
 					if( st_handler_info.mn_uldnum != 1)		return;
 					st_sync_info.nWorkRbt_Dvc_Req[THD_ULD_1_STACKER][0] = CTL_REQ;
@@ -442,6 +478,10 @@ void CRunUldGoodTrayLeftOutputElevator::OnRunMove(void)
 				else if (st_handler_info.mn_removetray == CTL_CHANGE) //kwlee 2017.0117
 				{
 					m_nRunStep = 2000;
+				}
+				else
+				{
+					st_handler_info.mn_removetray = CTL_NO;
 				}
 			}
 			if(st_sync_info.nWorkRbt_Dvc_Req[THD_ULD_1_STACKER][0] == CTL_REQ) //워크 로봇에서 uld 1 stacker에 트레이 공간을 요청 했다 
@@ -1004,7 +1044,7 @@ void CRunUldGoodTrayLeftOutputElevator::OnRunMove(void)
 
 					clsFunc.OnCycleTime(7, 
 										st_tray_info[THD_ULD_1_STACKER].strLotNo,
-										st_tray_info[THD_ULD_2_STACKER].strPartNo,
+										st_tray_info[THD_ULD_1_STACKER].strPartNo,
 										st_work_info.dwRearSmema[0][2], 
 										m_dwCycleTime[2], 
 										st_work_info.dwRearTime[0][2]);

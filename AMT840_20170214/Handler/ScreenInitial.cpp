@@ -851,27 +851,41 @@ int CScreenInitial::OnInitExcution()
 				AfxMessageBox(_T("Cannot begin the thread [threadTestSiteRetestBuffer_Right]"));
 			}
 
+			/////////////////////////////////////////////////////////////////////////////////////////////
+			//2017.0430
+// 			m_thread[30] = AfxBeginThread(OnThreadRejectTrayBuffer, this);
+// 			if (m_thread[30] != NULL) 
+// 			{
+// 				m_thrHandle[30] = m_thread[30]->m_hThread;
+// 			}
+// 			else 
+// 			{
+// 				AfxMessageBox(_T("Cannot begin the thread [threadRejectTrayBuffer]"));
+// 			}
+			/////////////////////////////////////////////////////////////////////////////////////////////
+
 			if (st_recovery_info.nMcDataRecovery == YES)
 			{
-				st_sync_info.nInit_Flag[THD_LD_CV_STACKER_LEFT]		= INIT_READY;
-				st_sync_info.nInit_Flag[THD_LD_CV_STACKER_RIGHT]	= INIT_READY;
-				st_sync_info.nInit_Flag[THD_LD_STACKER]				= INIT_READY;
-				st_sync_info.nInit_Flag[THD_LD_TRAY_PLATE]			= INIT_READY;
-				st_sync_info.nInit_Flag[THD_EMPTY_STACKER]			= INIT_READY;
-				st_sync_info.nInit_Flag[THD_ULD_1_STACKER]			= INIT_READY;
-				st_sync_info.nInit_Flag[THD_ULD_2_STACKER]			= INIT_READY;
-				st_sync_info.nInit_Flag[THD_REJECT_EMPTY_STACKER]	= INIT_READY;
-				st_sync_info.nInit_Flag[THD_REJECT_OUT_1_STACKER]	= INIT_READY;
-				st_sync_info.nInit_Flag[THD_REJECT_OUT_2_STACKER]	= INIT_READY;
-				st_sync_info.nInit_Flag[THD_WORK_RBT]				= INIT_READY;
-				st_sync_info.nInit_Flag[THD_TEST_RBT]				= INIT_READY;
-				st_sync_info.nInit_Flag[THD_LD_BUFF]				= INIT_READY;
-				st_sync_info.nInit_Flag[THD_ULD_BUFF]				= INIT_READY;
-				st_sync_info.nInit_Flag[THD_WORK_TRANSFER]			= INIT_READY;
-				st_sync_info.nInit_Flag[THD_REJECT_TRANSFER]		= INIT_READY;
+				st_sync_info.nInit_Flag[THD_LD_CV_STACKER_LEFT]			= INIT_READY;
+				st_sync_info.nInit_Flag[THD_LD_CV_STACKER_RIGHT]			= INIT_READY;
+				st_sync_info.nInit_Flag[THD_LD_STACKER]						= INIT_READY;
+				st_sync_info.nInit_Flag[THD_LD_TRAY_PLATE]					= INIT_READY;
+				st_sync_info.nInit_Flag[THD_EMPTY_STACKER]					= INIT_READY;
+				st_sync_info.nInit_Flag[THD_ULD_1_STACKER]					= INIT_READY;
+				st_sync_info.nInit_Flag[THD_ULD_2_STACKER]					= INIT_READY;
+				st_sync_info.nInit_Flag[THD_REJECT_EMPTY_STACKER]		= INIT_READY;
+				st_sync_info.nInit_Flag[THD_REJECT_OUT_1_STACKER]		= INIT_READY;
+				st_sync_info.nInit_Flag[THD_REJECT_OUT_2_STACKER]		= INIT_READY;
+				st_sync_info.nInit_Flag[THD_WORK_RBT]							= INIT_READY;
+				st_sync_info.nInit_Flag[THD_TEST_RBT]								= INIT_READY;
+				st_sync_info.nInit_Flag[THD_LD_BUFF]								= INIT_READY;
+				st_sync_info.nInit_Flag[THD_ULD_BUFF]							= INIT_READY;
+				st_sync_info.nInit_Flag[THD_WORK_TRANSFER]					= INIT_READY;
+				st_sync_info.nInit_Flag[THD_REJECT_TRANSFER]					= INIT_READY;
 				//kwlee 2016.1003
-				st_sync_info.nInit_Flag[THD_RETEST_1_BUFF]          = INIT_READY;
-				st_sync_info.nInit_Flag[THD_RETEST_2_BUFF]          = INIT_READY;
+				st_sync_info.nInit_Flag[THD_RETEST_1_BUFF]						= INIT_READY;
+				st_sync_info.nInit_Flag[THD_RETEST_2_BUFF]						= INIT_READY;
+
 			}
 			m_nInitStep = 1000;
 			break;
@@ -998,6 +1012,7 @@ int CScreenInitial::OnInitExcution()
 				OnInitChangeStatus(17);
 				st_sync_info.nInit_Flag[THD_REJECT_TRANSFER]		= INIT_COMPLETE;
 			}
+
 			////////////
 			if (st_sync_info.nInit_Flag[THD_TESTSITE_1] == INIT_READY)
 			{

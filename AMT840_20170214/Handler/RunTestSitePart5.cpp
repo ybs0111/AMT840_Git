@@ -446,7 +446,9 @@ void CRunTestSitePart5::OnRunMove()
 						nCount = 0;
 						for (i=0; i<8; i++)
 						{
-							if (st_test_site_info[m_nTHD_ID].st_pcb_info[i].nYesNo == YES)
+							//2017.0322
+							//if (st_test_site_info[m_nTHD_ID].st_pcb_info[i].nYesNo == YES)
+							if ( st_test_site_info[m_nTHD_ID].st_pcb_info[i].nYesNo == YES && st_test_site_info[m_nTHD_ID].st_pcb_info[i].strBarcode1D[0] != _T("") && st_test_site_info[m_nTHD_ID].st_pcb_info[i].strBarcode1D[0] != _T("ERROR") )
 							{
 								nCount++;
 							}
@@ -613,7 +615,9 @@ void CRunTestSitePart5::OnRunMove()
 			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_ChamberOpenChk[m_nIO_No],	IO_ON);  
 			nRet_2 = FAS_IO.get_in_bit(st_io_info.i_ChamberCloseChk[m_nIO_No],	IO_OFF);  
 
-			if(nRet_1 == IO_ON && nRet_2 == IO_OFF )
+			//2017.0325
+			//if(nRet_1 == IO_ON && nRet_2 == IO_OFF)
+			if( nRet_1 == IO_OFF && nRet_2 == IO_ON )
 			{
 				m_dwDoorWaitTime[0] = GetTickCount();
 
@@ -644,7 +648,9 @@ void CRunTestSitePart5::OnRunMove()
 			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_ChamberOpenChk[m_nIO_No],	IO_ON);  
 			nRet_2 = FAS_IO.get_in_bit(st_io_info.i_ChamberCloseChk[m_nIO_No],	IO_OFF);  
 
-			if(nRet_1 == IO_ON && nRet_2 == IO_OFF )
+			//2017.0325
+			//if(nRet_1 == IO_ON && nRet_2 == IO_OFF)
+			if( nRet_1 == IO_OFF && nRet_2 == IO_ON )
 			{
 				m_dwDoorWaitTime[1] = GetTickCount();
 				m_dwDoorWaitTime[2] = m_dwDoorWaitTime[1] - m_dwDoorWaitTime[0];
@@ -954,7 +960,7 @@ void CRunTestSitePart5::OnCommunication()
 					//st_test_site_info[nSite].nTestBdStart = BD_END;
 					for (i=0; i<8; i++)
 					{
-						if ((rand() % 10) == 0)
+						if ((rand() % 10) == 0 )
 						{
 							st_test_site_info[nSite].st_pcb_info[i].nRetestCnt++;
 							if (st_test_site_info[nSite].st_pcb_info[i].nRetestCnt > st_recipe_info.nTestRetest_Count)
@@ -963,42 +969,15 @@ void CRunTestSitePart5::OnCommunication()
 							}
 							else 
 							{
-								//st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_RETEST;
-								//kwlee 2017.0202
-								st_test_site_info[nSite].st_pcb_info[i].nFailCount++;
-								if(st_test_site_info[nSite].st_pcb_info[i].nFailCount > st_recipe_info.nFailCnt)
-								{
-									st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
-									st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_CONTINUE_FAIL; //kwlee 2017.0125
-									//st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_CONTINUE_FAIL;
-								}
-								else
-								{
-									st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_RETEST;
-								}
-								//
-							}
-						}
-						else if ((rand() % 10) == 1)
-						{
-							//st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_RETEST;
-							//kwlee 2017.0202
-							st_test_site_info[nSite].st_pcb_info[i].nFailCount++;
-							if(st_test_site_info[nSite].st_pcb_info[i].nFailCount > st_recipe_info.nFailCnt)
-							{
-								st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
-								st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_CONTINUE_FAIL; //kwlee 2017.0125
-								//st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_CONTINUE_FAIL;
-							}
-							else
-							{
 								st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_RETEST;
 							}
-							///
+						}
+						else if ((rand() % 10) == 1 || (rand() % 10) == 2 || (rand() % 10) == 3)
+						{
+							st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_RETEST;
 						}
 						else
 						{
-
 							st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_GOOD;
 						}
 						st_test_site_info[nSite].st_pcb_info[i].nTestBdStart = BD_END;
@@ -1034,7 +1013,7 @@ void CRunTestSitePart5::OnCommunication()
 					}*/
 
 					nBin = (rand() % 10);
-					if (nBin == 0 || nBin == 1 || nBin == 2 || nBin == 3 || nBin == 4)
+					if (nBin == 0 || nBin == 1  || nBin == 3 || nBin == 4)
 					{
 						st_test_site_info[nSite].st_pcb_info[i].nRetestCnt++;
 						if (st_test_site_info[nSite].st_pcb_info[i].nRetestCnt > st_recipe_info.nTestRetest_Count)

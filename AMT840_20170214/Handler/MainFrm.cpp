@@ -368,7 +368,11 @@ CMainFrame::~CMainFrame()
 		}
 	}
 
+	
+
 	if(mp_msg_dlg != NULL)   delete mp_msg_dlg;
+
+	if( m_pAMTVClassWrapper != NULL ) delete m_pAMTVClassWrapper;
 }
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)

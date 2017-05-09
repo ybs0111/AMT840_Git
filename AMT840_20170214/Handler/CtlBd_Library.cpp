@@ -369,9 +369,13 @@ int CCtlBd_Library::Initialize_motor_board(int n_bd_type, CString s_filename)	//
 		//16: retest buffer #1(left) rotator
 		nMotor[0] = M_RETEST_BUF_1_ROTATOR;	
 		// 1mm 이동하는데 필요한 pulse
-		COMI.Set_MotUnitDist(nMotor[0], 10);
+		//COMI.Set_MotUnitDist(nMotor[0], 10);
+		//kwlee 2017.0331
+		COMI.Set_MotUnitDist(nMotor[0], 100);
 		// 10mm 이동하는데 필요한 pulse (속도는 1Cm/초로 세팅하게 된다.)
-		COMI.Set_MotUnitSpeed(nMotor[0], 10);
+		//COMI.Set_MotUnitSpeed(nMotor[0], 10);
+		//kwlee 2017.0331
+		COMI.Set_MotUnitSpeed(nMotor[0], 100);
 		// motor Homec
 		COMI.mn_homecheck_method[nMotor[0]]= 1;
 		COMI.Set_MotorType_Init(nMotor[0], MOT_SERVO);
@@ -379,9 +383,14 @@ int CCtlBd_Library::Initialize_motor_board(int n_bd_type, CString s_filename)	//
 		//17: retest buffer #2(right) rotator
 		nMotor[0] = M_RETEST_BUF_2_ROTATOR;	
 		// 1mm 이동하는데 필요한 pulse
-		COMI.Set_MotUnitDist(nMotor[0], 10);
+		//COMI.Set_MotUnitDist(nMotor[0], 10);
+		//kwlee 2017.0331
+		COMI.Set_MotUnitDist(nMotor[0], 100);
 		// 10mm 이동하는데 필요한 pulse (속도는 1Cm/초로 세팅하게 된다.)
-		COMI.Set_MotUnitSpeed(nMotor[0], 10);
+
+		//COMI.Set_MotUnitSpeed(nMotor[0], 10);
+		//kwlee 2017.0331
+		COMI.Set_MotUnitSpeed(nMotor[0], 100);
 		// motor Home
 		COMI.mn_homecheck_method[nMotor[0]]= 1;
 		COMI.Set_MotorType_Init(nMotor[0], MOT_SERVO);

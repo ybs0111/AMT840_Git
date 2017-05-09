@@ -23,6 +23,7 @@ CRunEmptyStackerElevator::CRunEmptyStackerElevator()
 	m_nInitStep	= -1;
 
 	m_nAxisNum = M_EMPTY_ELV;
+
 }
 
 CRunEmptyStackerElevator::~CRunEmptyStackerElevator()
@@ -169,6 +170,28 @@ void CRunEmptyStackerElevator::OnRunMove(void)
 				m_nRunStep = 100;				
 			}
 
+			//////////////////////////////////////////////////////////////////////////////////////////////
+			//랏을 투입과 동시에 자동으로 empty 트레이를 제거하자.
+			//2017.0430
+			if( ( st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )  || ( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") ) )
+			{
+				if( st_handler_info.mn_removetray == CTL_REQ )
+				{
+					if( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )
+					{
+						m_nRunStep = 100;	
+					}
+					else if( st_count_info.nInCount[0][0] <= 0 && st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )
+					{
+						m_nRunStep = 100;
+					}
+					else
+					{
+						st_handler_info.mn_removetray = CTL_NO;
+					}
+				}				
+			}
+			//////////////////////////////////////////////////////////////////////////////////////////////
 			//2017.0116
 			//if( st_lot_info[LOT_CURR].strLotNo !=_T("") || st_lot_info[LOT_NEXT].strLotNo !=_T(""))
 			if( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T(""))
@@ -280,7 +303,7 @@ void CRunEmptyStackerElevator::OnRunMove(void)
 						//kwlee 2016.1221 
 						//if(st_lot_info[m_nLotProcessNum].nLot_THD_Status[THD_WORK_RBT] != LOT_END && m_bEmptyTrayCheck == false)
 						//kwlee 2017.0110
-						nRet_1 = FAS_IO.get_in_bit(st_io_info.i_LdStkTrayChk,	IO_OFF); //elevator stacker tary 가 있어야 한다 
+						nRet_1 = FAS_IO.get_in_bit(st_io_info.i_LdStkTrayChk, IO_OFF); //elevator stacker tary 가 있어야 한다 
 						nRet_2 = FAS_IO.get_in_bit(st_io_info.i_LdStkTrayArrivedChk,	IO_OFF); //tary가 도착해 있어야 한다 
 						nRet_3 = FAS_IO.get_in_bit(st_io_info.i_ReadyLd1TrayExistChk, IO_OFF);
 						nRet_4 = FAS_IO.get_in_bit(st_io_info.i_ReadyLd2TrayExistChk, IO_OFF);
@@ -516,6 +539,19 @@ void CRunEmptyStackerElevator::OnRunMove(void)
 			break;
 
 		case 4100:
+			///////////////////////////////////////////////////////////////////////////////////////////////////////
+			//2017.0430
+			//일단 버리자.
+			if( st_handler_info.mn_auto_empty_tray == YES )
+			{//들고 있는걸 버리자
+				//1.만약 들고 있으면 일단 버리고
+				//2. 안들고 있으면 바로 집어 보자.
+				st_handler_info.mn_out_empty = YES;//강제로 버린다. 
+// 				m_nRunStep = 5000;
+// 				break;
+			}
+			///////////////////////////////////////////////////////////////////////////////////////////////////////
+
 			Set_StackerTray_UpDown(IO_OFF); 
 			m_nRunStep = 4110;
 			break;
@@ -535,7 +571,6 @@ void CRunEmptyStackerElevator::OnRunMove(void)
 			}
 			break;
 
-
 		case 5000:
 			/*
 			nRet_1 = COMI.Get_MotIOSensor(m_nAxisNum, MOT_SENS_SD); 	
@@ -553,7 +588,7 @@ void CRunEmptyStackerElevator::OnRunMove(void)
 			st_sync_info.nWorkTransfer_Req[THD_EMPTY_STACKER][0] = CTL_READY;
 
 			m_nRunStep = 6000;
-			break;
+			break;		
 
 		case 5800:
 			nRet_1 = CTL_Lib.Elevator_Job_Move_Pos(0, m_nAxisNum,  P_ELV_RECEIVE_OFFSET); //트레이를 트랜스퍼에서 받는다 

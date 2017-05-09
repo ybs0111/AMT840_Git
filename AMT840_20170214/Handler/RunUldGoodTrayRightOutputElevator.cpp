@@ -898,7 +898,7 @@ void CRunUldGoodTrayRightOutputElevator::OnRunMove(void)
 					st_work_info.dwRearTime[1][2]	= st_work_info.dwRearTime[1][1] - st_work_info.dwRearTime[1][0];
 
 					clsFunc.OnCycleTime(7, 
-										st_tray_info[THD_ULD_1_STACKER].strLotNo,
+										st_tray_info[THD_ULD_2_STACKER].strLotNo,
 										st_tray_info[THD_ULD_2_STACKER].strPartNo,
 										st_work_info.dwRearSmema[0][2], 
 										m_dwCycleTime[2], 
