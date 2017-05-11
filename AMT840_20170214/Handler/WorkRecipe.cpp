@@ -823,8 +823,11 @@ void CWorkRecipe::OnDataApply()
 		{
 			for (j=0; j<2; j++)
 			{
-				st_code_info[0].m_nScrapCode[i][j] = st_recipe_info.nTestRetest_Count;
-				st_code_info[1].m_nScrapCode[i][j] = st_recipe_info.nTestRetest_Count;
+// 				st_code_info[0].m_nScrapCode[i][j] = st_recipe_info.nTestRetest_Count;
+// 				st_code_info[1].m_nScrapCode[i][j] = st_recipe_info.nTestRetest_Count;
+				//kwlee 2017.0511
+				st_code_info[0].m_nScrapCode[i][j] = m_nRetCnt[1];
+				st_code_info[1].m_nScrapCode[i][j] = m_nRetCnt[1];
 			}
 		}
 		if( st_recipe_info.nTestRetest_Count > 0)
@@ -1353,8 +1356,6 @@ void CWorkRecipe::OnDestroy()
 void CWorkRecipe::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	
-	
 	CDialog::OnTimer(nIDEvent);
 }
 
@@ -1413,6 +1414,22 @@ void CWorkRecipe::OnClickedDgtTestsiteOffset()
 
 void CWorkRecipe::OnStnClickedDgtRetestCount()
 {
+	
+	CDialog_Message dlgMsg;
+	int nResponse;
+	CString strTemp;
+
+	//kwlee 2017.0511
+	if(st_lot_info[LOT_NEXT].strLotNo !=_T("")  || st_lot_info[LOT_CURR].strLotNo !=_T("") )
+	{
+		dlgMsg.m_nMessageType	= 1;
+		dlgMsg.m_strMessage		= _T("진행 중인 랏이 있습니다. Retest Cnt를 변경 할 수 없습니다.");
+		strTemp.Format(_T("Try Retest Cnt Change : %s."), dlgMsg.m_strMessage);
+		clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
+		dlgMsg.DoModal();
+		return;
+	}
+
 	int nKey = m_nRetCnt[1];
 
 	KeyPadI(0, 110, &nKey);

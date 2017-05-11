@@ -2445,6 +2445,8 @@ void CScreenMain::OnTestSite1CellRClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 	nRow				= pItem->iRow;
 	nCol				= pItem->iColumn;
 
+	return; //kwlee 2017.0511
+
 	if (st_handler_info.nRunStatus != dSTOP) return;	//2015.03.04 night
 
 
@@ -2482,6 +2484,8 @@ void CScreenMain::OnTestSite2CellRClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 
 	nRow				= pItem->iRow;
 	nCol				= pItem->iColumn;
+
+	return; //kwlee 2017.0511
 
 	if (st_handler_info.nRunStatus != dSTOP) return;	//2015.03.04 night
 
@@ -2521,6 +2525,8 @@ void CScreenMain::OnTestSite3CellRClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 	nRow				= pItem->iRow;
 	nCol				= pItem->iColumn;
 
+	return; //kwlee 2017.0511
+
 	if (st_handler_info.nRunStatus != dSTOP) return;	//2015.03.04 night
 
 
@@ -2559,6 +2565,8 @@ void CScreenMain::OnTestSite4CellRClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 	nRow				= pItem->iRow;
 	nCol				= pItem->iColumn;
 
+	return; //kwlee 2017.0511
+
 	if (st_handler_info.nRunStatus != dSTOP) return;	//2015.03.04 night
 
 
@@ -2595,6 +2603,8 @@ void CScreenMain::OnTestSite5CellRClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 
 	nRow				= pItem->iRow;
 	nCol				= pItem->iColumn;
+
+	return; //kwlee 2017.0511
 
 	if (st_handler_info.nRunStatus != dSTOP) return;	//2015.03.04 night
 
@@ -2633,6 +2643,8 @@ void CScreenMain::OnTestSite6CellRClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 
 	nRow				= pItem->iRow;
 	nCol				= pItem->iColumn;
+
+	return; //kwlee 2017.0511
 
 	if (st_handler_info.nRunStatus != dSTOP) return;	//2015.03.04 night
 
@@ -2674,6 +2686,7 @@ void CScreenMain::OnTestSite7CellRClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 
 	if (st_handler_info.nRunStatus != dSTOP) return;	//2015.03.04 night
 
+	return; //kwlee 2017.0511
 
 	if ((nRow-2) < 0) return;
 
@@ -2708,6 +2721,8 @@ void CScreenMain::OnTestSite8CellRClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 
 	nRow				= pItem->iRow;
 	nCol				= pItem->iColumn;
+
+	return; //kwlee 2017.0511
 
 	if (st_handler_info.nRunStatus != dSTOP) return;	//2015.03.04 night
 
