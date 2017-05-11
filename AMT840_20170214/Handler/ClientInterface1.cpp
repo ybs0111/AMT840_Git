@@ -979,7 +979,6 @@ void CClientInterface1::OnSocketInfo(tagTEST_SITE_INFO &test_site)
 void CClientInterface1::OnModuleInfo(tagTEST_SITE_INFO &test_site)
 {
 	int i;
-
 	CString strTemp;
 	CString strData;
 	CString strMsg;

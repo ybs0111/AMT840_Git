@@ -452,7 +452,9 @@ void CRunTestSitePart6::OnRunMove()
 							}
 						}
 						st_test_site_info[m_nTHD_ID].nModuleCount	= nCount;
-						st_test_site_info[m_nTHD_ID].nBarcodeMode	= st_recipe_info.nBarcodeCount;
+						//st_test_site_info[m_nTHD_ID].nBarcodeMode	= st_recipe_info.nBarcodeCount;
+						//kwlee 2017.0511
+						st_test_site_info[m_nTHD_ID].nBarcodeMode	= st_recipe_info.nBarcodeCnt;
 						//st_test_site_info[m_nTHD_ID].strOptCode		= _T("2R");
 						st_test_site_info[m_nTHD_ID].nRetry			= st_recipe_info.nTestRetest_Count;
 						if (st_test_site_info[m_nTHD_ID].strLotNo == st_lot_info[LOT_CURR].strLotNo)
