@@ -331,13 +331,14 @@ int CPublicFunction::Set_LotInfo_LotEndDataExchange(int nMode) //james 2016.0921
 		st_count_info.nPrimeRejectCount[0][0]		= st_count_info.nPrimeRejectCount[0][1];
 
 		// jtkim 20150529 scrap code shift
-		for (i=0; i<10000; i++)
-		{
-			for (j=0; j<2; j++)
-			{
-				st_code_info[LOT_CURR].m_nScrapCode[i][j] = st_code_info[LOT_NEXT].m_nScrapCode[i][j];
-			}
-		}
+		//2017.0511
+// 		for (i=0; i<10000; i++)
+// 		{
+// 			for (j=0; j<2; j++)
+// 			{
+// 				st_code_info[LOT_CURR].m_nScrapCode[i][j] = st_code_info[LOT_NEXT].m_nScrapCode[i][j];
+// 			}
+// 		}
 
 		//////////////////////////////////////////////////////////////////////////////
 		//2016.1203

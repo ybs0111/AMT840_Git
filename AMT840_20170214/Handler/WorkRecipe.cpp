@@ -830,8 +830,12 @@ void CWorkRecipe::OnDataApply()
 				st_code_info[1].m_nScrapCode[i][j] = m_nRetCnt[1];
 			}
 		}
+		//2017.0511
 		if( st_recipe_info.nTestRetest_Count > 0)
-			clsFunc.OnScrapCodeFind(0, _T("C:\\AMT840\\File\\RETEST_RULE.TXT"));
+		{
+			clsFunc.OnScrapCodeFind(LOT_CURR, _T("C:\\AMT840\\File\\RETEST_RULE.TXT"));
+			clsFunc.OnScrapCodeFind(LOT_NEXT, _T("C:\\AMT840\\File\\RETEST_RULE.TXT"));
+		}
 		//////////////////////////////////////////////////////////////////////////
 
 	}
@@ -1416,18 +1420,34 @@ void CWorkRecipe::OnStnClickedDgtRetestCount()
 {
 	
 	CDialog_Message dlgMsg;
-	int nResponse;
+	int nResponse=0, i=0, nSite=THD_TESTSITE_1;
 	CString strTemp;
+	BOOL bData = FALSE;
+
+	for ( nSite=THD_TESTSITE_1; nSite <= THD_TESTSITE_8; nSite++)
+	{
+		for (i=0; i<8; i++)
+		{
+			if (	st_test_site_info[nSite].st_pcb_info[i].nYesNo	== YES)
+			{
+				bData = TRUE;
+				break;
+			}
+		}
+	}
 
 	//kwlee 2017.0511
 	if(st_lot_info[LOT_NEXT].strLotNo !=_T("")  || st_lot_info[LOT_CURR].strLotNo !=_T("") )
 	{
-		dlgMsg.m_nMessageType	= 1;
-		dlgMsg.m_strMessage		= _T("진행 중인 랏이 있습니다. Retest Cnt를 변경 할 수 없습니다.");
-		strTemp.Format(_T("Try Retest Cnt Change : %s."), dlgMsg.m_strMessage);
-		clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
-		dlgMsg.DoModal();
-		return;
+		if( bData == TRUE)
+		{
+			dlgMsg.m_nMessageType	= 1;
+			dlgMsg.m_strMessage		= _T("진행 중인 랏이 있습니다. Retest Cnt를 변경 할 수 없습니다.");
+			strTemp.Format(_T("Try Retest Cnt Change : %s."), dlgMsg.m_strMessage);
+			clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
+			dlgMsg.DoModal();
+			return;
+		}
 	}
 
 	int nKey = m_nRetCnt[1];
