@@ -1020,7 +1020,9 @@ void CClientInterface8::OnModuleInfo(tagTEST_SITE_INFO &test_site)
 	strData += strTemp;
 	strData += _T(" ");
 
-	strTemp.Format(_T("BACRDOE_OPT2=%d"), test_site.nBarcodeMode);
+	//strTemp.Format(_T("BACRDOE_OPT2=%d"), test_site.nBarcodeMode);
+	///kwlee 2017.0512
+	strTemp.Format(_T("BACRDOE_OPT2=%d"), st_recipe_info.nBarcodeCnt);
 	strData += strTemp;
 	strData += _T(" ");
 
@@ -1033,7 +1035,9 @@ void CClientInterface8::OnModuleInfo(tagTEST_SITE_INFO &test_site)
 	{
 		if (test_site.st_pcb_info[i].nYesNo == YES)
 		{
-			if (test_site.nBarcodeMode == 1)
+			//if (test_site.nBarcodeMode == 1)
+			//kwlee 2017.0512
+			if (st_recipe_info.nBarcodeCnt == 1)
 			{
 				if (test_site.st_pcb_info[i].nRetestCnt == 0)
 				{
