@@ -1358,8 +1358,11 @@ void CMyBasicData::OnBasic_Data_Load(int nMode)
 	GetPrivateProfileString(_T("BASIC_SCREEN"), _T("nStackerTray_Count"), _T("0"), chr_data, sizeof(chr_data), st_path_info.strFileBasic);
 	str_temp.Format(_T("%s"), chr_data);
 	st_basic_info.nUldGoodTrayStack_Count = _wtoi(str_temp);
-//	st_basic_info.nStackerTray_Count = _wtoi(str_temp);
-	//
+
+	//kwlee 2017.0609
+	GetPrivateProfileString(_T("BASIC_SCREEN"), _T("nRejectStackerTray_Cnt"), _T("0"), chr_data, sizeof(chr_data), st_path_info.strFileBasic);
+	str_temp.Format(_T("%s"), chr_data);
+	st_basic_info.nRejectStackerTray_Cnt = _wtoi(str_temp);
 
 	//kwlee 2016.1124
 	GetPrivateProfileString(_T("BASIC_SCREEN"), _T("nAlarmDelayCnt"), _T("0"), chr_data, sizeof(chr_data), st_path_info.strFileBasic);
@@ -2494,6 +2497,10 @@ void CMyBasicData::OnBasic_Data_Save()
 	mstr_temp.Format(_T("%d"), st_basic_info.nUldGoodTrayStack_Count);
 	//mstr_temp.Format(_T("%d"), st_basic_info.nStackerTray_Count);
 	:: WritePrivateProfileString(_T("BASIC_SCREEN"), _T("nStackerTray_Count"), LPCTSTR(mstr_temp), st_path_info.strFileBasic);
+
+	//kwlee 2017.0609
+	mstr_temp.Format(_T("%d"), st_basic_info.nRejectStackerTray_Cnt);
+	:: WritePrivateProfileString(_T("BASIC_SCREEN"), _T("nRejectStackerTray_Cnt"), LPCTSTR(mstr_temp), st_path_info.strFileBasic);
 
 	:: WritePrivateProfileString(_T("BASIC_SCREEN"), _T("ModelName"), LPCTSTR(st_basic_info.strModelName), str_save_file);
 	
