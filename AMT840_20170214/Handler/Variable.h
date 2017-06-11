@@ -1031,6 +1031,9 @@ struct tagBASIC_INFO
 	//int		nModeTesterDisable; //teser 사용유/무(0:tester사용, 1:사용하지 않음(소켓오프여부 보지않음)
 	//kwlee 2016.0930
 	int		nUldGoodTrayStack_Count; //언로딩 스태ㅔ커에 적재하는 셋팅 수량 (단독 장비 사용시 적용)
+	//kwlee 2017.0609
+	int     nRejectStackerTray_Cnt; //Reject Stacker에 적재하는 셋팅 수량
+
 	//int		nStackerTray_Count; //언로딩 스태ㅔ커에 적재하는 셋팅 수량 (단독 장비 사용시 적용)
 	//
 

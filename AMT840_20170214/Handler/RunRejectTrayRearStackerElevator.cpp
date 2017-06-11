@@ -599,7 +599,9 @@ void CRunRejectTrayRearStackerElevator::OnRunMove(void)
 				//st_count_info.nUnldStackerTray++; //트레이 스태커 트레이 적재 정보 하나 up 
 				st_count_info.nUnLdStacker_Reject_TrayCnt[1]++; //unload good 1 stacker tray 적재 수량
 
-				if(st_count_info.nUnLdStacker_Reject_TrayCnt[1] >= st_basic_info.nUldGoodTrayStack_Count)//셋팅 수랴을 적재 했으면 배출한다  
+				//if(st_count_info.nUnLdStacker_Reject_TrayCnt[1] >= st_basic_info.nUldGoodTrayStack_Count)//셋팅 수랴을 적재 했으면 배출한다
+				//kwlee 2017.0609
+				if(st_count_info.nUnLdStacker_Reject_TrayCnt[1] >= st_basic_info.nRejectStackerTray_Cnt)//셋팅 수랴을 적재 했으면 배출한다  
 				{
 					m_nRunStep = 7000;
 				}
