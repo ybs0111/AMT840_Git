@@ -396,7 +396,7 @@ void CRunRejectTrayRearStackerElevator::OnRunMove(void)
 		/////////////////////////////////////////////////////////////////////////////
 		case 1000: 
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			//2017.0611
+			//2017.0610
 			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_Rej2StkTrayExistChk,	IO_OFF); //stacker tary 는 처음에는 없어야 한다  
 			nRet_2 = FAS_IO.get_in_bit(st_io_info.i_Rej2UldCvyTrayExistChk,	IO_OFF); //tary가 중간에 감지되면 안된다
 			if( nRet_1 == IO_ON || nRet_2 == IO_ON)
