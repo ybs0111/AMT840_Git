@@ -438,7 +438,7 @@ void CScreenBasic::OnInitLabel()
 	m_msgAlarmDelayCnt.SetGradientColor(ORANGE_C);
 	m_msgAlarmDelayCnt.SetTextColor(BLACK_C);
 
-	//kwlee 2017.0609
+	//kwlee 2017.0613
 	m_msg_Reject_Tray_Cnt.SetFont(clsFunc.m_pFont[5]);
 	m_msg_Reject_Tray_Cnt.SetWindowText(_T("Reject Stk Tray Cnt"));
 	m_msg_Reject_Tray_Cnt.SetCenterText();
@@ -2069,7 +2069,7 @@ void CScreenBasic::OnDataHistoryLog()
 		clsFunc.OnLogFileAdd(0, strMsg);
 	}
 
-	//kwlee 2017.0609
+	//kwlee 2017.0613
 	if (m_nRejectStackerTrayCnt[0]			!= m_nRejectStackerTrayCnt[1])
 	{
 		strMsg.Format(_T("Reject Stacker Tray Count Change %d -> %d"), m_nRejectStackerTrayCnt[0], m_nRejectStackerTrayCnt[1]);
@@ -2122,11 +2122,11 @@ void CScreenBasic::OnDataRecovery()
 	m_nAbortTime[1]				= m_nAbortTime[0];
 	m_nBarcodeCnt[1]			= m_nBarcodeCnt[0];
 	m_nStackerTrayCnt[1]		= m_nStackerTrayCnt[0]; //kwlee 2016.0930
-	m_nRejectStackerTrayCnt[1]	= m_nRejectStackerTrayCnt[0]; //kwlee 2017.0609
 	m_nModeTestInterface[1]		= m_nModeTestInterface[0];
 	m_nAlarmDelayCnt[1]			= m_nAlarmDelayCnt[0]; //kwlee 2016.1121
 	m_nDirectionCheck[1]		= m_nDirectionCheck[0]; //kwlee 2016.1121
 	m_nAutoLoadMode[1]			= m_nAutoLoadMode[0]; //kwlee 2016.1201
+	m_nRejectStackerTrayCnt[1]	= m_nRejectStackerTrayCnt[0]; //kwlee 2017.0613
 }
 
 
@@ -2154,7 +2154,7 @@ int	CScreenBasic::OnDataComparison()
 	if (m_nAbortTime[0]				!= m_nAbortTime[1])							return RET_ERROR;
 	if (m_nBarcodeCnt[0]			!= m_nBarcodeCnt[1])						return RET_ERROR;
 	if (m_nStackerTrayCnt[0]		!= m_nStackerTrayCnt[1])					return RET_ERROR; //kwlee 2016.0930
-	if (m_nRejectStackerTrayCnt[0]	!= m_nRejectStackerTrayCnt[1])				return RET_ERROR; //kwlee 2017.0609
+	if (m_nRejectStackerTrayCnt[0]	!= m_nRejectStackerTrayCnt[1])				return RET_ERROR; //kwlee 2017.0613
 	if (m_nModeTestInterface[0]		!= m_nModeTestInterface[1])					return RET_ERROR;
 	if (m_nAlarmDelayCnt[0]			!= m_nAlarmDelayCnt[1])						return RET_ERROR; //kwlee 2016.1124
 	if (m_nDirectionCheck[0]		!= m_nDirectionCheck[1])					return RET_ERROR; //kwlee 2016.1124
@@ -2303,19 +2303,7 @@ void CScreenBasic::OnDataApply()
 
 		clsLog.LogConfig(_T("BASIC"), _T("CHANGE"), st_basic_info.strDeviceName, 3, m_strLogKey, m_strLogData);
 	}
-	if (st_basic_info.nUldGoodTrayStack_Count	!= m_nStackerTrayCnt[1])
-	{
-		m_strLogKey[0]	= _T("TYPE");
-		m_strLogData[0]	= _T("GOODSTACKER CNT");
-		m_strLogKey[1]	= _T("OLD");
-		m_strLogData[1].Format(_T("%d"), st_basic_info.nUldGoodTrayStack_Count);
-		m_strLogKey[2]	= _T("NEW");
-		m_strLogData[2].Format(_T("%d"), m_nStackerTrayCnt[1]);
-
-		clsLog.LogConfig(_T("BASIC"), _T("CHANGE"), st_basic_info.strDeviceName, 3, m_strLogKey, m_strLogData);
-	}
-
-	//kwlee 2017.0609
+	//kwlee 2017.0613
 	if (st_basic_info.nRejectStackerTray_Cnt	!= m_nRejectStackerTrayCnt[1])
 	{
 		m_strLogKey[0]	= _T("TYPE");
@@ -2328,6 +2316,17 @@ void CScreenBasic::OnDataApply()
 		clsLog.LogConfig(_T("BASIC"), _T("CHANGE"), st_basic_info.strDeviceName, 3, m_strLogKey, m_strLogData);
 	}
 
+	if (st_basic_info.nUldGoodTrayStack_Count	!= m_nStackerTrayCnt[1])
+	{
+		m_strLogKey[0]	= _T("TYPE");
+		m_strLogData[0]	= _T("GOODSTACKER CNT");
+		m_strLogKey[1]	= _T("OLD");
+		m_strLogData[1].Format(_T("%d"), st_basic_info.nUldGoodTrayStack_Count);
+		m_strLogKey[2]	= _T("NEW");
+		m_strLogData[2].Format(_T("%d"), m_nStackerTrayCnt[1]);
+
+		clsLog.LogConfig(_T("BASIC"), _T("CHANGE"), st_basic_info.strDeviceName, 3, m_strLogKey, m_strLogData);
+	}
 	if (st_basic_info.nAlarmDelayCnt	!= m_nAlarmDelayCnt[1])
 	{
 		m_strLogKey[0]	= _T("TYPE");
@@ -2423,7 +2422,7 @@ void CScreenBasic::OnDataApply()
 	st_recipe_info.nBarcodeCnt	= m_nBarcodeCnt[1];
 
 	st_basic_info.nUldGoodTrayStack_Count = m_nStackerTrayCnt[1]; //kwlee 2016.0930
-	st_basic_info.nRejectStackerTray_Cnt = m_nRejectStackerTrayCnt[1]; //kwlee 2017.0609
+	st_basic_info.nRejectStackerTray_Cnt = m_nRejectStackerTrayCnt[1]; //kwlee 2017.0613
 
 	st_basic_info.nAlarmDelayCnt = m_nAlarmDelayCnt[1]; //kwlee 2016.1124
 	st_basic_info.nModeTestInterface = m_nModeTestInterface[1];
@@ -2458,9 +2457,7 @@ void CScreenBasic::OnDataBackup()
 	m_nAbortTime[0]			= m_nAbortTime[1];
 	m_nBarcodeCnt[0]		= m_nBarcodeCnt[1];
 	m_nStackerTrayCnt[0]		= m_nStackerTrayCnt[1]; //kwlee 2016.0930
-	
-	m_nRejectStackerTrayCnt[0]	= m_nRejectStackerTrayCnt[1]; //kwlee 2017.0609
-
+	m_nRejectStackerTrayCnt[0]	= m_nRejectStackerTrayCnt[1]; //kwlee 2017.0613
 	m_nModeTestInterface[0] = m_nModeTestInterface[1];
 }
 
@@ -2500,8 +2497,7 @@ void CScreenBasic::OnDataInit()
 	m_nAbortTime[1]						= st_recipe_info.nAbortTime;
 	m_nBarcodeCnt[1]					= st_recipe_info.nBarcodeCnt;
 	m_nStackerTrayCnt[1]                = st_basic_info.nUldGoodTrayStack_Count; //kwlee 2016.0930
-	m_nRejectStackerTrayCnt[1]          = st_basic_info.nRejectStackerTray_Cnt; //kwlee 2017.0609
-
+	m_nRejectStackerTrayCnt[1]          = st_basic_info.nRejectStackerTray_Cnt; //kwlee 2017.0613
 	m_nModeTestInterface[1]				= st_basic_info.nModeTestInterface;
 	m_nAlarmDelayCnt[1]                = st_basic_info.nAlarmDelayCnt; //kwlee 2016.1124
 	m_nDirectionCheck[1]                = st_basic_info.nDirectionCheckSkip; //kwlee 2016.1124
@@ -3887,7 +3883,7 @@ void CScreenBasic::OnBnClickedBtnLotendUse()
 	Invalidate(FALSE);
 }
 
-//kwlee 2017.0609
+//kwlee 2017.0613
 void CScreenBasic::OnStnClickedDgtRejectStackerTray()
 {
 	CDialog_KeyPad dlgKeyPad;
