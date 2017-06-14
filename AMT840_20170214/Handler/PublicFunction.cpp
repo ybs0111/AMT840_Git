@@ -331,7 +331,6 @@ int CPublicFunction::Set_LotInfo_LotEndDataExchange(int nMode) //james 2016.0921
 		st_count_info.nPrimeRejectCount[0][0]		= st_count_info.nPrimeRejectCount[0][1];
 
 		// jtkim 20150529 scrap code shift
-
 		//2017.0511
 // 		for (i=0; i<10000; i++)
 // 		{

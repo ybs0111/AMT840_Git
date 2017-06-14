@@ -49,7 +49,6 @@ public:
 	int                 m_nBcr_2d_IBM_Len[2];
 	int                 m_nBcr_2d_SAMSUNG_Len[2];
 	int                 m_nStackerTrayCnt[2]; //kwlee 20160930
-	int					m_nRejectStackerTrayCnt[2]; //kwlee 2017.0609
 	//kwlee 2016.1024
 	int                 m_nDirectionCheck[2];
 	int                 m_nAlarmDelayCnt[2];
@@ -58,6 +57,7 @@ public:
 	//kwlee 2017.0225
 	int                m_nLotEndMode[2];
 	//
+	int					m_nRejectStackerTrayCnt[2]; //kwlee 2017.0609
 
 	bool                m_bTimerCheck;
 	int                 m_nModeSel;
@@ -112,6 +112,10 @@ public:
 	CGradientStatic			m_msgBarcodeCnt;
 	//kwlee 20160930
 	CGradientStatic			m_msgStackerTrayCnt;
+	//kwlee 
+	CGradientStatic			m_msg_Reject_Tray_Cnt;
+	CDigit					m_dgtRejectTrayCnt;
+
 	CDigit					m_dgtStackTrayCnt;
 	//
 	CDigit					m_dgtBarcodeCnt;
@@ -251,8 +255,6 @@ public:
 	CXPGroupBox m_groupLotEndUse;
 	afx_msg void OnBnClickedBtnLotendUse();
 	CButtonST m_btnLotendUse;
-	CGradientStatic m_msg_Reject_Tray_Cnt;
-	CDigit m_dgtRejectTrayCnt;
 	afx_msg void OnStnClickedDgtRejectStackerTray();
 };
 

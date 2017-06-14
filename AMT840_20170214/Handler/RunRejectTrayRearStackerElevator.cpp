@@ -394,7 +394,18 @@ void CRunRejectTrayRearStackerElevator::OnRunMove(void)
 		//1. LOT 시작시 unload stacker 정보에 LOT 정보를 입력하여 구분 사용하게 한다 
 		//   st_tray_info[THD_ULD_1_STACKER].strLotNo
 		/////////////////////////////////////////////////////////////////////////////
-		case 1000: 
+		case 1000:
+			//2017.0613
+			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_Rej2UldCvyTrayExistChk,	IO_OFF);
+			if(nRet_1 == IO_ON)
+			{
+				//트레이  에러 
+				m_strAlarmCode.Format(_T("8%d%04d"), IO_OFF, st_io_info.i_Rej2UldCvyTrayExistChk); 
+				CTL_Lib.Alarm_Error_Occurrence(7990, dWARNING, m_strAlarmCode);
+				break;
+			}
+			///////////////////////////////////////////////////////////////
+
 			m_nRetry = 0;
 			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_Rej2StkUpChk,	IO_ON);
 			nRet_2 = FAS_IO.get_in_bit(st_io_info.i_Rej2StkDnChk,	IO_OFF);
@@ -580,8 +591,8 @@ void CRunRejectTrayRearStackerElevator::OnRunMove(void)
 				//st_count_info.nUnldStackerTray++; //트레이 스태커 트레이 적재 정보 하나 up 
 				st_count_info.nUnLdStacker_Reject_TrayCnt[1]++; //unload good 1 stacker tray 적재 수량
 
-				//if(st_count_info.nUnLdStacker_Reject_TrayCnt[1] >= st_basic_info.nUldGoodTrayStack_Count)//셋팅 수랴을 적재 했으면 배출한다
-				//kwlee 2017.0609
+				//if(st_count_info.nUnLdStacker_Reject_TrayCnt[1] >= st_basic_info.nUldGoodTrayStack_Count)//셋팅 수랴을 적재 했으면 배출한다  
+				//kwlee 2017.0613
 				if(st_count_info.nUnLdStacker_Reject_TrayCnt[1] >= st_basic_info.nRejectStackerTray_Cnt)//셋팅 수랴을 적재 했으면 배출한다  
 				{
 					m_nRunStep = 7000;

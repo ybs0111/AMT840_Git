@@ -75,11 +75,13 @@ BOOL CFtpComm::OnScrapCodeDownload(int nMode, CString strPath, CString strFilena
 		{
 			m_pFtp.Close();
 			st_code_info[nMode].m_nScrapBin = BD_DATA_REJECT;
+
 			return FALSE;
 		}
 
 		m_pFtp.Close();
 		st_code_info[nMode].m_nScrapBin = BD_DATA_GOOD;
+
 		return TRUE;
 	}
 
