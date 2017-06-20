@@ -449,6 +449,9 @@ void CRunTestSitePart3::OnRunMove()
 						{
 							//2017.0322
 							//if (st_test_site_info[m_nTHD_ID].st_pcb_info[i].nYesNo == YES)
+							//kwlee 2017.0614
+							st_test_site_info[m_nTHD_ID].st_pcb_info[i].strBarcode1D[0].TrimLeft();
+							st_test_site_info[m_nTHD_ID].st_pcb_info[i].strBarcode1D[0].TrimRight();
 							if ( st_test_site_info[m_nTHD_ID].st_pcb_info[i].nYesNo == YES && st_test_site_info[m_nTHD_ID].st_pcb_info[i].strBarcode1D[0] != _T("") && st_test_site_info[m_nTHD_ID].st_pcb_info[i].strBarcode1D[0] != _T("ERROR") )
 							{
 								nCount++;
