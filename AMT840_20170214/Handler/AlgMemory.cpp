@@ -113,6 +113,8 @@ void CAlgMemory::OnNormalMessageWrite(CString strMsg)
 		{
 			return;
 		}
+
+		if (m_pQueueNormal->m_nRear >= 100) return; //kwlee 2017.0614
 		OnNormalStringToChar(strMsg, m_pQueueNormal->m_chMsg[m_pQueueNormal->m_nRear]);
 
 		m_pQueueNormal->m_nRear++;

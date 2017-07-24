@@ -1349,8 +1349,8 @@ void CRunTestSiteRobot::OnRunMove()
 					else
 					{
 						//2017.0613
-						strTemp.Format(_T("[RESTRBT_1200] nCount : %d nRetestExistCnt : %d m_npFindWorkPosYXCPB[2]:%d"), nCount, nRetestExistCnt, m_npFindWorkPosYXCPB[2]);
-						clsMem.OnNormalMessageWrite(strTemp);
+						//strTemp.Format(_T("[RESTRBT_1200] nCount : %d nRetestExistCnt : %d m_npFindWorkPosYXCPB[2]:%d"), nCount, nRetestExistCnt, m_npFindWorkPosYXCPB[2]);
+						//clsMem.OnNormalMessageWrite(strTemp);
 						 m_nRunStep = 1000; //james 2016.0918 6000;
 						break;
 					}

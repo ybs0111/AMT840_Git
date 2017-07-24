@@ -518,13 +518,14 @@ void CRunEmptyStackerElevator::OnRunMove(void)
 				//kwlee 2016.1221 Tray Full 
  				//if(st_sync_info.nWorkTransfer_Req[THD_EMPTY_STACKER][1] == WORK_PLACE) //트레이를 놓는 구조이면 
  				//{
-					if(m_nTrayFull_Falg == 0)
-					{
-						m_nTrayFull_Falg = 0;
-						m_nRunStep = 4100;
-					}
-					else
-					{
+				//2017.0615
+// 					if(m_nTrayFull_Falg == 0)
+// 					{
+// 						m_nTrayFull_Falg = 0;
+// 						m_nRunStep = 4100;
+// 					}
+// 					else
+// 					{
 						if (st_handler_info.cWndMain != NULL)
 						{
 							m_nTrayFull_Falg = 0;
@@ -533,8 +534,10 @@ void CRunEmptyStackerElevator::OnRunMove(void)
 							st_other_info.strBoxMsg = _T("[TRAY FULL] eject on Empty Stacker Tray. \r\n Please Remove it.");
 							st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_MESSAGE_BOX_CREATE_REQ, 0);
 						}
-					}
+//					}
 				//}
+
+				m_nRunStep = 4200;
 			}
 			break;
 
@@ -571,7 +574,58 @@ void CRunEmptyStackerElevator::OnRunMove(void)
 			}
 			break;
 
+		case 4200:
+			Set_StackerTray_UpDown(IO_ON); 
+			m_nRunStep = 4210;
+			break;
+
+		case 4210:
+			nRet_1 = Chk_StackerTray_UpDown(IO_ON); 
+			if(nRet_1 == RET_GOOD)
+			{
+				m_nRunStep = 4000;
+			}
+			else if(nRet_1 == RET_ERROR)
+			{
+				CTL_Lib.Alarm_Error_Occurrence(4148, dWARNING, m_strAlarmCode);
+
+				m_nRunStep = 4200;
+			}
+			break;
+
 		case 5000:
+			//2017.0615
+			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_EmptyStkUpChk,	IO_ON); //load stacker up check    
+			if(nRet_1 == IO_ON)
+			{
+				m_nRunStep = 5700;
+			}
+			else
+			{
+				m_nRunStep = 5100;
+			}
+			break;
+
+		case 5100:
+			Set_StackerTray_UpDown(IO_ON); 
+			m_nRunStep = 5110;
+			break;
+
+		case 5110:
+			nRet_1 = Chk_StackerTray_UpDown(IO_ON); 
+			if(nRet_1 == RET_GOOD)
+			{
+				m_nRunStep = 5700;
+			}
+			else if(nRet_1 == RET_ERROR)
+			{
+				CTL_Lib.Alarm_Error_Occurrence(4149, dWARNING, m_strAlarmCode);
+
+				m_nRunStep = 5100;
+			}
+			break;
+
+		case 5700:
 			/*
 			nRet_1 = COMI.Get_MotIOSensor(m_nAxisNum, MOT_SENS_SD); 	
 			if(nRet_1 == BD_GOOD) //로더 플레이트에 트레이가 감지 된 상태 
