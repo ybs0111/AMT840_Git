@@ -25,6 +25,8 @@ bool CAlg_Excel::OnOpenIOMap(CString strFilename)
 	CString strTmp;
 	CString strData;
 
+	
+
 	if (m_clsExcel != NULL)
 	{
 		delete m_clsExcel;
@@ -100,6 +102,7 @@ bool CAlg_Excel::OnOpenIOMap(CString strFilename)
 								m_nIOBitType[i][j][k][l]	= IO_IN;
 //								m_nINIOBitNum[i][j][k][l]	=  (i*10000) + (j*1000) + (k*100) + l;
 							}
+						
 						}
 						else
 						{		
