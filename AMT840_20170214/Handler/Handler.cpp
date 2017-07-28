@@ -114,7 +114,7 @@ BOOL CHandlerApp::InitInstance()
 		return FALSE;
 
 	// 창 하나만 초기화되었으므로 이를 표시하고 업데이트합니다.
-	m_strVer = _T("AMT840 : 1.0.0_2017.0615");
+	m_strVer = _T("AMT840 : 1.0.0_2017.0728");
 	m_pMainWnd->SetWindowText((LPCTSTR)m_strVer);
 
 	//2015.1005

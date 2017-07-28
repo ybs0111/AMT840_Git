@@ -384,7 +384,9 @@ void CLogFromat::OnLogTestSite(int nMode, int nSite, int nLfToRi, tagTEST_SITE_I
 			strMsg += test_site.strLotNo;
 			strMsg += _T("\t");
 
-			if (test_site.st_pcb_info[i].nRetestCnt == 0)
+			//if (test_site.st_pcb_info[i].nRetestCnt == 0)
+			//kwlee 2017.0728
+			if (test_site.st_pcb_info[i].nRetestCnt == 0 && st_recipe_info.nTestRetest_Count != 0)
 			{
 				strMsg += _T("P");
 				strMsg += _T("\t");
@@ -432,7 +434,9 @@ void CLogFromat::OnLogTestSite(int nMode, int nSite, int nLfToRi, tagTEST_SITE_I
 			strMsg += test_site.strLotNo;
 			strMsg += _T("\t");
 
-			if (test_site.st_pcb_info[i].nRetestCnt == 0)
+			//if (test_site.st_pcb_info[i].nRetestCnt == 0)
+			//kwlee 2017.0728
+			if (test_site.st_pcb_info[i].nRetestCnt == 0 && st_recipe_info.nTestRetest_Count != 0)
 			{
 				strMsg += _T("P");
 				strMsg += _T("\t");
@@ -492,7 +496,9 @@ void CLogFromat::OnLogTestSite(int nMode, int nSite, int nLfToRi, tagTEST_SITE_I
 			strMsg += test_site.strLotNo;
 			strMsg += _T("\t");
 
-			if (test_site.st_pcb_info[i].nRetestCnt == 0)
+			//if (test_site.st_pcb_info[i].nRetestCnt == 0)
+			//kwlee 2017.0728
+			if (test_site.st_pcb_info[i].nRetestCnt == 0 && st_recipe_info.nTestRetest_Count != 0)
 			{
 				strMsg += _T("P");
 				strMsg += _T("\t");
@@ -540,7 +546,9 @@ void CLogFromat::OnLogTestSite(int nMode, int nSite, int nLfToRi, tagTEST_SITE_I
 			strMsg += test_site.strLotNo;
 			strMsg += _T("\t");
 
-			if (test_site.st_pcb_info[i].nRetestCnt == 0)
+			//if (test_site.st_pcb_info[i].nRetestCnt == 0)
+			//kwlee 2017.0728
+			if (test_site.st_pcb_info[i].nRetestCnt == 0 && st_recipe_info.nTestRetest_Count != 0)
 			{
 				strMsg += _T("P");
 				strMsg += _T("\t");

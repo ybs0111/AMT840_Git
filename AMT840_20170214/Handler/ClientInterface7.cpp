@@ -1034,7 +1034,9 @@ void CClientInterface7::OnModuleInfo(tagTEST_SITE_INFO &test_site)
 		{
 			if (test_site.nBarcodeMode == 1)
 			{
-				if (test_site.st_pcb_info[i].nRetestCnt == 0)
+				//if (test_site.st_pcb_info[i].nRetestCnt == 0)
+				//kwlee 2017.0728
+				if (test_site.st_pcb_info[i].nRetestCnt == 0 && st_recipe_info.nTestRetest_Count != 0)
 				{
 					strTemp.Format(_T("MDL%02d=%s,P,I"), i+1, test_site.st_pcb_info[i].strBarcode1D[0]);
 				}
@@ -1056,7 +1058,9 @@ void CClientInterface7::OnModuleInfo(tagTEST_SITE_INFO &test_site)
 			}
 			else
 			{
-				if (test_site.st_pcb_info[i].nRetestCnt == 0)
+				//if (test_site.st_pcb_info[i].nRetestCnt == 0)
+				//kwlee 2017.0728
+				if (test_site.st_pcb_info[i].nRetestCnt == 0 && st_recipe_info.nTestRetest_Count != 0)
 				{
 					strTemp.Format(_T("MDL%02d=%s,%s,P,I"), i+1, test_site.st_pcb_info[i].strBarcode1D[0],
 						test_site.st_pcb_info[i].strBarcode1D[1]);
