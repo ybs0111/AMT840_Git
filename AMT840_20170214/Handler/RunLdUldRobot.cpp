@@ -403,10 +403,16 @@ void CRunLdUldRobot::OnRunMove()
 				//st_track_info.nIn				= st_count_info.nInCount[1][0];
 				//2017.0416
 				st_track_info.nIn				= st_count_info.nInCount[0][1];
-				st_track_info.nPrimePass		= st_count_info.nPrimeCount[1][0];
-				st_track_info.nPrimeReject		= st_count_info.nPrimeRejectCount[1][0];
-				st_track_info.nCumPass			= st_count_info.nPassCount[1][0];
-				st_track_info.nCumReject		= st_count_info.nRejectCount[1][0];
+// 				st_track_info.nPrimePass		= st_count_info.nPrimeCount[1][0];
+// 				st_track_info.nPrimeReject		= st_count_info.nPrimeRejectCount[1][0];
+// 				st_track_info.nCumPass			= st_count_info.nPassCount[1][0];
+// 				st_track_info.nCumReject		= st_count_info.nRejectCount[1][0];
+				//kwlee 2017.0728
+				st_track_info.nPrimePass		= st_count_info.nPrimeCount[0][1];
+				st_track_info.nPrimeReject		= st_count_info.nPrimeRejectCount[0][1];
+				st_track_info.nCumPass			= st_count_info.nPassCount[0][1];
+				st_track_info.nCumReject		= st_count_info.nRejectCount[0][1];
+
 				// jtkim 20161008
 				st_track_info.tStart			= st_lot_info[LOT_NEXT].tLotStart;
 				st_track_info.nBdTime			= st_lot_info[LOT_NEXT].nBdTime;
