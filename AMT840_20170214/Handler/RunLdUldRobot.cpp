@@ -18,6 +18,9 @@
 #include "AlgMemory.h"
 #include "LogFromat.h"
 
+//kwlee 2017.0905
+#include "XgemClient.h"
+
 // CRunLdUldRobot
 CRunLdUldRobot clsRunLdUldRobot;
 
@@ -316,6 +319,11 @@ void CRunLdUldRobot::OnRunMove()
 				st_track_info.nBdTime			= st_lot_info[LOT_CURR].nBdTime;
 				st_track_info.nBdTimeCount		= st_lot_info[LOT_CURR].nBdTimeCount;
 
+				//kwlee 2017.0905
+				if (st_basic_info.nModeXgem == YES)
+				{
+					clsXgem.OnMcLotEnd(st_lot_info[LOT_CURR].strLotNo,st_lot_info[LOT_CURR].strPartNo,st_count_info.nInCount[0][0],st_count_info.nPassCount[0][0],st_count_info.nRejectCount[0][0]);
+				}
 
 				clsFunc.OnMCStop();
 
@@ -324,7 +332,7 @@ void CRunLdUldRobot::OnRunMove()
 					st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_LOT_END_CREATE_REQ, 0);
 				}
 
-
+				
 				////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				//2016.1203
 				clsFunc.OnDailyCycleData(st_lot_info[LOT_CURR].strLotNo, 
@@ -375,6 +383,7 @@ void CRunLdUldRobot::OnRunMove()
 				//st_handler_info.nRunStatus	= dSTOP;
 				clsFunc.OnMCStop();
 			}
+			
 		}
 		 		
 	}	
@@ -418,6 +427,12 @@ void CRunLdUldRobot::OnRunMove()
 				st_track_info.nBdTime			= st_lot_info[LOT_NEXT].nBdTime;
 				st_track_info.nBdTimeCount		= st_lot_info[LOT_NEXT].nBdTimeCount;
 
+				//kwlee 2017.0905
+				if (st_basic_info.nModeXgem == YES)
+				{
+					clsXgem.OnMcLotEnd(st_lot_info[LOT_NEXT].strLotNo,st_lot_info[LOT_NEXT].strPartNo,st_count_info.nInCount[0][1],st_count_info.nPassCount[0][1],st_count_info.nRejectCount[0][1]);
+				}
+
 				clsFunc.OnMCStop();
 
 				if (st_handler_info.cWndMain != NULL)
@@ -437,6 +452,10 @@ void CRunLdUldRobot::OnRunMove()
 				}
 				//CTL_Lib.Alarm_Error_Occurrence(0, dWARNING, _T("990000")); //inline off line 일때만 lot end 알람 발생시킴 
 			} 
+
+			
+
+
 
 			st_lot_info[LOT_NEXT].strLotNo		= _T("");
 			st_lot_info[LOT_NEXT].strPartNo		= _T("");
@@ -2187,6 +2206,13 @@ int CRunLdUldRobot::Process_DVC_Pick(int nMode, int nWork_Site)
 		if(nWork_Site == THD_LD_TRAY_PLATE)
 		{
 			m_dpTargetPosList[2] = st_motor_info[m_nRobot_Z].d_pos[P_WORKROBOT_Z_LDTRAY_PICK];
+			//kwlee 2017.0905
+			if (st_basic_info.nModeXgem == YES)
+			{
+				st_tray_info[THD_LD_TRAY_PLATE].nProductCnt = m_npFindWorkPosYXCPB[0];
+				clsXgem.OnMcProductLoadBuffer(START,st_tray_info[THD_LD_TRAY_PLATE].nTrayCnt,st_recipe_info.nTrayY,st_tray_info[THD_LD_TRAY_PLATE].nProductCnt);
+			}
+			////
 		}
 		else if(nWork_Site == THD_ULD_BUFF)
 		{
@@ -2574,6 +2600,12 @@ int CRunLdUldRobot::Process_DVC_Pick(int nMode, int nWork_Site)
 							m_strLotNo[1]	= st_picker[THD_WORK_RBT].st_pcb_info[i].strLotNo;
 							m_strPartNo[1] = st_picker[THD_WORK_RBT].st_pcb_info[i].strPartNo;
 						}
+						//kwlee 2017.0905
+						if (st_basic_info.nModeXgem == YES)
+						{
+							clsXgem.OnMcProductUnloadBuffer(START,st_picker[THD_WORK_RBT].st_pcb_info[i].nTrayCnt,st_picker[THD_WORK_RBT].st_pcb_info[i].strSerialNo);
+						}
+						//
 					}
 				}
 			}
@@ -3490,6 +3522,7 @@ int CRunLdUldRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTestSite_P
 		nRet_1 = Chk_WorkRbtPicker_UpDown(IO_OFF);  
 		if(nRet_1 == RET_GOOD)
 		{
+			
 			m_bDvcWaitChk_Falg = false;
 			m_nPlace_Step = 4020;
 		}
@@ -3521,6 +3554,18 @@ int CRunLdUldRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTestSite_P
 	case 4100:
 		if(nWork_Site == THD_LD_BUFF)
 		{
+			//kwlee 2017.0905
+			if (st_basic_info.nModeXgem == YES)
+			{	
+				for (i = 0; i<m_nPickerPara; i++)
+				{
+					if(st_picker[THD_WORK_RBT].st_pcb_info[i].nYesNo == CTL_YES)
+					{
+						clsXgem.OnMcProductLoadBuffer(END,st_picker[THD_WORK_RBT].st_pcb_info[i].nTrayCnt,st_recipe_info.nTrayY,st_picker[THD_WORK_RBT].st_pcb_info[i].nProductCnt);
+					}
+				}
+			}
+			////
 			mn_BcrFirst = CTL_YES;//2016.1111
 			mn_BcrFirstChk = CTL_NO;
 			mn_BcrFirstFinal = CTL_NO;
@@ -3528,6 +3573,15 @@ int CRunLdUldRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTestSite_P
 		}
 		else
 		{
+			//kwlee 2017.0905
+			if (st_basic_info.nModeXgem == YES)
+			{
+				for (i = 0; i<m_nPickerPara; i++)
+				{
+					clsXgem.OnMcProductUnloadBuffer(END,st_picker[THD_WORK_RBT].st_pcb_info[i].nTrayCnt,st_picker[THD_WORK_RBT].st_pcb_info[i].strSerialNo);
+				}
+			}
+			//
 			m_nPlace_Step = 5000; 
 		}
 		break;
@@ -4630,7 +4684,17 @@ int CRunLdUldRobot::Process_Barcode1D(int nWork_Site, int nX, int nY)
 			// 바코드 읽기 요청 
 			clsBcr1D.m_nCommand = BD_NONE;
 			::SendMessage(st_handler_info.hWnd, WM_BARCODE_MSG_1, BARCODE_TRIGGER_1, 0);
-
+			
+			
+			//kwlee 2017.0905
+			if (st_basic_info.nModeXgem == YES)
+			{
+				if (st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nYesNo == YES)
+				{
+					clsXgem.OnMcBarcode(START,st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nTrayCnt,st_recipe_info.nTrayY,st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nProductCnt);
+				}
+			}
+			
 			m_nBarcode1dStep = 1300;
 			break;
 
@@ -4682,6 +4746,14 @@ int CRunLdUldRobot::Process_Barcode1D(int nWork_Site, int nX, int nY)
 					break;
 				}
 
+				//kwlee 2017.0905
+				if (st_basic_info.nModeXgem == YES)
+				{
+					if (st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nYesNo == YES)
+					{
+						clsXgem.OnMcBarcode(END,st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nTrayCnt,st_recipe_info.nTrayY,st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nProductCnt);
+					}
+				}
 //				st_tray_info[nWork_Site].st_pcb_info[nY][nX].strBarcode1D[0] = clsBcr1D.m_strBarcode[0];
 //				st_tray_info[nWork_Site].st_pcb_info[nY][nX].strBarcode1D[1] = clsBcr1D.m_strBarcode[1];
 				//2016.1006
@@ -5001,7 +5073,14 @@ int CRunLdUldRobot::Process_Barcode2D(int nWork_site, int nX, int nY)
 
 				return RET_GOOD;
 			}
-
+			//kwlee 2017.0905
+			if (st_basic_info.nModeXgem == YES)
+			{
+				if (st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nYesNo == YES)
+				{
+					clsXgem.OnMcBarcode(START,st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nTrayCnt,st_recipe_info.nTrayY,st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nProductCnt);
+				}
+			}
 			// 바코드 읽기 요청 
 			clsBcr2D.m_nCommand = BD_NONE;
 			::SendMessage(st_handler_info.hWnd, WM_BARCODE_MSG_2, BARCODE_TRIGGER_1, 1);
@@ -5037,6 +5116,16 @@ int CRunLdUldRobot::Process_Barcode2D(int nWork_site, int nX, int nY)
 				}
 
 				// jtkim 20160929
+
+				//kwlee 2017.0905
+				if (st_basic_info.nModeXgem == YES)
+				{
+					if (st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nYesNo == YES)
+					{
+						clsXgem.OnMcBarcode(END,st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nTrayCnt,st_recipe_info.nTrayY,st_buffer_info[THD_LD_BUFF].st_pcb_info[nY].nProductCnt);
+					}
+				}
+
 
 				//st_picker[m_nRobotSite].st_pcb_info[i]
 				if (nWork_site == THD_ULD_BUFF)
@@ -5200,6 +5289,7 @@ int CRunLdUldRobot::Process_Barcode2D(int nWork_site, int nX, int nY)
 			clsBcr2D.m_nCommand = BD_NONE;
 			::SendMessage(st_handler_info.hWnd, WM_BARCODE_MSG_2, BARCODE_TRIGGER_1, 1);
 			m_dwWaitUntil[0] = GetCurrentTime();
+
 			m_nBarcode2dStep = 1420;
 			break;
 

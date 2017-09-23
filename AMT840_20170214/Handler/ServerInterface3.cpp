@@ -6,7 +6,8 @@
 #include "RunTestSitePart3.h"
 #include "FastechPublic_IO.h"
 #include "LogFromat.h"
-
+//kwlee 2017.0905
+#include "XgemClient.h"
 #define INTERFACE_SERVER_MSG_NAME_3		"INTERFACE_SERVER_SHAREMEM_3"
 
 CServerInterface3 clsInterS3;
@@ -313,6 +314,11 @@ void CServerInterface3::OnDataAnalysis(CString strMsg)
 					{
 						st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
 					}
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						clsXgem.OnMcSocket(st_test_site_info[nSite].st_pcb_info[i].nEnable,i+1);	
+					}
 				}
 
 // 				if (strTemp == _T("1"))
@@ -476,7 +482,11 @@ void CServerInterface3::OnDataAnalysis(CString strMsg)
 										st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
 										st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_CONTINUE_FAIL; //kwlee 2017.0125
 										//kwlee 2017.0105
-										strTemp.Format(_T("TSite_3,Socket Off Slot : %d"),i + 1);
+										strTemp.Format(_T("TSite_3,Socket Off Slot : %d BIN : [%s]"),i + 1,strBin);
+										//kwlee 2017.0918
+										st_handler_info.mstr_event_msg[0] = strTemp;
+										::PostMessage(st_handler_info.hWnd, WM_MAIN_EVENT, YES, 0);	
+										//
 										clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
 										//
 									  //st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_CONTINUE_FAIL;
@@ -542,6 +552,19 @@ void CServerInterface3::OnDataAnalysis(CString strMsg)
 	 												  strLogKey, 
 	 												  strLogData);
 								}
+								//kwlee 2017.0905
+								if (st_basic_info.nModeXgem == YES)
+								{
+									if (st_test_site_info[nSite].st_pcb_info[i].nFailCount > 0 && st_test_site_info[nSite].st_pcb_info[i].nYesNo == YES)
+									{
+										if (st_test_site_info[nSite].st_pcb_info[i].nBin == BD_DATA_RETEST || st_test_site_info[nSite].st_pcb_info[i].nBin == BD_DATA_GOOD ||
+											st_test_site_info[nSite].st_pcb_info[i].nBin == BD_DATA_REJECT)
+										{
+											clsXgem.OnMcRetestEnd(st_test_site_info[nSite].st_pcb_info[i].strSerialNo,i+1,st_test_site_info[nSite].st_pcb_info[i].nTrayCnt,nSite);
+										}
+									}
+								}
+								///
 							}
 							else
 							{
@@ -638,6 +661,11 @@ void CServerInterface3::OnDataAnalysis(CString strMsg)
 					else
 					{
 						st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
+					}
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						clsXgem.OnMcSocket(st_test_site_info[nSite].st_pcb_info[i].nEnable,i+1);	
 					}
 				}
 

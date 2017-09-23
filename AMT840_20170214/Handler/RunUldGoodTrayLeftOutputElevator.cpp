@@ -14,6 +14,8 @@
 #include "AlgMemory.h"
 #include "LogCtrl.h"
 #include "LogFromat.h"
+//kwlee 2017.0905
+#include "XgemClient.h"
 
 // CUldGoodTrayLeftOutputElevator
 CRunUldGoodTrayLeftOutputElevator clsRunUldGoodTrayLeftOutputElevator;
@@ -668,6 +670,7 @@ void CRunUldGoodTrayLeftOutputElevator::OnRunMove(void)
 			nRet_1 = CTL_Lib.Elevator_Job_Move_Pos(0, m_nAxisNum,  P_ELV_RECEIVE_OFFSET); //트레이를 트랜스퍼에서 받는다 
 			if(nRet_1 == RET_GOOD)
 			{
+				
 				m_nRunStep = 3100;
 			}
 			break;
@@ -678,7 +681,6 @@ void CRunUldGoodTrayLeftOutputElevator::OnRunMove(void)
 				st_tray_info[THD_ULD_1_STACKER].nTrayExist = CTL_NO; //tray 정보 클리어 
 
 				st_lot_info[m_nLotProcessNum].nUnLdTrayCnt++; //해당 lot의 트레이 카운트 정보 증가 
-
 				//st_count_info.nUnldStackerTray++; //트레이 스태커 트레이 적재 정보 하나 up 
 				st_count_info.nUnLdStacker_Good_TrayCnt[0]++; //unload good 1 stacker tray 적재 수량
 
@@ -692,6 +694,12 @@ void CRunUldGoodTrayLeftOutputElevator::OnRunMove(void)
 				{				
 					m_nRunStep = 3200;				
 				}
+				//kwlee 2017.0905
+				if (st_basic_info.nModeXgem == YES)
+				{
+					clsXgem.OnMcTrayUnload(START,st_lot_info[m_nLotProcessNum].strLotNo,st_lot_info[m_nLotProcessNum].strPartNo,st_count_info.nUnLdStacker_Good_TrayCnt[0]);
+				}
+				///
 			}
 			else
 			{
@@ -799,6 +807,13 @@ void CRunUldGoodTrayLeftOutputElevator::OnRunMove(void)
 		case 3600:
 			//james 2016.0912 st_sync_info.nWorkRbt_Dvc_Req[THD_ULD_1_STACKER][0] = CTL_READY;//2016.0828 
 			//st_tray_info[THD_ULD_1_STACKER].nTrayExist = CTL_YES; //tray 정보 셋
+
+			//kwlee 2017.0905
+			if (st_basic_info.nModeXgem == YES)
+			{
+				clsXgem.OnMcTrayUnload(END,st_lot_info[m_nLotProcessNum].strLotNo,st_lot_info[m_nLotProcessNum].strPartNo,st_count_info.nUnLdStacker_Good_TrayCnt[0]);
+			}
+			///
 			m_nRunStep = 1000;
 			break;
 			

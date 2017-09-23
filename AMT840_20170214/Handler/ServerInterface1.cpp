@@ -6,7 +6,8 @@
 #include "RunTestSitePart1.h"
 #include "FastechPublic_IO.h"
 #include "LogFromat.h"
-
+//kwlee 2017.0905
+#include "XgemClient.h"
 #define INTERFACE_SERVER_MSG_NAME_1		"INTERFACE_SERVER_SHAREMEM_1"
 
 CServerInterface1 clsInterS1;
@@ -314,6 +315,11 @@ void CServerInterface1::OnDataAnalysis(CString strMsg)
 					{
 						st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
 					}
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						clsXgem.OnMcSocket(st_test_site_info[nSite].st_pcb_info[i].nEnable,i+1);	
+					}
 				}
 
 // 				if (strTemp == _T("1"))
@@ -447,6 +453,7 @@ void CServerInterface1::OnDataAnalysis(CString strMsg)
 								// barcode정보가 같으면 
 								// jtkim 20161006
 								st_test_site_info[nSite].st_pcb_info[i].nRetestCnt++;
+
 								if (strBin == _T("01") || strBin == _T("02") || strBin == _T("03") || strBin == _T("P"))
 								{
 									// 1/2/3 bin정보면 양품
@@ -482,13 +489,17 @@ void CServerInterface1::OnDataAnalysis(CString strMsg)
  										st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
 										st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_CONTINUE_FAIL; //kwlee 2017.0125
 										//kwlee 2017.0105
-										strTemp.Format(_T("TSite_1,Socket Off Slot : %d"),i + 1);
+										
+										strTemp.Format(_T("TSite_1,Socket Off Slot : %d BIN : [%s]"),i + 1,strBin);
+										//kwlee 2017.0918
+										st_handler_info.mstr_event_msg[0] = strTemp;
+										::PostMessage(st_handler_info.hWnd, WM_MAIN_EVENT, YES, 0);	
+										//
 										clsMem.OnAbNormalMessagWrite(strTemp);//로그 저장
 										//
 									//st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_CONTINUE_FAIL;
  									}
 									
-
 									// 양품이 아니고 불량이면 scrap code 
 									st_test_site_info[nSite].st_pcb_info[i].nScrCode = _wtoi(strBin);
 
@@ -550,6 +561,20 @@ void CServerInterface1::OnDataAnalysis(CString strMsg)
 	 												  strLogKey, 
 	 												  strLogData);
 								}
+
+								//kwlee 2017.0905
+								if (st_basic_info.nModeXgem == YES)
+								{
+									if (st_test_site_info[nSite].st_pcb_info[i].nFailCount > 0 && st_test_site_info[nSite].st_pcb_info[i].nYesNo == YES)
+									{
+										if (st_test_site_info[nSite].st_pcb_info[i].nBin == BD_DATA_RETEST || st_test_site_info[nSite].st_pcb_info[i].nBin == BD_DATA_GOOD ||
+											st_test_site_info[nSite].st_pcb_info[i].nBin == BD_DATA_REJECT)
+										{
+											clsXgem.OnMcRetestEnd(st_test_site_info[nSite].st_pcb_info[i].strSerialNo,i+1,st_test_site_info[nSite].st_pcb_info[i].nTrayCnt,nSite);
+										}
+									}
+								}
+								///
 							}
 							else
 							{
@@ -645,6 +670,11 @@ void CServerInterface1::OnDataAnalysis(CString strMsg)
 					else
 					{
 						st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
+					}
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						clsXgem.OnMcSocket(st_test_site_info[nSite].st_pcb_info[i].nEnable,i+1);	
 					}
 				}
 

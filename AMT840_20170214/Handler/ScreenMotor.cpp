@@ -1810,6 +1810,7 @@ void CScreenMotor::OnMotorCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 	int nResponse;
 	int nLen;
 	double dKey;
+	double dCurr; //kwlee 2017.0918
 
 	double value;
 
@@ -1868,6 +1869,10 @@ void CScreenMotor::OnMotorCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 
 		case 1:
 			dKey = m_dMotorPos[nRow-2][1];
+			//kwlee 2017.0918
+			dCurr = m_dMotorPos[nRow-2][1];
+			//
+
 			KeyPadD(st_motor_info[nMotor].d_limit_position[0], 10000, &dKey);
 
 			m_dMotorPos[nRow-2][1] = dKey;
@@ -1876,12 +1881,18 @@ void CScreenMotor::OnMotorCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 
 			m_pGridMotPosition.SetItemText(nRow, 1, strTmp);
 
-			strTmp.Format(_T("[Motor] (%s)_Axis (%s)_Position [%.3f] Change"), strMotorName, 
-				strPosName,
+// 			strTmp.Format(_T("[Motor] (%s)_Axis (%s)_Position [%.3f] Change"), strMotorName, 
+// 				strPosName,
+// 				m_dMotorPos[nRow - 2][1]);
+			//clsFunc.OnLogFileAdd(99, strTmp);
+
+			//kwlee 2017.0918
+			strTmp.Format(_T("[Motor] (%s)_Axis (%s)_Position[%.3f] -> [%.3f] Change"), strMotorName, 
+				strPosName,dCurr,
 				m_dMotorPos[nRow - 2][1]);
-			
+			clsFunc.OnLogFileAdd(1, strTmp);
 			clsFunc.OnLogFileAdd(99, strTmp);
-			
+			//
 			break;
 
 		case 2:
@@ -1973,6 +1984,9 @@ void CScreenMotor::OnMotorCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 
 			value = COMI.Get_MotCurrentPos(clsExcel.m_nPartAxis[m_nMotorPartNum][m_nMotorPartAxisNum]);  // FASTECH 모터 특정 축의 커맨트 위치 리턴 함수 //
 			
+			
+			
+
 			dlgMsg.m_nMessageType	= 1;
 			dlgMsg.m_strMessage.Format(_T("The current value of the input is 3, you want to set the value of this position to this value?"), value);
 				
@@ -1980,16 +1994,23 @@ void CScreenMotor::OnMotorCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 
 			if(nResponse == IDOK)
 			{
+				dCurr = m_dMotorPos[nRow - 2][1]; //kwlee 2017.0918
 				m_dMotorPos[nRow - 2][1] = value;
 				strTmp.Format(_T("%.3f"), m_dMotorPos[nRow - 2][1]);
 				m_pGridMotPosition.SetItemText(nRow, 1, strTmp);	
 			}
 
-			strTmp.Format(_T("[Motor] (%s)_Axis (%s)_Position [%.3f] Change"), strMotorName,
-																			   strPosName, 
-																			   m_dMotorPos[nRow - 2][1]);
+// 			strTmp.Format(_T("[Motor] (%s)_Axis (%s)_Position [%.3f] Change"), strMotorName,
+// 																			   strPosName, 
+// 																			   m_dMotorPos[nRow - 2][1]);
+// 			clsFunc.OnLogFileAdd(99, strTmp);
+			//kwlee 2017.0918
+			strTmp.Format(_T("[Motor] (%s)_Axis (%s)_Position [%.3f] -> [%.3f] Change"), strMotorName,
+				strPosName, dCurr,
+				m_dMotorPos[nRow - 2][1]);
+			clsFunc.OnLogFileAdd(1, strTmp);
 			clsFunc.OnLogFileAdd(99, strTmp);
-
+			//
 			OnMotorCompletion(m_nCellRowPos, m_nCellColPos);
 			break;
 	}

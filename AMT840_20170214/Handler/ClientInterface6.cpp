@@ -5,7 +5,8 @@
 #include "CtlBd_Library.h"
 #include "AlgMemory.h"
 #include "LogFromat.h"
-
+//kwlee 2017.0905
+#include "XgemClient.h"
 #define INTERFACE_CLIENT_MSG_NAME_6		"INTERFACE_CLIENT_SHAREMEM_6"
 
 CClientInterface6 clsInterC6;
@@ -474,6 +475,11 @@ void CClientInterface6::OnDataAnalysis(CString strMsg)
 					{
 						st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
 					}
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						clsXgem.OnMcSocket(st_test_site_info[nSite].st_pcb_info[i].nEnable,i+1);	
+					}
 				}
 
 // 				if (strTemp == _T("1"))
@@ -539,6 +545,11 @@ void CClientInterface6::OnDataAnalysis(CString strMsg)
 					else
 					{
 						st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
+					}
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						clsXgem.OnMcSocket(st_test_site_info[nSite].st_pcb_info[i].nEnable,i+1);	
 					}
 				}
 

@@ -15,6 +15,8 @@
 #include "PublicFunction.h"
 #include "LogCtrl.h"
 #include "LogFromat.h"
+//kwlee 2017.0905
+#include "XgemClient.h"
 
 // CRunDvcLdBuffer
 CRunDvcLdBuffer clsRunDvcLdBuffer;
@@ -460,6 +462,15 @@ void CRunDvcLdBuffer::OnRunMove()
 				{ //버퍼의 자재 정보를 셋팅한다
 					m_npBuff_Info[i] = st_buffer_info[THD_LD_BUFF].st_pcb_info[i].nYesNo; //버퍼의 자재 정보를 셋팅한다 
 					nCount++;
+
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						if (st_buffer_info[THD_LD_BUFF].st_pcb_info[i].nYesNo == YES)
+						{
+							clsXgem.OnMcTrayMoveLDBuffer(START,st_buffer_info[THD_LD_BUFF].st_pcb_info[i].nTrayCnt,st_recipe_info.nTrayY,st_buffer_info[THD_LD_BUFF].st_pcb_info[i].nProductCnt,st_buffer_info[THD_LD_BUFF].st_pcb_info[i].strCSerialNo);
+						}
+					}
 				}
 
 				if(nCount > 0)
@@ -574,7 +585,7 @@ void CRunDvcLdBuffer::OnRunMove()
 			nRet_1 = clsFunc.Check_BufferStatus(0, THD_LD_BUFF, CTL_YES, m_npBuff_Info, m_npBuff_Status, m_npBuff_OutputStatus); //전역변수와 센서 상태가 일치해야 한다 
 			if(nRet_1 == RET_GOOD)
 			{//정상 상태, //전역변수와 센서 상태가 일치해야 한다
-				 m_nRunStep = 2400;
+				m_nRunStep = 2400;
 			}
 			else if(nRet_1== RET_ERROR)
 			{//아직 
@@ -607,6 +618,18 @@ void CRunDvcLdBuffer::OnRunMove()
 			nRet_1 = CTL_Lib.Linear_Move(BOTH_MOVE_FINISH, m_nLinearMove_Index, m_lAxisCnt, m_lpAxisNum, m_dpTargetPosList, COMI.mn_runspeed_rate);
 			if(nRet_1 == BD_GOOD) //정상적으로 완료된 상태
 			{
+				//kwlee 2017.0905
+				if (st_basic_info.nModeXgem == YES)
+				{
+					for (i = 0; i < st_recipe_info.nLdUldBuffer_Num; i++)
+					{
+						if (st_buffer_info[THD_LD_BUFF].st_pcb_info[i].nYesNo == YES)
+						{
+							clsXgem.OnMcTrayMoveLDBuffer(END,st_buffer_info[THD_LD_BUFF].st_pcb_info[i].nTrayCnt,st_recipe_info.nTrayY,st_buffer_info[THD_LD_BUFF].st_pcb_info[i].nProductCnt,st_buffer_info[THD_LD_BUFF].st_pcb_info[i].strSerialNo );
+						}
+					}
+				}
+				///
 				m_nRunStep = 3100;
 			}
 			else if(nRet_1 == BD_ERROR)

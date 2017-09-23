@@ -134,7 +134,8 @@ void CDialogTesterInterface::OnInitGridItemData()
 
 	CStringArray options;
 
-	nX		= 4;
+	//nX		= 4;
+	nX		= 8;
 	nY		= 8;
 
 	nMaxRow = 25; // unloader tray y count
@@ -205,7 +206,9 @@ void CDialogTesterInterface::OnInitGridItemData()
 	// 1
 	for (i= 0; i<nY; i++) 
 	{
-		m_pGridItemData.SetItemText((i * 3) +1, 1, _T("LotNo"));
+		//m_pGridItemData.SetItemText((i * 3) +1, 1, _T("LotNo"));
+		//kwlee 2017.0919
+		m_pGridItemData.SetItemText((i * 3) +1, 1, _T("SerialNo"));
 		m_pGridItemData.SetItemBkColour((i * 3) + 1, 1,RGB(219, 229, 241), BLACK_C);
 
 		m_pGridItemData.SetItemText((i * 3)+ 2, 1, _T("PartNo"));
@@ -240,8 +243,18 @@ void CDialogTesterInterface::OnInitGridItemData()
 		{
 			if (m_nSite == 0)
 			{
-				strTemp.Format(_T("%s [%s]"), st_test_site_info[THD_TESTSITE_1 + j].st_pcb_info[j].strLotNo, st_bd_info[THD_TESTSITE_1 + j][1].strBinHistory[j]);
+				//strTemp.Format(_T("%s [%s]"), st_test_site_info[THD_TESTSITE_1 + j].st_pcb_info[j].strSerialNo, st_bd_info[THD_TESTSITE_1 + j][1].strBinHistory[j]);
+				//kwlee 2017.0919
+				if (st_test_site_info[THD_TESTSITE_1 + j].st_pcb_info[j].nEnable == YES)
+				{
+					strTemp.Format(_T("%s [%s]"), st_test_site_info[THD_TESTSITE_1 + j].st_pcb_info[j].strSerialNo, st_test_site_info[THD_TESTSITE_1 + j].st_pcb_info[j].strBin);	
+				}
+				else
+				{
+					strTemp.Format(_T("[Socket Off]"));
+				}
 				m_pGridItemData.SetItemText((i * 3) +1, j + 2, strTemp);
+				
 				m_pGridItemData.SetItemText((i * 3) + 2, j + 2, st_test_site_info[THD_TESTSITE_1 + j].st_pcb_info[j].strPartNo);
 
 				dAve = 0.0;
@@ -254,22 +267,34 @@ void CDialogTesterInterface::OnInitGridItemData()
 			}
 			else
 			{
-				strTemp.Format(_T("%s [%s]"), st_test_site_info[THD_TESTSITE_5 + j].st_pcb_info[j + 4].strLotNo, st_bd_info[THD_TESTSITE_5 + j][1].strBinHistory[j + 4]);
+				//strTemp.Format(_T("%s [%s]"), st_test_site_info[THD_TESTSITE_5 + j].st_pcb_info[j + 4].strLotNo, st_bd_info[THD_TESTSITE_5 + j][1].strBinHistory[j + 4]);
+				//kwlee 2017.0919
+				if (st_test_site_info[THD_TESTSITE_5 + j].st_pcb_info[j].nEnable == YES)
+				{
+					strTemp.Format(_T("%s [%s]"), st_test_site_info[THD_TESTSITE_5 + j].st_pcb_info[j].strSerialNo,st_test_site_info[THD_TESTSITE_5 + j].st_pcb_info[j].strBin);
+				}
+				else
+				{
+					strTemp.Format(_T("[Socket Off]"));
+				}
 				m_pGridItemData.SetItemText((i * 3) +1, j + 2, strTemp);
-				m_pGridItemData.SetItemText((i * 3) + 2, j + 2, st_test_site_info[THD_TESTSITE_5 + j].st_pcb_info[j + 4].strPartNo);
+				
+				//m_pGridItemData.SetItemText((i * 3) + 2, j + 2, st_test_site_info[THD_TESTSITE_5 + j].st_pcb_info[j + 4].strPartNo);
+				m_pGridItemData.SetItemText((i * 3) + 2, j + 2, st_test_site_info[THD_TESTSITE_5 + j].st_pcb_info[j].strPartNo);
 
 				dAve = 0.0;
-				if (st_bd_info[m_nSite][1].nBdPassCnt[j + 4] > 0)
+				if (st_bd_info[m_nSite][1].nBdPassCnt[j] > 0)
 				{
-					dAve = ((double)st_bd_info[m_nSite][1].nBdPassCnt[j + 4] / (double)st_bd_info[m_nSite][1].nBdTestCnt[j + 4]) * (double)100;
+					//dAve = ((double)st_bd_info[m_nSite][1].nBdPassCnt[j + 4] / (double)st_bd_info[m_nSite][1].nBdTestCnt[j + 4]) * (double)100;
+					dAve = ((double)st_bd_info[m_nSite][1].nBdPassCnt[j] / (double)st_bd_info[m_nSite][1].nBdTestCnt[j]) * (double)100;
 				}
-				strTemp.Format(_T("%.2f T:[%d]P:[%d]"), dAve, st_bd_info[m_nSite][1].nBdTestCnt[j], st_bd_info[m_nSite][1].nBdPassCnt[j + 4]); 
+				strTemp.Format(_T("%.2f T:[%d]P:[%d]"), dAve, st_bd_info[m_nSite][1].nBdTestCnt[j], st_bd_info[m_nSite][1].nBdPassCnt[j]); 
 				m_pGridItemData.SetItemText((i * 3) +3, j + 2, strTemp);
 			}
 		}
 		m_nNum++;
-	
 	}
+	UpdateData(FALSE);
 }
 
 void CDialogTesterInterface::OnInitGridBottomItemData()

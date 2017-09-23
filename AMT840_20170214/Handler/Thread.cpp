@@ -88,6 +88,8 @@
 #include "RunTestSitePart8.h"
 #include "ClientEcFirst.h"
 #include "ClientEcSecond.h"
+//kwlee 2017.0905
+#include "XgemClient.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -281,6 +283,8 @@ UINT OnThreadInterface(LPVOID lParam)			// m_thread[4]
 
 		clsEcFirst.OnCommunication();
 		clsEcSecond.OnCommunication();
+		//kwlee 2017.0905
+		clsXgem.OnCommunication();
 		Sleep(0);
 		sing.Unlock();
 	}

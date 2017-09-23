@@ -314,6 +314,7 @@ void CClientEcSecond::OnDataAnalysis(CString strMsg)
 			st_tray_info[st_work_info.nLdCvySite].strPartNo	= st_lot_display_info[0].strPartNo;
 			st_tray_info[st_work_info.nLdCvySite].nNewLotIn	= YES;
 
+
 			if (st_handler_info.cWndMain != NULL)
 			{
 				st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_LOT_START_DELETE_REQ, 0);

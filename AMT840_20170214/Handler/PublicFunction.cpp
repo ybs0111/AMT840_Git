@@ -4519,6 +4519,9 @@ int CPublicFunction::Handler_Tray_DataInfo_Shift(int nMode, int nDvc_Yes_No, int
 				st_tray_info[nRcv_Site].st_pcb_info[y][x].nBdNum = st_tray_info[nSend_SIte].st_pcb_info[y][x].nBdNum;
 				st_tray_info[nRcv_Site].st_pcb_info[y][x].nEnable = st_tray_info[nSend_SIte].st_pcb_info[y][x].nEnable;
 				//st_tray_info[THD_MACHINE_INPUT_NETWORK_SITE].st_pcb_info[y][x].nScrCodd =5;
+
+				
+
 			}
 		}
 
@@ -4529,7 +4532,9 @@ int CPublicFunction::Handler_Tray_DataInfo_Shift(int nMode, int nDvc_Yes_No, int
 		st_tray_info[nRcv_Site].strLotNo = st_tray_info[nSend_SIte].strLotNo;// lot no......
 		st_tray_info[nRcv_Site].strPartNo = st_tray_info[nSend_SIte].strPartNo;
 		st_tray_info[nRcv_Site].strProcess = st_tray_info[nSend_SIte].strProcess;	// process id.....
-
+		//kwlee 2017.0905
+		st_tray_info[nRcv_Site].nTrayCnt = st_tray_info[nSend_SIte].nTrayCnt;
+		st_tray_info[nRcv_Site].nProductCnt = st_tray_info[nSend_SIte].nProductCnt;
 		/*if (st_handler.cwnd_list != NULL)  // 리스트 바 화면 존재
 		{
 			sprintf(st_msg.c_normal_msg, "[CLEAR DATA] SHIFT_IDBUFF_OUTPUTREADY_BUFFER DATA CLEAR");
@@ -4558,7 +4563,6 @@ int CPublicFunction::Handler_Tray_DataInfo_Shift(int nMode, int nDvc_Yes_No, int
 				st_tray_info[nRcv_Site].st_pcb_info[y][x].nBdNum		= st_tray_info[nSend_SIte].st_pcb_info[y][x].nBdNum;
 				st_tray_info[nRcv_Site].st_pcb_info[y][x].nEnable		= st_tray_info[nSend_SIte].st_pcb_info[y][x].nEnable;
 
-
 				st_tray_info[nSend_SIte].st_pcb_info[y][x].strLotNo = "";
 				st_tray_info[nSend_SIte].st_pcb_info[y][x].strSerialNo = "";
 				st_tray_info[nSend_SIte].st_pcb_info[y][x].strCSerialNo = "";
@@ -4574,6 +4578,7 @@ int CPublicFunction::Handler_Tray_DataInfo_Shift(int nMode, int nDvc_Yes_No, int
 				st_tray_info[nSend_SIte].st_pcb_info[y][x].nRetest = 0;
 				st_tray_info[nSend_SIte].st_pcb_info[y][x].nBdNum = 0;
 				st_tray_info[nSend_SIte].st_pcb_info[y][x].nEnable = 0;
+				
 			}
 		}
 		st_tray_info[nRcv_Site].nNewLotIn = st_tray_info[nSend_SIte].nNewLotIn;
@@ -4584,6 +4589,10 @@ int CPublicFunction::Handler_Tray_DataInfo_Shift(int nMode, int nDvc_Yes_No, int
 		st_tray_info[nRcv_Site].strPartNo = st_tray_info[nSend_SIte].strPartNo;
 		st_tray_info[nRcv_Site].strProcess = st_tray_info[nSend_SIte].strProcess;	// process id.....
 
+		//kwlee 2017.0905
+		st_tray_info[nRcv_Site].nTrayCnt = st_tray_info[nSend_SIte].nTrayCnt;
+		st_tray_info[nRcv_Site].nProductCnt = st_tray_info[nSend_SIte].nProductCnt;
+
 		st_tray_info[nSend_SIte].nNewLotIn = 0;
 		st_tray_info[nSend_SIte].nLastModule = 0; //마지막 자재인지 체크
 		st_tray_info[nSend_SIte].nModuleCnt = 0;
@@ -4591,7 +4600,9 @@ int CPublicFunction::Handler_Tray_DataInfo_Shift(int nMode, int nDvc_Yes_No, int
 		st_tray_info[nSend_SIte].strLotNo = "";// lot no......
 		st_tray_info[nSend_SIte].strPartNo = "";
 		st_tray_info[nSend_SIte].strProcess = "";	// process id.....
-
+		//kwlee 2017.0905 
+		st_tray_info[nSend_SIte].nTrayCnt = 0;
+		st_tray_info[nSend_SIte].nProductCnt = 0;
 
 		/*if (st_handler.cwnd_list != NULL)  // 리스트 바 화면 존재
 		{
@@ -4620,6 +4631,8 @@ int CPublicFunction::Handler_Tray_DataInfo_Shift(int nMode, int nDvc_Yes_No, int
 				st_tray_info[nRcv_Site].st_pcb_info[y][x].nRetest = 0;
 				st_tray_info[nRcv_Site].st_pcb_info[y][x].nBdNum = 0;
 				st_tray_info[nRcv_Site].st_pcb_info[y][x].nEnable = 0; 
+
+				
 			}
 		}
 
@@ -4631,7 +4644,9 @@ int CPublicFunction::Handler_Tray_DataInfo_Shift(int nMode, int nDvc_Yes_No, int
 		st_tray_info[nRcv_Site].strPartNo = st_tray_info[nSend_SIte].strPartNo;
 		st_tray_info[nRcv_Site].strProcess = st_tray_info[nSend_SIte].strProcess;	// process id.....
 
-
+		//kwlee 2017.0905
+		st_tray_info[nRcv_Site].nTrayCnt = st_tray_info[nSend_SIte].nTrayCnt;
+		st_tray_info[nRcv_Site].nProductCnt = st_tray_info[nSend_SIte].nProductCnt;
 		/*if (st_handler.cwnd_list != NULL)  // 리스트 바 화면 존재
 		{
 			sprintf(st_msg.c_normal_msg, "[CLEAR DATA] SHIFT_IDBUFF_OUTPUTREADY_BUFFER DATA CLEAR");
@@ -4662,6 +4677,8 @@ int CPublicFunction::Handler_Tray_DataInfo_Shift(int nMode, int nDvc_Yes_No, int
 				st_tray_info[nSend_SIte].st_pcb_info[y][x].nBdNum = 0;
 				st_tray_info[nSend_SIte].st_pcb_info[y][x].nEnable = 0;
 				//st_tray_info[THD_MACHINE_INPUT_NETWORK_SITE].st_pcb_info[y][x].nScrCodd =5;
+
+				
 			}
 		}
 
@@ -4673,6 +4690,9 @@ int CPublicFunction::Handler_Tray_DataInfo_Shift(int nMode, int nDvc_Yes_No, int
 		st_tray_info[nSend_SIte].strPartNo = "";
 		st_tray_info[nSend_SIte].strProcess = "";	// process id.....
 		
+		//kwlee 2017.0905
+		st_tray_info[nSend_SIte].nTrayCnt = 0;
+		st_tray_info[nSend_SIte].nProductCnt = 0;
 
 		/*if (st_handler.cwnd_list != NULL)  // 리스트 바 화면 존재
 		{
@@ -5756,6 +5776,10 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				// jtkim 20160929
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[0]		= st_tray_info[nWorkSite].st_pcb_info[npWorkPos[0]][npWorkPos[1]].strBarcode2D[0];
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1]		= st_tray_info[nWorkSite].st_pcb_info[npWorkPos[0]][npWorkPos[1]].strBarcode2D[1];
+
+				//kwlee 2017.0905
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt		= st_tray_info[nWorkSite].nTrayCnt;
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt		= st_tray_info[nWorkSite].nProductCnt;
 				
 				//2016.1031
 				if( st_handler_info.bLoaderOnFlag == CTL_YES )
@@ -5783,6 +5807,10 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 					// jtkim 20160929
 					st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[0]	= _T("");
 					st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1]	= _T("");
+
+					//kwlee 2017.0905
+					st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt	= 0;
+					st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt  = 0;
 				}
 				
 				//////////////////////
@@ -5813,6 +5841,10 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				// jtkim 20160929
 				st_tray_info[nWorkSite].st_pcb_info[npWorkPos[0]][npWorkPos[1]].strBarcode2D[0]	= _T("");
 				st_tray_info[nWorkSite].st_pcb_info[npWorkPos[0]][npWorkPos[1]].strBarcode2D[1]	= _T("");
+
+				//kwlee 2017.0905
+				st_tray_info[nWorkSite].nTrayCnt = 0;
+				st_tray_info[nWorkSite].nProductCnt = 0;
 			}
 			else if(nWorkSite ==THD_ULD_BUFF )
 			{
@@ -5841,6 +5873,10 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				// jtkim 20160929
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[0]		= st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strBarcode2D[0];
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1]		= st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strBarcode2D[1];
+
+				//kwlee 2017.0905
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt		= st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nTrayCnt;
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt		= st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nProductCnt;
 				//////////////////////
 				//data clear
 				/////////////////////////
@@ -5870,6 +5906,10 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strBarcode2D[0]	= _T("");
 				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strBarcode2D[1]	= _T("");
 				//test site만 사용 st_tray_info[nWorkSite].st_pcb_info[npWorkPos[0]][npWorkPos[1]].tStart;	
+
+				//kwlee 2017.0905
+				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nTrayCnt	= 0;
+				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nProductCnt	= 0;
 			}
 		}  //work robot 작업완료
 		else if(nRobotSite == THD_TEST_RBT) //PICKER_PICK_MODE
@@ -5923,6 +5963,10 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1]		= st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strBarcode2D[1];
 				//test site만 사용 st_picker[nRobotSite].st_pcb_info[npRobotPos[3]].tStart = st_tray_info[nWorkSite].st_pcb_info[npWorkPos[0]][npWorkPos[1]].tStart;			
 
+				//kwlee 2017.0905
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt		= st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nTrayCnt;
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt		= st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nProductCnt;
+
 				//////////////////////
 				//data clear
 				/////////////////////////
@@ -5952,6 +5996,9 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strBarcode2D[0]	= _T("");
 				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strBarcode2D[1]	= _T("");
 				//test site만 사용 st_tray_info[nWorkSite].st_pcb_info[npWorkPos[0]][npWorkPos[1]].tStart;	
+				//kwlee 2017.0905
+				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nTrayCnt	= 0;
+				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nProductCnt = 0;
 			}
 			else if(nWorkSite >= THD_TESTSITE_1 && nWorkSite <= THD_TESTSITE_8) //테스트 소켓에서 자재 집는 동작
 			{//피커는 정보를 가지고 가고, 테스트 소켓은 정보가 클리어 된다 		
@@ -5995,7 +6042,9 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[0]	 = st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].strBarcode2D[0];
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1]	 = st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].strBarcode2D[1];
 				//test site만 사용 st_picker[nRobotSite].st_pcb_info[npRobotPos[0]].tStart = st_test_site_info[nWorkSite][npWorkPos[0]].st_pcb_info[npWorkPos[1]].tStart;			
-				 
+				//kwlee 2017.0905
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt	 = st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].nTrayCnt;
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt	 = st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].nProductCnt;
 				//////////////////////
 				//data clear
 				/////////////////////////
@@ -6025,6 +6074,11 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				// jtkim 20160929
 				st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].strBarcode2D[0]	= _T("");
 				st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].strBarcode2D[1]	= _T("");
+
+				//kwlee 2017.0905
+				st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].nTrayCnt = 0;
+				st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].nProductCnt = 0;
+
 				/* james 2016.0804 
 				// jtkim 20150424
 				if (nWorkSite == THD_LEFT_TEST_SITE)
@@ -6077,6 +6131,10 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strWWN			= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strWWN;
 				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strCSerialNo	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strCSerialNo;
 
+				//kwlee 2017.0905
+				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nTrayCnt	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt;
+				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nProductCnt	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt;
+
 				// jtkim 20160903
 				//ybs 2016.1006
 // 				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strBarcode1D[0]	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode1D[0];
@@ -6116,6 +6174,10 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[0]	= _T("");
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1]	= _T("");
 				//test site만 사용 st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].tStart;	
+
+				//kwlee 2017.0905
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt	= 0;
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt	= 0;
 			}
 			else if(nWorkSite == THD_ULD_1_STACKER || nWorkSite == THD_ULD_2_STACKER || nWorkSite == THD_REJECT_OUT_1_STACKER || nWorkSite == THD_REJECT_OUT_2_STACKER)
 			{
@@ -6145,6 +6207,9 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				st_tray_info[nWorkSite].st_pcb_info[npWorkPos[0]][npWorkPos[1]].strBarcode2D[0]	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[0];
 				st_tray_info[nWorkSite].st_pcb_info[npWorkPos[0]][npWorkPos[1]].strBarcode2D[1]	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1];
 				//test site만 사용 st_picker[nRobotSite].st_pcb_info[npRobotPos[0]].tStart = st_picker[nRobotSite].st_pcb_info[npRobotPos[0]].tStart;			
+				//kwlee 2017.0905
+				st_tray_info[nWorkSite].st_pcb_info[npWorkPos[0]][npWorkPos[1]].nTrayCnt	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt;
+				st_tray_info[nWorkSite].st_pcb_info[npWorkPos[0]][npWorkPos[1]].nProductCnt	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt;
 
 				//////////////////////
 				//data clear
@@ -6174,7 +6239,12 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				// jtkim 20160929
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[0]	= _T("");
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1]	= _T("");
-				//test site만 사용 st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].tStart;	
+				//test site만 사용 st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].tStart;
+
+				//kwlee 2017.0905
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt	= 0;
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt	= 0;
+
 			}
 		}
 		else if(nRobotSite == THD_TEST_RBT)
@@ -6227,7 +6297,9 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strBarcode2D[0]	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[0];
 				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].strBarcode2D[1]	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1];
 				//test site만 사용 st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].tStart = st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].tStart;			
-
+				//kwlee 2017.0905
+				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nTrayCnt	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt;
+				st_buffer_info[nWorkSite].st_pcb_info[npWorkPos[0]].nProductCnt	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt;
 				//////////////////////
 				//data clear
 				/////////////////////////
@@ -6256,6 +6328,10 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[0]	= _T("");
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1]	= _T("");
 				//test site만 사용 st_picker[nRobotSite].st_pcb_info[npRobotPos[0]].tStart;	
+
+				//kwlee 2017.0905
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt	= 0;
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt	= 0;
 			}
 			else if(nWorkSite >= THD_TESTSITE_1 && nWorkSite <= THD_TESTSITE_8) //테스트 소켓에서 자재 집는 동작
 			{//피커는 정보를 가지고 가고, 테스트 소켓은 정보가 클리어 된다 		
@@ -6285,7 +6361,11 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				// jtkim 20160929
 				st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].strBarcode2D[0]	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[0];
 				st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].strBarcode2D[1]	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1];
-				//test site만 사용 st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].tStart = st_test_site_info[nWorkSite][npWorkPos[0]].st_pcb_info[npWorkPos[1]].tStart;			
+				//test site만 사용 st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].tStart = st_test_site_info[nWorkSite][npWorkPos[0]].st_pcb_info[npWorkPos[1]].tStart;	
+
+				//kwlee 2017.0905
+				st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].nTrayCnt	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt;
+				st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].nProductCnt	= st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt;
 				// jtkim 20160906
 				st_test_site_info[nWorkSite].st_pcb_info[npWorkPos[1]].nTestBdStart = BD_NONE;
 				//////////////////////
@@ -6317,7 +6397,10 @@ int CPublicFunction::Data_Exchange_PickPlace(int nPickPlace, int nJobCnt, int nR
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[0]	= _T("");
 				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].strBarcode2D[1]	= _T("");
 				//test site만 사용 st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].tStart;	
-				 
+				//kwlee 2017.0905
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nTrayCnt	= 0;
+				st_picker[nRobotSite].st_pcb_info[npWorkPos[3]].nProductCnt	= 0;
+
 				/* james 2016.0804 
 				// jtkim 20150424
 				if (nWorkSite == THD_LEFT_TEST_SITE)

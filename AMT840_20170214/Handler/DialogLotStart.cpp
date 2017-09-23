@@ -511,7 +511,7 @@ void CDialogLotStart::OnBnClickedBtnLotStart()
 			st_tray_info[m_nLdCvySite].strPartNo	= st_lot_info[LOT_NEXT].strPartNo;
 
 			st_tray_info[m_nLdCvySite].nNewLotIn	= YES;
-
+		
 			if (st_handler_info.cWndMain != NULL)
 			{
 				st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_LOT_START_DELETE_REQ, 0);
@@ -533,33 +533,33 @@ void CDialogLotStart::OnBnClickedBtnLotStart()
 	}
 	else
 	{
-		//2017.0430 발주 후 살릴것
-// 		if( ( st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )  || ( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") ) )
-// 		{
-// 			if( st_handler_info.mn_removetray == CTL_NO )
-// 			{
-// 				if( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )//나올수 없다.ㅋ
-// 				{
-// 					st_handler_info.mn_removetray = CTL_REQ;
-// 					st_handler_info.mn_uldnum = 1;
-// 					if( st_handler_info.cWndList != NULL)
-// 					{
-// 						strMsg.Format( _T(" 현재 랏(%s) 시작전 빈트레이 제거할려는데. 나올 수 없다.") , m_strLotNo );
-// 						clsMem.OnNormalMessageWrite(strMsg);
-// 					}
-// 				}
-// 				else if( st_count_info.nInCount[0][0] <= 0 && st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )
-// 				{
-// 					st_handler_info.mn_removetray = CTL_REQ;
-// 					st_handler_info.mn_uldnum = 1;
-// 					if( st_handler_info.cWndList != NULL)
-// 					{
-// 						strMsg.Format( _T(" 현재 랏(%s) 시작전 빈트레이 제거할려는데. 나올 수 없다.") , m_strLotNo );
-// 						clsMem.OnNormalMessageWrite(strMsg);
-// 					}
-// 				}
-// 			}				
-// 		}
+		//2017.0430 발주 후 살릴것 -> 2017.0821 해제
+		if( ( st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )  || ( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") ) )
+		{
+			if( st_handler_info.mn_removetray == CTL_NO )
+			{
+				if( st_lot_info[LOT_CURR].strLotNo ==_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )//나올수 없다.ㅋ
+				{
+					st_handler_info.mn_removetray = CTL_REQ;
+					st_handler_info.mn_uldnum = 1;
+					if( st_handler_info.cWndList != NULL)
+					{
+						strMsg.Format( _T(" 현재 랏(%s) 시작전 빈트레이 제거할려는데. 나올 수 없다.") , m_strLotNo );
+						clsMem.OnNormalMessageWrite(strMsg);
+					}
+				}
+				else if( st_count_info.nInCount[0][0] <= 0 && st_lot_info[LOT_CURR].strLotNo !=_T("") && st_lot_info[LOT_NEXT].strLotNo ==_T("") )
+				{
+					st_handler_info.mn_removetray = CTL_REQ;
+					st_handler_info.mn_uldnum = 1;
+					if( st_handler_info.cWndList != NULL)
+					{
+						strMsg.Format( _T(" 현재 랏(%s) 시작전 빈트레이 제거할려는데. 나올 수 없다.") , m_strLotNo );
+						clsMem.OnNormalMessageWrite(strMsg);
+					}
+				}
+			}				
+		}
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

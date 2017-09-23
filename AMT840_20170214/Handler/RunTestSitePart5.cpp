@@ -9,6 +9,8 @@
 #include "ComizoaPublic.h"
 #include "LogCtrl.h"
 #include "LogFromat.h"
+//kwlee 2017.0905
+#include "XgemClient.h"
 
 CRunTestSitePart5 clsTestSite5;
 
@@ -836,6 +838,18 @@ void CRunTestSitePart5::OnCommunication()
 					st_test_site_info[nSite].nTestBdStart	= BD_BIN_CHK;
 
 					st_test_site_info[nSite].tStart			= COleDateTime::GetCurrentTime();
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						for (i=0; i<8; i++)
+						{
+							if (st_test_site_info[nSite].st_pcb_info[i].nYesNo == YES)
+							{
+								clsXgem.OnMcProductTest(START,st_test_site_info[nSite].st_pcb_info[i].strSerialNo,i,nSite);
+							}
+						}
+					}
+					///	
 				}
 				else if (st_test_site_info[nSite].nTestBdStart == BD_BIN_CHK)
 				{
@@ -907,6 +921,12 @@ void CRunTestSitePart5::OnCommunication()
 						{
 							st_test_site_info[nSite].st_pcb_info[i].nTestBdStart	= BD_END;
 							st_test_site_info[nSite].st_pcb_info[i].strBdTime		= strTime;
+							//kwlee 2017.0905
+							if (st_basic_info.nModeXgem == YES)
+							{
+								clsXgem.OnMcProductTest(END,st_test_site_info[nSite].st_pcb_info[i].strSerialNo,i,nSite);
+							}
+							///
 						}
 
 					}
@@ -976,11 +996,16 @@ void CRunTestSitePart5::OnCommunication()
 							else 
 							{
 								st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_RETEST;
+								
+								//kwlee 2017.0828 Test
+								st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
 							}
 						}
 						else if ((rand() % 10) == 1 || (rand() % 10) == 2 || (rand() % 10) == 3)
 						{
 							st_test_site_info[nSite].st_pcb_info[i].nBin = BD_DATA_RETEST;
+							//kwlee 2017.0828 Test
+							st_test_site_info[nSite].st_pcb_info[i].nEnable = NO;
 						}
 						else
 						{

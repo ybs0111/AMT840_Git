@@ -15,6 +15,8 @@
 #include "LogCtrl.h"
 #include "AlgMemory.h"
 #include "LogFromat.h"
+//kwlee 2017.0905
+#include "XgemClient.h"
 
 // CLdTrayInputShifterConveyor
 CRunLdTrayInputShifterConveyor clsRunLdTrayInputShifterConveyor;
@@ -990,7 +992,6 @@ void CRunLdTrayInputShifterConveyor::OnRunMove(void) //0816
 						m_nRunStep = 3010;
 					}
 				}
-
 			}
 			break;
 
@@ -1259,7 +1260,20 @@ void CRunLdTrayInputShifterConveyor::OnRunMove(void) //0816
 				st_sync_info.nConveyor_AcMotorCtl_Req[THD_LD_CV_STACKER_RIGHT] = CTL_REQ;
 				st_sync_info.nConveyor_AcMotorCtl_Req[THD_LD_STACKER] = CTL_REQ;  //load stacker ac motor 구동 
 				m_bCVTrayStackerArrivedFlag = false;
-			}	
+			}
+			//kwlee 2017.0905
+			if (st_basic_info.nModeXgem == YES)
+			{
+				if(st_lot_info[LOT_CURR].nLotStatus == LOT_START)
+				{
+					clsXgem.OnMcTrayIn(START,st_lot_info[LOT_CURR].strLotNo,st_lot_info[LOT_CURR].strPartNo,st_lot_info[LOT_CURR].nQty);
+				}
+				else if(st_lot_info[LOT_NEXT].nLotStatus == LOT_START)
+				{
+					clsXgem.OnMcTrayIn(START,st_lot_info[LOT_NEXT].strLotNo,st_lot_info[LOT_NEXT].strPartNo,st_lot_info[LOT_CURR].nQty);
+				}
+			}
+			
 			m_nRunStep = 4300;
 			break;
 
@@ -1391,12 +1405,22 @@ void CRunLdTrayInputShifterConveyor::OnRunMove(void) //0816
 				st_sync_info.nLdCV_LR_TrayInStack_Flag[THD_LD_CV_STACKER_RIGHT] = CTL_NO; //트레이를 이송하여 없으니 적재 정보 클리어 
 				st_tray_info[THD_LD_CV_STACKER_RIGHT].nTrayExist = CTL_NO; //트레이존재 정보 클리어 
 			}
+			//kwlee 2017.0905
+			if (st_basic_info.nModeXgem == YES)
+			{
+				if(st_lot_info[LOT_CURR].nLotStatus >= LOT_START)
+				{
+					clsXgem.OnMcTrayIn(END,st_lot_info[LOT_CURR].strLotNo,st_lot_info[LOT_CURR].strPartNo,st_lot_info[LOT_CURR].nQty);
+				}
+				else if(st_lot_info[LOT_NEXT].nLotStatus >= LOT_START)
+				{
+					clsXgem.OnMcTrayIn(END,st_lot_info[LOT_NEXT].strLotNo,st_lot_info[LOT_NEXT].strPartNo,st_lot_info[LOT_CURR].nQty);
+				}
+			}
 			m_nRunStep = 5100;
 			break;
 
 		case 5100:
-			
-			
 			st_sync_info.nLdElv_Tray_Req[THD_LD_STACKER] = CTL_READY; //로딩 스태커에 자재를 모두 넣었다 
 			m_nRunStep = 6000;
 			break;

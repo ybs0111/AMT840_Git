@@ -412,6 +412,9 @@ typedef unsigned int					UINT32;			// 0 .. 4,294,967,295
 #define PICKER				0
 #define FINGER				1
 
+//kwlee 2017.0904
+#define START               0
+#define END                 1
 //2015.0324 james 
 #define SOCKET_CONTACT_ON			100
 #define SOCKET_CONTACT_OFF			200
@@ -2662,6 +2665,9 @@ struct tagPCB_INFO
 
 	CString strBdTime;
 
+	//kwlee 2017.0905
+	int nTrayCnt;
+	int nProductCnt;
 
 	//2017.0109
 	CString			strMaterial;			// matrial id.....
@@ -2683,6 +2689,11 @@ struct tag_BUFFER_INFO
 	CString strPartNo;				// test site part no.....
 	CString strEqpID;				// test site epq id.....
 	CString strOptCode;				// opt code (lot display에서 정보 가져오기)
+
+	//kwlee 2017.0905
+	int nTrayCnt;
+	int nProductCnt;
+	//
 
 	//james 2016.0813 
 	int nTestSIte_No;	  //작업이 지정된 정보, Test Site #1,#2,#3,#4, #5,#6,#7,#8
@@ -2714,6 +2725,11 @@ struct tag_PICKER_INFO
 	CString			strMaterial;			// matrial id.....
 	CString			strLogKey[50];
 	CString			strLogData[50];
+
+	//kwlee 2017.0905
+	int nTrayCnt;
+	int nProductCnt;
+	//
 };
 extern tag_PICKER_INFO st_picker[THREAD_MAX_SITE];
 
@@ -2747,6 +2763,10 @@ struct tagALL_TRAY_INFO
 	int		nModuleCount;			//
 	int		nPgmDown;				// pgm download 완료......
 
+	//kwlee 2017.0905
+	int nTrayCnt;
+	int nProductCnt;
+	//
 	//2017.0109
 	int				nLogCount;
 	int				nStartStatus;
@@ -2768,6 +2788,10 @@ struct tagREJECT_TRAY_INFO
 {
 	int nYesNo;				// reject tray 수량.....
 
+	//kwlee 2017.0905
+	int nTrayCnt;
+	int nProductCnt;
+	//
 	tagPCB_INFO st_pcb_info[MAX_TRAY_ROW][MAX_TRAY_COL]; // pcb 구조체 변수..... 
 };
 //james 2016.0805 extern tagREJECT_TRAY_INFO	st_reject_info[THREAD_MAX_SITE];
@@ -2804,7 +2828,10 @@ struct tagTEST_SITE_INFO
 	int nStart_FixPos; //작업 가능한 사이트 0~7 까지 의 소켓 정보(0번, 4번 소켓이 시작 위치이며, 체크 및 동작 위치로 FIX이다) //james 2016.0813 
 
 	int nTester_Req[3];
-
+	//kwlee 2017.0905
+	int nTrayCnt;
+	int nProductCnt;
+	//
 };
 // jtkim 20160803
 //extern tagTEST_SITE_INFO st_test_site_info[THREAD_MAX_SITE][2]; //2015.0216 [2][2];

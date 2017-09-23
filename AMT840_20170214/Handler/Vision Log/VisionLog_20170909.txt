@@ -1,0 +1,4 @@
+2017-09-09 오전 9:44:13:170 : AMT Vision DLL MainForm Load
+2017-09-09 오전 9:44:13:171 : Camera Mode = 1 Load Start
+2017-09-09 오전 9:45:35:306 : AMT Vision DLL MainForm Load
+2017-09-09 오전 9:45:35:307 : Camera Mode = 1 Load Start

@@ -129,6 +129,9 @@ public:
 	CString			m_strLotNo[2];
 	CString			m_strPartNo[2];	
 	DWORD			m_dwCycleTime[2][3];
+
+	//kwlee 2017.0905
+	int            m_nProduct_Cnt;
 	 
 };
 extern CRunLdUldRobot clsRunLdUldRobot;

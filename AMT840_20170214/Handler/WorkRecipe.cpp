@@ -1572,6 +1572,13 @@ void CWorkRecipe::OnInterfaceCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 						m_pGridInterface.SetItemFont(j+2, i + 1, &clsFunc.OnLogFont(18));
 						m_pGridInterface.SetItemText(j+2, i + 1, _T("Y"));
 
+						//kwlee 2017.0905
+						if (st_basic_info.nModeXgem == YES)
+						{
+							clsXgem.OnMcSocket(m_nTsiteSocketUse[1][i][j],j+1);	
+						}
+						
+
 						//Test Site Use;
 // 						m_nTsiteUse[1][i] = YES;
 // 						strTemp.Format(_T("%d"),i + 1);
@@ -1615,6 +1622,11 @@ void CWorkRecipe::OnInterfaceCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 						m_pGridInterface.SetItemFont(j+11, i + 1, &clsFunc.OnLogFont(18));
 						m_pGridInterface.SetItemText(j+11, i + 1, _T("Y"));
 
+						//kwlee 2017.0905
+						if (st_basic_info.nModeXgem == YES)
+						{
+							clsXgem.OnMcSocket(m_nTsiteSocketUse[1][i + 4][j],j+1);	
+						}
 						//Test Site Use;
 // 						m_nTsiteUse[1][i +4] = YES;
 // 						strTemp.Format(_T("%d"),i + 5);
@@ -1649,6 +1661,13 @@ void CWorkRecipe::OnInterfaceCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 					m_pGridInterface.SetItemFont(nRow, nCol, &clsFunc.OnLogFont(18));
 					m_pGridInterface.SetItemText(nRow, nCol, _T("N"));
 
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						clsXgem.OnMcSocket(m_nTsiteSocketUse[1][nColTemp - 1][nRowTemp - 1],nRowTemp - 1);	
+					}
+					
+
 					if (st_handler_info.cWndList != NULL)
 					{
 						strTemp.Format(_T("[Recipe] %d site %d th Board Off"),nColTemp, 10 - nRow);
@@ -1666,7 +1685,13 @@ void CWorkRecipe::OnInterfaceCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 					m_pGridInterface.SetItemBkColour(nRow, nCol, YELLOW_D, BLACK_L);
 					m_pGridInterface.SetItemFont(nRow, nCol, &clsFunc.OnLogFont(18));
 					m_pGridInterface.SetItemText(nRow, nCol, _T("N"));
-	
+
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						clsXgem.OnMcSocket(m_nTsiteSocketUse[1][nColTemp - 1][nRowTemp - 1],nRowTemp - 1);	
+					}
+					
 				}
 			}
 		}
@@ -1687,6 +1712,11 @@ void CWorkRecipe::OnInterfaceCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 
 					m_pGridInterface.SetItemBkColour(nRow, nCol, YELLOW_C, BLACK_L);
 					m_pGridInterface.SetItemText(nRow, nCol, _T("Y"));
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						clsXgem.OnMcSocket(m_nTsiteSocketUse[1][nColTemp - 1][nRowTemp - 1],nRowTemp - 1);	
+					}
 
 					dlgMsg.m_nMessageType	= 1;
 					dlgMsg.m_strMessage.Format(_T("Do you want a Left [%02d] Board Count Reset?"), (10 - nRow));
@@ -1722,6 +1752,12 @@ void CWorkRecipe::OnInterfaceCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 					m_pGridInterface.SetItemBkColour(nRow, nCol, YELLOW_C, BLACK_L);
 					m_pGridInterface.SetItemText(nRow, nCol, _T("Y"));
 
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						clsXgem.OnMcSocket(m_nTsiteSocketUse[1][nColTemp - 1][nRowTemp - 1],nRowTemp - 1);	
+					}
+
 					dlgMsg.m_nMessageType	= 1;
 					dlgMsg.m_strMessage.Format(_T("Do you want a Right [%02d] Board Count Reset?"), (nRow - 10) );
 					if (dlgMsg.DoModal() == IDOK)
@@ -1748,6 +1784,7 @@ void CWorkRecipe::OnInterfaceCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 							m_pGridInterface.SetItemBkColour(nRow, nCol, RGB(219, 229, 241), BLACK_L);
 							m_pGridInterface.SetItemFont(nRow, nCol, &clsFunc.OnLogFont(18));
 
+							
 							for(j =0; j< 8; j++ )
 							{
 								m_nTsiteSocketUse[1][nCol - 1][j] = YES;
@@ -1755,10 +1792,16 @@ void CWorkRecipe::OnInterfaceCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 								m_pGridInterface.SetItemFont(j+2, nCol, &clsFunc.OnLogFont(18));
 								m_pGridInterface.SetItemText(j+2, nCol, _T("Y"));
 
+								//kwlee 2017.0905
+								if (st_basic_info.nModeXgem == YES)
+								{
+									clsXgem.OnMcSocket(m_nTsiteSocketUse[1][nCol - 1][j],j + 1);	
+								}
+
 								//kwlee 2017.0124
 								st_test_site_info[THD_TESTSITE_1 + nCol - 1].st_pcb_info[j].nFailCount = 0;
 							}
-
+							
 							if (st_handler_info.cWndList != NULL)
 							{
 								strTemp.Format(_T("[Recipe] %d th Board All On"), nCol);
@@ -1788,6 +1831,11 @@ void CWorkRecipe::OnInterfaceCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 								m_pGridInterface.SetItemBkColour(j+2, nCol, YELLOW_D, BLACK_L);
 								m_pGridInterface.SetItemFont(j+2, nCol, &clsFunc.OnLogFont(18));
 								m_pGridInterface.SetItemText(j+2, nCol, _T("N"));
+								//kwlee 2017.0905
+								if (st_basic_info.nModeXgem == YES)
+								{
+									clsXgem.OnMcSocket(m_nTsiteSocketUse[1][nCol - 1][j],j + 1);	
+								}
 							}
 						}
 						/////////////////
@@ -1814,7 +1862,11 @@ void CWorkRecipe::OnInterfaceCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 								m_pGridInterface.SetItemBkColour(j+11, nCol, YELLOW_C, BLACK_L);
 								m_pGridInterface.SetItemFont(j+11, nCol, &clsFunc.OnLogFont(18));
 								m_pGridInterface.SetItemText(j+11, nCol, _T("Y"));
-
+								//kwlee 2017.0905
+								if (st_basic_info.nModeXgem == YES)
+								{
+									clsXgem.OnMcSocket(m_nTsiteSocketUse[1][nCol +3][j],j + 1);	
+								}
 								//kwlee 2017.0124
 								st_test_site_info[THD_TESTSITE_5 + nCol - 1].st_pcb_info[j].nFailCount = 0;
 							}
@@ -1840,6 +1892,11 @@ void CWorkRecipe::OnInterfaceCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 								m_pGridInterface.SetItemBkColour(j+11, nCol, YELLOW_D, BLACK_L);
 								m_pGridInterface.SetItemFont(j+11, nCol, &clsFunc.OnLogFont(18));
 								m_pGridInterface.SetItemText(j+11, nCol, _T("N"));
+								//kwlee 2017.0905
+								if (st_basic_info.nModeXgem == YES)
+								{
+									clsXgem.OnMcSocket(m_nTsiteSocketUse[1][nCol +3][j],j + 1);	
+								}
 							}
 						}
 						/////////////////////////

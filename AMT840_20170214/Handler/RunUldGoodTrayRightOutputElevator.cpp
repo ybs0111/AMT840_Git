@@ -14,7 +14,8 @@
 #include "LogCtrl.h"
 #include "AlgMemory.h"
 #include "LogFromat.h"
-
+//kwlee 2017.0905
+#include "XgemClient.h"
 // CUldGoodTrayRightOutputElevator
 CRunUldGoodTrayRightOutputElevator clsRunUldGoodTrayRightOutputElevator;
 CRunUldGoodTrayRightOutputElevator::CRunUldGoodTrayRightOutputElevator()
@@ -557,6 +558,12 @@ void CRunUldGoodTrayRightOutputElevator::OnRunMove(void)
 				{				
 					m_nRunStep = 3200;				
 				}
+				//kwlee 2017.0905
+				if (st_basic_info.nModeXgem == YES)
+				{
+					clsXgem.OnMcTrayUnload(START,st_lot_info[m_nLotProcessNum].strLotNo,st_lot_info[m_nLotProcessNum].strPartNo,st_count_info.nUnLdStacker_Good_TrayCnt[1]);
+				}
+				///
 			}
 			else
 			{
@@ -656,6 +663,12 @@ void CRunUldGoodTrayRightOutputElevator::OnRunMove(void)
 		case 3600:
 			//james 2016.0912 st_sync_info.nWorkRbt_Dvc_Req[THD_ULD_2_STACKER][0] = CTL_READY;//2016.0828 
 			//st_tray_info[THD_ULD_2_STACKER].nTrayExist = CTL_YES; //tray Á¤º¸ ¼Â
+			//kwlee 2017.0905
+			if (st_basic_info.nModeXgem == YES)
+			{
+				clsXgem.OnMcTrayUnload(END,st_lot_info[m_nLotProcessNum].strLotNo,st_lot_info[m_nLotProcessNum].strPartNo,st_count_info.nUnLdStacker_Good_TrayCnt[1]);
+			}
+			///
 			m_nRunStep = 1000;
 			break;
 			

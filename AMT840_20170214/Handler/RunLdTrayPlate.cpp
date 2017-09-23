@@ -15,6 +15,9 @@
 #include "LogCtrl.h"
 #include "LogFromat.h"
 
+//kwlee 2017.0905
+#include "XgemClient.h"
+
 // CLdTrayPlate
 CRunLdTrayPlate clsRunLdTrayPlate;
 CRunLdTrayPlate::CRunLdTrayPlate()
@@ -203,14 +206,23 @@ void CRunLdTrayPlate::OnRunMove(void) //0816
 				////////////////////////////////////////
 				// 트레이 관련 정보등을 이미 받은 상태 
 				////////////////////////////////////////						
-				
+		
+
 				//st_count_info.nLoadTray_Cnt++; //트레이 작업수량 
 				if(st_lot_info[m_nLotProcessNum].strLotNo == st_tray_info[THD_LD_STACKER].strLotNo) //2016.0907 
 				{
 					st_tray_info[THD_LD_TRAY_PLATE].nTrayExist = CTL_YES;		
 					st_lot_info[m_nLotProcessNum].nLdTrayCnt++;
+					//kwlee 2017.0905
+					st_tray_info[THD_LD_TRAY_PLATE].nTrayCnt = st_lot_info[m_nLotProcessNum].nLdTrayCnt;
 					m_nRunStep = 2000; 
 				}		
+
+				//kwlee 2017.0905
+				if (st_basic_info.nModeXgem == YES)
+				{
+					clsXgem.OnMcTrayMoveLDZone(START,st_tray_info[THD_LD_TRAY_PLATE].nTrayCnt,st_recipe_info.nTrayY,st_recipe_info.nTrayY);	
+				}
 
 				if (st_handler_info.cWndMain != NULL)
 				{
@@ -271,6 +283,13 @@ void CRunLdTrayPlate::OnRunMove(void) //0816
 			nRet_1 = COMI.Get_MotIOSensor(M_LD_ELV, MOT_SENS_SD); 	
 			if(nRet_1 == BD_GOOD) //로더 플레이트에 트레이가 감지 된 상태 
 			{
+				//kwlee 2017.0905
+				if (st_basic_info.nModeXgem == YES)
+				{
+					clsXgem.OnMcTrayMoveLDZone(END,st_tray_info[THD_LD_TRAY_PLATE].nTrayCnt,st_recipe_info.nTrayY,st_recipe_info.nTrayY);	
+				}
+				//
+
 				st_sync_info.nLdPlate_Tray_Supply_Req[THD_LD_TRAY_PLATE] = CTL_CLEAR;
 				m_nRunStep = 5000;
 			}

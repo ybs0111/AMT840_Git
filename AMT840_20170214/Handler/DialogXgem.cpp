@@ -102,7 +102,7 @@ void CDialogXgem::OnBnClickedButtonEnd()
 
 	if (m_strLotNo == _T("") || m_strPartNo == _T("")) return;
 
-	clsXgem.OnMcLotEnd(m_strLotNo, m_strPartNo, 100, 90, 10, time);
+	clsXgem.OnMcLotEnd(m_strLotNo, m_strPartNo, 100, 90, 10);
 }
 
 

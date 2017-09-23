@@ -11,6 +11,7 @@ nTestEndBin
 #include "Ctlbd_Variable.h"
 #include "PublicFunction.h"
 #include "LogFromat.h"
+#include "XgemClient.h"//kwlee 2017.0905
 
 #define EC_FIRST_CLIENT_MSG_NAME		"EC_FIRST_CLIENT_SHAREMEM"
 
@@ -334,6 +335,13 @@ void CClientEcFirst::OnDataAnalysis(CString strMsg)
 			st_tray_info[st_work_info.nLdCvySite].strLotNo	= st_lot_display_info[0].strLotNo;
 			st_tray_info[st_work_info.nLdCvySite].strPartNo	= st_lot_display_info[0].strPartNo;
 			st_tray_info[st_work_info.nLdCvySite].nNewLotIn	= YES;
+			
+			//kwlee 2017.0905
+			if (st_basic_info.nModeXgem = YES)
+			{
+				clsXgem.OnMcLotStart(st_tray_info[st_work_info.nLdCvySite].strLotNo,st_tray_info[st_work_info.nLdCvySite].strPartNo);
+			}
+			
 
 			if (st_handler_info.cWndMain != NULL)
 			{

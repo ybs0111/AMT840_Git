@@ -12,7 +12,8 @@
 #include "PublicFunction.h"
 #include "ComizoaPublic.h"
 #include "LogCtrl.h"
-
+//kwlee 2017.0905
+#include "XgemClient.h"
 
 #include "RunDvcLdBuffer.h"
 #include "RunDvcUldBuffer.h"
@@ -827,8 +828,6 @@ void CRunTestSiteRobot::OnRunMove()
 			}//if(nFlag == 0 && nTemp_Test_Place_THD_Site > 0 && st_lot_info[m_nLotProcessNum].nLot_THD_Status[THD_TEST_RBT] >=  LOT_END_START)			 
 			////////////// LOT_END_START 시 retest 자재 처리 조건 
 
-
-
 			/////////////////////////////////////////////////////////////////
 			//테스터에 로딩 또는 언로딩 중 어느것을 먼저 작업할지 결정한다
 			/////////////////////////////////////////////////////////////////
@@ -894,8 +893,6 @@ void CRunTestSiteRobot::OnRunMove()
 								break;
 							}
 						}
-
-
 						if(st_test_site_info[nTHD_i].strLotNo == m_strFindLotNo && nSiteYesCnt > 0 ) //WORK_PICK 할 수 있는 자재가 있으면 이 자재를 있으면 
 						{
 							nCount++;
@@ -1049,140 +1046,139 @@ void CRunTestSiteRobot::OnRunMove()
 			}
 
 			//james 2016.0926 조건 변경 
+			//kwlee 2017.0821 del
+// 			if(st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].strLotNo == st_lot_info[m_nLotProcessNum].strLotNo)
+// 			{
+// 				if (st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_FREE || st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_CLEAR) 
+// 				{
+// 					nRet_1 = TestSite_PickPlace_SocketData_LoadBuff_Map_Combine(0, st_sync_info.nTestSite_Target_THD_Work_Site[1], st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]); //버퍼 위치별 작업 가능여부 정보,피커의 사용 유/무 같이 셋팅
+//  		 
+// 					if( nRet_1 == RET_GOOD )
+// 					{
+// 						st_sync_info.nSmema_Tray_Input_Req = CTL_YES;//테스터가 요청했다
+// 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] = CTL_REQ;
+// 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][1] = WORK_PICK; //자재를 집을 수 있게 요청 
+// 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][2] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][2]; //st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].nSite_Pos; //1:TESTSITE_LEFT, 2:TESTSITE_RIGHT , //로딩 버퍼의 테스터에 맞는 회전 각도를 정한다
+// 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]; //james 2016.0924 추가 
+// 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][4] = st_sync_info.nTestSite_Target_THD_Work_Site[1]; //james 2016.0924 추가
+// 
+// 						//2017.0319
+// 						strTemp.Format(_T("[1100_TESTSITE_PICK_LD_BUFF_REQ] Work_Site : %d Start_FixPos : %d"), st_sync_info.nTestSite_Target_THD_Work_Site[1] , st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3]);
+// 						clsMem.OnNormalMessageWrite(strTemp);
+// 					}
+// 					else
+// 					{
+// 						if (st_handler_info.cWndMain != NULL)
+// 						{
+// 							st_other_info.nBuzYesNo = YES;
+// 							if(st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 >= 0 )
+// 							{
+// 								st_other_info.strBoxMsg.Format(_T("It have to enable 1 over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
+// 							}
+// 							else
+// 							{
+// 								st_other_info.strBoxMsg = _T("It have to enable 1 over per socket. \r\n Please enable socket.");
+// 							}
+// 							st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_MESSAGE_BOX_CREATE_REQ, 0);
+// 						}
+// 					}
+// 				}
+// 			}//james 2016.0926 조건 변경 
+
+			//////////////////////////////////////////////////////////////////////////
+			//2017.0430 //발주후 살릴것 -> 2017.0821 해제
 			if(st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].strLotNo == st_lot_info[m_nLotProcessNum].strLotNo)
 			{
-				if (st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_FREE || st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_CLEAR) 
-				{
-					nRet_1 = TestSite_PickPlace_SocketData_LoadBuff_Map_Combine(0, st_sync_info.nTestSite_Target_THD_Work_Site[1], st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]); //버퍼 위치별 작업 가능여부 정보,피커의 사용 유/무 같이 셋팅
- 		 
-					if( nRet_1 == RET_GOOD )
-					{
-						st_sync_info.nSmema_Tray_Input_Req = CTL_YES;//테스터가 요청했다
-						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] = CTL_REQ;
-						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][1] = WORK_PICK; //자재를 집을 수 있게 요청 
-						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][2] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][2]; //st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].nSite_Pos; //1:TESTSITE_LEFT, 2:TESTSITE_RIGHT , //로딩 버퍼의 테스터에 맞는 회전 각도를 정한다
-						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]; //james 2016.0924 추가 
-						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][4] = st_sync_info.nTestSite_Target_THD_Work_Site[1]; //james 2016.0924 추가
+				//일단 리테스트르 체트하자 + 언로더 자재중에 리테스트자재가 있느지 체크하자.
+				//1.일단 사용가능한 소켓이 몇개인지 체크한다.
+				//st_sync_info.nTestSite_Target_THD_Work_Site[1]:작업 소켓
 
-						//2017.0319
-						strTemp.Format(_T("[1100_TESTSITE_PICK_LD_BUFF_REQ] Work_Site : %d Start_FixPos : %d"), st_sync_info.nTestSite_Target_THD_Work_Site[1] , st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3]);
-						clsMem.OnNormalMessageWrite(strTemp);
-					}
-					else
+				//테스트사이트 언로드할때 불량 디바이스를 세어보고, 테스트 사이트에 디바이스가 있는지 확인 후 꼭 4개가 아니라도(먼저 4개이상일때만 확인하자 바쁘다)
+				//픽업할 테스트사이트의 넣을 자재가 retest버퍼에 자재가 충분할 경우  일단, 먼저 리테스트 자재를 픽업한다.
+
+				int nDvc = 0, nRetestDvc = 0, nPos = 0;
+				for(i=0; i< 4; i++) //loading 버퍼 수량 4개 
+				{
+					int nTestSite_THD_Num = st_sync_info.nTestSite_Target_THD_Work_Site[1];
+					int nTestSocket_0_4_Start_Pos = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3];
+
+					if( nTestSite_THD_Num >= THD_TESTSITE_1 && nTestSite_THD_Num <= THD_TESTSITE_4)
 					{
-						if (st_handler_info.cWndMain != NULL)
+						int nPos = (7 - nTestSocket_0_4_Start_Pos) - i;
+						if(st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nEnable == CTL_YES) //socket ON
 						{
-							st_other_info.nBuzYesNo = YES;
-							if(st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 >= 0 )
+							nDvc++;
+						}
+						if( st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_CONTINUE_FAIL ||
+							st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_RETEST )
+						{
+							nRetestDvc++;
+						}
+
+					}
+					else //if(nTestSite_THD_Num >= THD_TESTSITE_5 && nTestSite_THD_Num <= THD_TESTSITE_8) //죄측 테스터 , 소켓 기준은 좌측위치 부터  (1회작업)0,1,2,3, (2회작업)4,5,6,7 의 순서로 기준 소켓 위치및 정보 정의됨
+					{
+						nPos = nTestSocket_0_4_Start_Pos + i;
+						if(st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nEnable  == CTL_YES) //socket ON
+						{
+							nDvc++;
+						}
+						if( st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_CONTINUE_FAIL ||
+							st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_RETEST )
+						{
+							nRetestDvc++;
+						}
+					}  
+				}
+				//리테스트 버퍼의 자재 개수를 찾는다
+				nRet_1 = clsFunc.Find_TrayWork_Pos(0, st_sync_info.nRetestBuff_Traget_THD_Work_Site, CTL_YES, m_npFindWorkPosYXCPB, THD_TEST_RBT, m_strFindLotNo);
+				if(nRet_1 == RET_GOOD) //리테스트 버퍼에 작업 가능한 자재가 있다
+				{
+					nRetestDvc = nRetestDvc + m_npFindWorkPosYXCPB[2];
+				}
+
+				if( nDvc <= nRetestDvc )
+				{//리테스트 버퍼의 자재를 픽업한다.
+					m_nSort_Count = 1000;
+				}
+				else
+				{//load buffer에 자재를 요청한다.
+					if (st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_FREE || st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_CLEAR) 
+					{
+						nRet_1 = TestSite_PickPlace_SocketData_LoadBuff_Map_Combine(0, st_sync_info.nTestSite_Target_THD_Work_Site[1], st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]); //버퍼 위치별 작업 가능여부 정보,피커의 사용 유/무 같이 셋팅
+
+						if( nRet_1 == RET_GOOD )
+						{
+							st_sync_info.nSmema_Tray_Input_Req = CTL_YES;//테스터가 요청했다
+							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] = CTL_REQ;
+							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][1] = WORK_PICK; //자재를 집을 수 있게 요청 
+							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][2] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][2]; //st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].nSite_Pos; //1:TESTSITE_LEFT, 2:TESTSITE_RIGHT , //로딩 버퍼의 테스터에 맞는 회전 각도를 정한다
+							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]; //james 2016.0924 추가 
+							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][4] = st_sync_info.nTestSite_Target_THD_Work_Site[1]; //james 2016.0924 추가
+
+							//2017.0319
+							strTemp.Format(_T("[1100_TESTSITE_PICK_LD_BUFF_REQ] Work_Site : %d Start_FixPos : %d"), st_sync_info.nTestSite_Target_THD_Work_Site[1] , st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3]);
+							clsMem.OnNormalMessageWrite(strTemp);
+						}
+						else
+						{
+							if (st_handler_info.cWndMain != NULL)
 							{
-								st_other_info.strBoxMsg.Format(_T("It have to enable 1 over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
+								st_other_info.nBuzYesNo = YES;
+								if(st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 >= 0 )
+								{
+									st_other_info.strBoxMsg.Format(_T("It have to enable 1 over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
+								}
+								else
+								{
+									st_other_info.strBoxMsg = _T("It have to enable 1 over per socket. \r\n Please enable socket.");
+								}
+								st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_MESSAGE_BOX_CREATE_REQ, 0);
 							}
-							else
-							{
-								st_other_info.strBoxMsg = _T("It have to enable 1 over per socket. \r\n Please enable socket.");
-							}
-							st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_MESSAGE_BOX_CREATE_REQ, 0);
 						}
 					}
 				}
-			}//james 2016.0926 조건 변경 
-
-
-			//////////////////////////////////////////////////////////////////////////
-			//2017.0430 //발주후 살릴것
-// 			if(st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].strLotNo == st_lot_info[m_nLotProcessNum].strLotNo)
-// 			{
-// 				//일단 리테스트르 체트하자 + 언로더 자재중에 리테스트자재가 있느지 체크하자.
-// 				//1.일단 사용가능한 소켓이 몇개인지 체크한다.
-// 				//st_sync_info.nTestSite_Target_THD_Work_Site[1]:작업 소켓
-// 
-// 				//테스트사이트 언로드할때 불량 디바이스를 세어보고, 테스트 사이트에 디바이스가 있는지 확인 후 꼭 4개가 아니라도(먼저 4개이상일때만 확인하자 바쁘다)
-// 				//픽업할 테스트사이트의 넣을 자재가 retest버퍼에 자재가 충분할 경우  일단, 먼저 리테스트 자재를 픽업한다.
-// 
-// 				int nDvc = 0, nRetestDvc = 0, nPos = 0;
-// 				for(i=0; i< 4; i++) //loading 버퍼 수량 4개 
-// 				{
-// 					int nTestSite_THD_Num = st_sync_info.nTestSite_Target_THD_Work_Site[1];
-// 					int nTestSocket_0_4_Start_Pos = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3];
-// 
-// 					if( nTestSite_THD_Num >= THD_TESTSITE_1 && nTestSite_THD_Num <= THD_TESTSITE_4)
-// 					{
-// 						int nPos = (7 - nTestSocket_0_4_Start_Pos) - i;
-// 						if(st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nEnable == CTL_YES) //socket ON
-// 						{
-// 							nDvc++;
-// 						}
-// 						if( st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_CONTINUE_FAIL ||
-// 							st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_RETEST )
-// 						{
-// 							nRetestDvc++;
-// 						}
-// 
-// 					}
-// 					else //if(nTestSite_THD_Num >= THD_TESTSITE_5 && nTestSite_THD_Num <= THD_TESTSITE_8) //죄측 테스터 , 소켓 기준은 좌측위치 부터  (1회작업)0,1,2,3, (2회작업)4,5,6,7 의 순서로 기준 소켓 위치및 정보 정의됨
-// 					{
-// 						nPos = nTestSocket_0_4_Start_Pos + i;
-// 						if(st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nEnable  == CTL_YES) //socket ON
-// 						{
-// 							nDvc++;
-// 						}
-// 						if( st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_CONTINUE_FAIL ||
-// 							st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_RETEST )
-// 						{
-// 							nRetestDvc++;
-// 						}
-// 					}  
-// 				}
-// 				//리테스트 버퍼의 자재 개수를 찾는다
-// 				nRet_1 = clsFunc.Find_TrayWork_Pos(0, st_sync_info.nRetestBuff_Traget_THD_Work_Site, CTL_YES, m_npFindWorkPosYXCPB, THD_TEST_RBT, m_strFindLotNo);
-// 				if(nRet_1 == RET_GOOD) //리테스트 버퍼에 작업 가능한 자재가 있다
-// 				{
-// 					nRetestDvc = nRetestDvc + m_npFindWorkPosYXCPB[2];
-// 				}
-// 
-// 				if( nDvc <= nRetestDvc )
-// 				{//리테스트 버퍼의 자재를 픽업한다.
-// 					m_nSort_Count = 1000;
-// 				}
-// 				else
-// 				{//load buffer에 자재를 요청한다.
-// 					if (st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_FREE || st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_CLEAR) 
-// 					{
-// 						nRet_1 = TestSite_PickPlace_SocketData_LoadBuff_Map_Combine(0, st_sync_info.nTestSite_Target_THD_Work_Site[1], st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]); //버퍼 위치별 작업 가능여부 정보,피커의 사용 유/무 같이 셋팅
-// 
-// 						if( nRet_1 == RET_GOOD )
-// 						{
-// 							st_sync_info.nSmema_Tray_Input_Req = CTL_YES;//테스터가 요청했다
-// 							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] = CTL_REQ;
-// 							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][1] = WORK_PICK; //자재를 집을 수 있게 요청 
-// 							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][2] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][2]; //st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].nSite_Pos; //1:TESTSITE_LEFT, 2:TESTSITE_RIGHT , //로딩 버퍼의 테스터에 맞는 회전 각도를 정한다
-// 							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]; //james 2016.0924 추가 
-// 							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][4] = st_sync_info.nTestSite_Target_THD_Work_Site[1]; //james 2016.0924 추가
-// 
-// 							//2017.0319
-// 							strTemp.Format(_T("[1100_TESTSITE_PICK_LD_BUFF_REQ] Work_Site : %d Start_FixPos : %d"), st_sync_info.nTestSite_Target_THD_Work_Site[1] , st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3]);
-// 							clsMem.OnNormalMessageWrite(strTemp);
-// 						}
-// 						else
-// 						{
-// 							if (st_handler_info.cWndMain != NULL)
-// 							{
-// 								st_other_info.nBuzYesNo = YES;
-// 								if(st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 >= 0 )
-// 								{
-// 									st_other_info.strBoxMsg.Format(_T("It have to enable 1 over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
-// 								}
-// 								else
-// 								{
-// 									st_other_info.strBoxMsg = _T("It have to enable 1 over per socket. \r\n Please enable socket.");
-// 								}
-// 								st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_MESSAGE_BOX_CREATE_REQ, 0);
-// 							}
-// 						}
-// 					}
-// 				}
-// 			}
-
+			}
 			m_nRunStep = 2000;
 			break;
 
@@ -4306,6 +4302,7 @@ int CRunTestSiteRobot::Process_DVC_Pick(int nMode, int nWork_Site, int nTest_Sit
 		//if(nWork_Site == THD_LD_BUFF)
 		if(nWork_Site == THD_LD_BUFF)
 		{
+			
 			st_sync_info.nTestRbt_Dvc_Req[nWork_Site][0] = CTL_FREE; //test robot가 load buffer에서 집기완료 
 			st_sync_info.nAutoBufferIn = CTL_NO;
 		}
@@ -4390,6 +4387,16 @@ int CRunTestSiteRobot::Process_DVC_Pick(int nMode, int nWork_Site, int nTest_Sit
 											1, 
 											st_picker[m_nRobotSite].st_pcb_info[i].strLogKey,
 											st_picker[m_nRobotSite].st_pcb_info[i].strLogData);
+
+						//kwlee 2017.0905
+						if (st_basic_info.nModeXgem == YES)
+						{
+							if (st_picker[m_nRobotSite].st_pcb_info[i].nYesNo == YES)
+							{
+								clsXgem.OnMcProductBufferToSocket(START,st_picker[m_nRobotSite].st_pcb_info[i].nTrayCnt,st_picker[m_nRobotSite].st_pcb_info[i].strSerialNo,nFind_JobPos,st_sync_info.nTestSite_Target_THD_Work_Site[2]);
+							}
+						}
+						////
 					}					
 				} 
 				else if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8)
@@ -4449,6 +4456,15 @@ int CRunTestSiteRobot::Process_DVC_Pick(int nMode, int nWork_Site, int nTest_Sit
 											st_picker[m_nRobotSite].st_pcb_info[i].strLogData);
 
 					}
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						if (st_picker[m_nRobotSite].st_pcb_info[i].nYesNo == YES)
+						{
+							clsXgem.OnMcProductSocketToBuffer(START,st_picker[m_nRobotSite].st_pcb_info[i].nTrayCnt,st_picker[m_nRobotSite].st_pcb_info[i].strSerialNo,nFind_JobPos,nWork_Site);
+						}
+					}
+					////////
 				}
 				else if(nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF)
 				{//
@@ -4479,6 +4495,16 @@ int CRunTestSiteRobot::Process_DVC_Pick(int nMode, int nWork_Site, int nTest_Sit
 						{
 							nFind_JobPos = 0; //james test 2016.0907
 						}
+						//kwlee 2017.0905
+						if (st_basic_info.nModeXgem == YES)
+						{
+							if (st_picker[m_nRobotSite].st_pcb_info[i].nYesNo == YES)
+							{
+								clsXgem.OnMcRetestStart(st_picker[m_nRobotSite].st_pcb_info[i].strSerialNo);
+							}
+						}
+						//
+
 					}
 					else if(nTest_Site == TESTSITE_RIGHT) //RIGHT TEST SITE 작업일때, 로딩버퍼에서 피커정보눈 0,1,2,3 이고, 버퍼 정보정보는0,1,2,3 로 위치 순서가 동일하다 
 					{
@@ -5464,8 +5490,12 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 			break;
 
 	case 2037:
-		m_dpTargetPosList[0] = st_motor_info[M_TEST_RBT_Y].d_pos[P_TESTRBT_XY_RETESTBUF_2_START];
-		m_dpTargetPosList[1] = st_motor_info[M_TEST_RBT_X].d_pos[P_TESTRBT_XY_RETESTBUF_2_START];
+// 		m_dpTargetPosList[0] = st_motor_info[M_TEST_RBT_Y].d_pos[P_TESTRBT_XY_RETESTBUF_2_START];
+// 		m_dpTargetPosList[1] = st_motor_info[M_TEST_RBT_X].d_pos[P_TESTRBT_XY_RETESTBUF_2_START];
+		//kwlee 2017.0918
+		m_dpTargetPosList[0] = st_motor_info[M_TEST_RBT_Y].d_pos[P_TESTRBT_XY_TESTDUCT_1_LEFT_START];
+		m_dpTargetPosList[1] = st_motor_info[M_TEST_RBT_X].d_pos[P_TESTRBT_XY_TESTDUCT_1_LEFT_START];
+
 		nRet_1 = CTL_Lib.Linear_Move(BOTH_MOVE_FINISH, m_nLinearMove_Index, m_lAxisCnt, m_lpAxisNum, m_dpTargetPosList, COMI.mn_runspeed_rate); 
 		if (nRet_1 == BD_GOOD) //좌측으로 이동
 		{
@@ -5932,23 +5962,27 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		}
 		else
 		{
-			//m_nPlace_Step = 4200;
+			m_nPlace_Step = 4200;
 			//2016.1117
-			if(nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF)
-			{
-				m_nPlace_Step = 4102;
-			}
-			else
-			{
-				m_nPlace_Step = 4200;
-			}
+			//kwlee 2017.0918 자재 파손 관련 del
+// 			if(nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF)
+// 			{
+// 				m_nPlace_Step = 4102;
+// 			}
+// 			else
+// 			{
+// 				m_nPlace_Step = 4200;
+// 			}
 		}
 		break;
 
+		//2017.0918 Retest Buffer Place 후 확인 수정 예정.
+		
 	case 4102:
 		if(nWork_Site == THD_RETEST_1_BUFF )// || nWork_Site == THD_RETEST_2_BUFF)
 		{
 			m_dpTargetPosList[2] = st_motor_info[m_nRobot_Z].d_pos[P_TESTRBT_Z_RETESTBUF_1_PICK];
+			
 		}
 		else if(nWork_Site == THD_RETEST_2_BUFF)
 		{
@@ -5975,6 +6009,7 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		}
 		break;
 
+		//Place 후 센서 확인.
 	case 4105:
 		for (i = 0; i < 4; i++)
 		{
@@ -6172,6 +6207,15 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 
 							clsFunc.Data_Exchange_PickPlace(PICKER_PLACE_MODE, 1, m_nRobotSite, nWork_Site, m_npSet_WorkPosYXCPB); //피커 및 트레이 정보 셋팅 함수 
 						}
+						//kwlee 2017.0905
+						if (st_basic_info.nModeXgem == YES)
+						{
+							if (st_picker[m_nRobotSite].st_pcb_info[i].nYesNo == YES)
+							{
+								clsXgem.OnMcProductSocketToBuffer(END,st_buffer_info[m_nRobotSite].st_pcb_info[i].nTrayCnt,st_buffer_info[m_nRobotSite].st_pcb_info[i].strSerialNo,nFind_JobPos,nWork_Site);
+							}
+						}
+						////////
 					}
 				} 
 				else if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8)
@@ -6221,6 +6265,15 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 						{
 							break;
 						}
+						//kwlee 2017.0905
+						if (st_basic_info.nModeXgem == YES)
+						{
+							if (st_test_site_info[m_nRobotSite].st_pcb_info[i].nYesNo == YES)
+							{
+								clsXgem.OnMcProductBufferToSocket(END,st_test_site_info[m_nRobotSite].st_pcb_info[i].nTrayCnt,st_test_site_info[m_nRobotSite].st_pcb_info[i].strSerialNo,nFind_JobPos,st_sync_info.nTestSite_Target_THD_Work_Site[1]);
+							}
+						}
+						////
 					}
 				}
 				else if(nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF)

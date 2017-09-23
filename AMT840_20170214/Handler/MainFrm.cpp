@@ -469,7 +469,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	m_nXgemStep = 0;
-//	SetTimer(TM_XGEM, 5000, NULL);
+	SetTimer(TM_XGEM, 5000, NULL); //kwlee 2017.0906
 
 	return 0;
 }

@@ -9,6 +9,8 @@
 #include "ComizoaPublic.h"
 #include "LogCtrl.h"
 #include "LogFromat.h"
+//kwlee 2017.0905
+#include "XgemClient.h"
 
 CRunTestSitePart8 clsTestSite8;
 
@@ -833,6 +835,19 @@ void CRunTestSitePart8::OnCommunication()
 					st_test_site_info[nSite].nTestBdStart	= BD_BIN_CHK;
 
 					st_test_site_info[nSite].tStart			= COleDateTime::GetCurrentTime();
+
+					//kwlee 2017.0905
+					if (st_basic_info.nModeXgem == YES)
+					{
+						for (i=0; i<8; i++)
+						{
+							if (st_test_site_info[nSite].st_pcb_info[i].nYesNo == YES)
+							{
+								clsXgem.OnMcProductTest(START,st_test_site_info[nSite].st_pcb_info[i].strSerialNo,i,nSite);
+							}
+						}
+					}
+					///	
 				}
 				else if (st_test_site_info[nSite].nTestBdStart == BD_BIN_CHK)
 				{
@@ -902,6 +917,12 @@ void CRunTestSitePart8::OnCommunication()
 						{
 							st_test_site_info[nSite].st_pcb_info[i].nTestBdStart	= BD_END;
 							st_test_site_info[nSite].st_pcb_info[i].strBdTime		= strTime;
+							//kwlee 2017.0905
+							if (st_basic_info.nModeXgem == YES)
+							{
+								clsXgem.OnMcProductTest(END,st_test_site_info[nSite].st_pcb_info[i].strSerialNo,i,nSite);
+							}
+							///
 						}
 
 					}

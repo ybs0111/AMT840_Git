@@ -14,7 +14,8 @@
 #include "PublicFunction.h"
 #include "AlgMemory.h"
 #include "LogFromat.h"
-
+//kwlee 2017.0905
+#include "XgemClient.h"
 // CRunRejectTrayRearStackerElevator
 CRunRejectTrayRearStackerElevator clsRunRejectTrayRearStackerElevator;
 CRunRejectTrayRearStackerElevator::CRunRejectTrayRearStackerElevator()
@@ -601,6 +602,12 @@ void CRunRejectTrayRearStackerElevator::OnRunMove(void)
 				{				
 					m_nRunStep = 3200;				
 				}
+				//kwlee 2017.0905
+				if (st_basic_info.nModeXgem == YES)
+				{
+					clsXgem.OnMcTrayUnload(START,st_lot_info[m_nLotProcessNum].strLotNo,st_lot_info[m_nLotProcessNum].strPartNo,100 + st_count_info.nUnLdStacker_Reject_TrayCnt[1]);
+				}
+				///
 			}
 			else
 			{
@@ -686,6 +693,12 @@ void CRunRejectTrayRearStackerElevator::OnRunMove(void)
 			break;
 
 		case 3600:
+			//kwlee 2017.0905
+			if (st_basic_info.nModeXgem == YES)
+			{
+				clsXgem.OnMcTrayUnload(END,st_lot_info[m_nLotProcessNum].strLotNo,st_lot_info[m_nLotProcessNum].strPartNo,100 + st_count_info.nUnLdStacker_Reject_TrayCnt[1]);
+			}
+			///
 			m_nRunStep = 1000;
 			break;
 			
