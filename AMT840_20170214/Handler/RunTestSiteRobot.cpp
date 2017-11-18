@@ -5956,23 +5956,37 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		break;
 
 	case 4100:
-		if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8)
+// 		if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8)
+// 		{
+// 			m_nPlace_Step = 4110;
+// 			//2017.1119 MISS LOADING CHECK
+// 			m_nPlace_Step = 4106;
+// 		}
+// 		else
+// 		{
+// 			m_nPlace_Step = 4200;
+// 
+// 			//2016.1117
+// 			//kwlee 2017.0918 자재 파손 관련 del
+// // 			if(nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF)
+// // 			{
+// // 				m_nPlace_Step = 4102;
+// // 			}
+// // 			else
+// // 			{
+// // 				m_nPlace_Step = 4200;
+// // 			}
+// 		}
+		//2017.1119 
+		if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8) || ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF ) )
 		{
 			m_nPlace_Step = 4110;
+			//2017.1119 MISS LOADING CHECK
+			m_nPlace_Step = 4106;
 		}
 		else
 		{
 			m_nPlace_Step = 4200;
-			//2016.1117
-			//kwlee 2017.0918 자재 파손 관련 del
-// 			if(nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF)
-// 			{
-// 				m_nPlace_Step = 4102;
-// 			}
-// 			else
-// 			{
-// 				m_nPlace_Step = 4200;
-// 			}
 		}
 		break;
 
@@ -6044,6 +6058,79 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		}
 		m_nPlace_Step = 4200;
 		break;
+
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//2017.1119 MISS LOADING CHECK
+		//Missloading 티칭한 높이로 상승후 체크
+	case 4106:
+		if( ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF ) )
+		{
+			nRet_1 = CTL_Lib.Single_Move(BOTH_MOVE_FINISH, m_nRobot_Z, st_motor_info[m_nRobot_Z].d_pos[P_TESTRBT_Z_RETEST_MISSLOAD_CHECK], COMI.mn_runspeed_rate);
+		}
+		else
+		{
+			nRet_1 = CTL_Lib.Single_Move(BOTH_MOVE_FINISH, m_nRobot_Z, st_motor_info[m_nRobot_Z].d_pos[P_TESTRBT_Z_TESTSITE_MISSLOAD_CHECK], COMI.mn_runspeed_rate);
+		}
+		if (nRet_1 == BD_GOOD) //좌측으로 이동
+		{
+			m_dwWaitUntil[0] = GetCurrentTime();
+			m_nPlace_Step = 4107;
+		}
+		else if (nRet_1 == BD_RETRY)
+		{
+			m_nPlace_Step = 4106;
+		}
+		else if (nRet_1 == BD_ERROR || nRet_1 == BD_SAFETY)
+		{//모터 알람은 이미 처리했으니 이곳에서는 런 상태만 바꾸면 된다
+			CTL_Lib.Alarm_Error_Occurrence(2730, dWARNING, st_alarm_info.strCode);
+			m_nPlace_Step = 4106;
+		}		
+		break;
+
+	case 4107:
+		nRet_1 = FAS_IO.get_in_bit(st_io_info.i_MissLoadingChk1, IO_ON);
+		nRet_2 = FAS_IO.get_in_bit(st_io_info.i_MissLoadingChk2, IO_ON);
+
+		if(nRet_1 == IO_ON && nRet_2 == IO_ON)
+		{
+			if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8) || ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF ) )
+			{
+				m_nPlace_Step = 4110;
+			}
+			else
+			{
+				m_nPlace_Step = 4200;
+			}
+		}
+		else
+		{
+			m_dwWaitUntil[1] = GetCurrentTime();
+			m_dwWaitUntil[2] = m_dwWaitUntil[1] - m_dwWaitUntil[0];
+			if(m_dwWaitUntil[2] < IO_STABLE_WAIT) break;
+			m_nPlace_Step = 4109;
+		}
+		break;
+
+
+	case 4109:
+		nRet_1 = CTL_Lib.Single_Move(BOTH_MOVE_FINISH, m_nRobot_Z, st_motor_info[m_nRobot_Z].d_pos[P_TESTRBT_Z_SAFETY], COMI.mn_runspeed_rate);
+		if (nRet_1 == BD_GOOD) //좌측으로 이동
+		{
+			m_strAlarmCode.Format(_T("8%d%04d"), IO_ON, st_io_info.i_MissLoadingChk1); //Miss loading 센서 에러
+			CTL_Lib.Alarm_Error_Occurrence(2733, dWARNING, m_strAlarmCode);
+			m_nPlace_Step = 4106;
+		}
+		else if (nRet_1 == BD_RETRY)
+		{
+			m_nPlace_Step = 4109;
+		}
+		else if (nRet_1 == BD_ERROR || nRet_1 == BD_SAFETY)
+		{//모터 알람은 이미 처리했으니 이곳에서는 런 상태만 바꾸면 된다
+			CTL_Lib.Alarm_Error_Occurrence(2731, dWARNING, st_alarm_info.strCode);
+			m_nPlace_Step = 4109;
+		}		
+		break;
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	case 4110: //test site 자재 INSERT 
 		if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_4)
