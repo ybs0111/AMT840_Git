@@ -6199,6 +6199,7 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 // // 				m_nPlace_Step = 4200;
 // // 			}
 // 		}
+<<<<<<< HEAD
 // 		//2017.1119 
 // 		if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8) || ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF ) )
 // 		{
@@ -6246,6 +6247,18 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 			{
 				m_nPlace_Step = 4200;
 			}
+=======
+		//2017.1119 
+		if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8) || ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF ) )
+		{
+			m_nPlace_Step = 4110;
+			//2017.1119 MISS LOADING CHECK
+			m_nPlace_Step = 4106;
+		}
+		else
+		{
+			m_nPlace_Step = 4200;
+>>>>>>> 8aa0c3bce117831eef84567d193c4c42090dc78c
 		}
 		break;
 		//2017.0918 Retest Buffer Place 후 확인 수정 예정.
@@ -6321,6 +6334,7 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		//2017.1119 MISS LOADING CHECK
 		//Missloading 티칭한 높이로 상승후 체크
 	case 4106:
+<<<<<<< HEAD
 
 		if (st_basic_info.nMissLoading_Mode == CTL_YES)
 		{
@@ -6336,6 +6350,8 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		}
 
 
+=======
+>>>>>>> 8aa0c3bce117831eef84567d193c4c42090dc78c
 		if( ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF ) )
 		{
 			nRet_1 = CTL_Lib.Single_Move(BOTH_MOVE_FINISH, m_nRobot_Z, st_motor_info[m_nRobot_Z].d_pos[P_TESTRBT_Z_RETEST_MISSLOAD_CHECK], COMI.mn_runspeed_rate);
@@ -6364,6 +6380,7 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		nRet_1 = FAS_IO.get_in_bit(st_io_info.i_MissLoadingChk1, IO_ON);
 		nRet_2 = FAS_IO.get_in_bit(st_io_info.i_MissLoadingChk2, IO_ON);
 
+<<<<<<< HEAD
 		//if(nRet_1 == IO_ON && nRet_2 == IO_ON)
 		//kwlee 20171119 감지 시 알람.
 		if(nRet_1 == IO_OFF && nRet_2 == IO_OFF) 
@@ -6373,6 +6390,15 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 				m_nPlace_Step = 4110;
 			}
 			else// || ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF )
+=======
+		if(nRet_1 == IO_ON && nRet_2 == IO_ON)
+		{
+			if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8) || ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF ) )
+			{
+				m_nPlace_Step = 4110;
+			}
+			else
+>>>>>>> 8aa0c3bce117831eef84567d193c4c42090dc78c
 			{
 				m_nPlace_Step = 4200;
 			}
@@ -6393,9 +6419,13 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		{
 			m_strAlarmCode.Format(_T("8%d%04d"), IO_ON, st_io_info.i_MissLoadingChk1); //Miss loading 센서 에러
 			CTL_Lib.Alarm_Error_Occurrence(2733, dWARNING, m_strAlarmCode);
+<<<<<<< HEAD
 			//m_nPlace_Step = 4106;
 			//kwlee 20171119
 			m_nPlace_Step = 4100;
+=======
+			m_nPlace_Step = 4106;
+>>>>>>> 8aa0c3bce117831eef84567d193c4c42090dc78c
 		}
 		else if (nRet_1 == BD_RETRY)
 		{
