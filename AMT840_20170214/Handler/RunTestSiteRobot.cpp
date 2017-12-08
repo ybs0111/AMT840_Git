@@ -1046,139 +1046,138 @@ void CRunTestSiteRobot::OnRunMove()
 			}
 
 			//james 2016.0926 조건 변경 
-			//kwlee 2017.0821 del
-// 			if(st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].strLotNo == st_lot_info[m_nLotProcessNum].strLotNo)
-// 			{
-// 				if (st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_FREE || st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_CLEAR) 
-// 				{
-// 					nRet_1 = TestSite_PickPlace_SocketData_LoadBuff_Map_Combine(0, st_sync_info.nTestSite_Target_THD_Work_Site[1], st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]); //버퍼 위치별 작업 가능여부 정보,피커의 사용 유/무 같이 셋팅
-//  		 
-// 					if( nRet_1 == RET_GOOD )
-// 					{
-// 						st_sync_info.nSmema_Tray_Input_Req = CTL_YES;//테스터가 요청했다
-// 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] = CTL_REQ;
-// 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][1] = WORK_PICK; //자재를 집을 수 있게 요청 
-// 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][2] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][2]; //st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].nSite_Pos; //1:TESTSITE_LEFT, 2:TESTSITE_RIGHT , //로딩 버퍼의 테스터에 맞는 회전 각도를 정한다
-// 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]; //james 2016.0924 추가 
-// 						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][4] = st_sync_info.nTestSite_Target_THD_Work_Site[1]; //james 2016.0924 추가
-// 
-// 						//2017.0319
-// 						strTemp.Format(_T("[1100_TESTSITE_PICK_LD_BUFF_REQ] Work_Site : %d Start_FixPos : %d"), st_sync_info.nTestSite_Target_THD_Work_Site[1] , st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3]);
-// 						clsMem.OnNormalMessageWrite(strTemp);
-// 					}
-// 					else
-// 					{
-// 						if (st_handler_info.cWndMain != NULL)
-// 						{
-// 							st_other_info.nBuzYesNo = YES;
-// 							if(st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 >= 0 )
-// 							{
-// 								st_other_info.strBoxMsg.Format(_T("It have to enable 1 over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
-// 							}
-// 							else
-// 							{
-// 								st_other_info.strBoxMsg = _T("It have to enable 1 over per socket. \r\n Please enable socket.");
-// 							}
-// 							st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_MESSAGE_BOX_CREATE_REQ, 0);
-// 						}
-// 					}
-// 				}
-// 			}//james 2016.0926 조건 변경 
+			if(st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].strLotNo == st_lot_info[m_nLotProcessNum].strLotNo)
+			{
+				if (st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_FREE || st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_CLEAR) 
+				{
+					nRet_1 = TestSite_PickPlace_SocketData_LoadBuff_Map_Combine(0, st_sync_info.nTestSite_Target_THD_Work_Site[1], st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]); //버퍼 위치별 작업 가능여부 정보,피커의 사용 유/무 같이 셋팅
+ 		 
+					if( nRet_1 == RET_GOOD )
+					{
+						st_sync_info.nSmema_Tray_Input_Req = CTL_YES;//테스터가 요청했다
+						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] = CTL_REQ;
+						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][1] = WORK_PICK; //자재를 집을 수 있게 요청 
+						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][2] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][2]; //st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].nSite_Pos; //1:TESTSITE_LEFT, 2:TESTSITE_RIGHT , //로딩 버퍼의 테스터에 맞는 회전 각도를 정한다
+						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]; //james 2016.0924 추가 
+						st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][4] = st_sync_info.nTestSite_Target_THD_Work_Site[1]; //james 2016.0924 추가
+
+						//2017.0319
+						strTemp.Format(_T("[1100_TESTSITE_PICK_LD_BUFF_REQ] Work_Site : %d Start_FixPos : %d"), st_sync_info.nTestSite_Target_THD_Work_Site[1] , st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3]);
+						clsMem.OnNormalMessageWrite(strTemp);
+					}
+					else
+					{
+						if (st_handler_info.cWndMain != NULL)
+						{
+							st_other_info.nBuzYesNo = YES;
+							if(st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 >= 0 )
+							{
+								st_other_info.strBoxMsg.Format(_T("It have to enable 1 over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
+							}
+							else
+							{
+								st_other_info.strBoxMsg = _T("It have to enable 1 over per socket. \r\n Please enable socket.");
+							}
+							st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_MESSAGE_BOX_CREATE_REQ, 0);
+						}
+					}
+				}
+			}//james 2016.0926 조건 변경 
 
 			//////////////////////////////////////////////////////////////////////////
 			//2017.0430 //발주후 살릴것 -> 2017.0821 해제
-			if(st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].strLotNo == st_lot_info[m_nLotProcessNum].strLotNo)
-			{
-				//일단 리테스트르 체트하자 + 언로더 자재중에 리테스트자재가 있느지 체크하자.
-				//1.일단 사용가능한 소켓이 몇개인지 체크한다.
-				//st_sync_info.nTestSite_Target_THD_Work_Site[1]:작업 소켓
-
-				//테스트사이트 언로드할때 불량 디바이스를 세어보고, 테스트 사이트에 디바이스가 있는지 확인 후 꼭 4개가 아니라도(먼저 4개이상일때만 확인하자 바쁘다)
-				//픽업할 테스트사이트의 넣을 자재가 retest버퍼에 자재가 충분할 경우  일단, 먼저 리테스트 자재를 픽업한다.
-
-				int nDvc = 0, nRetestDvc = 0, nPos = 0;
-				for(i=0; i< 4; i++) //loading 버퍼 수량 4개 
-				{
-					int nTestSite_THD_Num = st_sync_info.nTestSite_Target_THD_Work_Site[1];
-					int nTestSocket_0_4_Start_Pos = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3];
-
-					if( nTestSite_THD_Num >= THD_TESTSITE_1 && nTestSite_THD_Num <= THD_TESTSITE_4)
-					{
-						int nPos = (7 - nTestSocket_0_4_Start_Pos) - i;
-						if(st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nEnable == CTL_YES) //socket ON
-						{
-							nDvc++;
-						}
-						if( st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_CONTINUE_FAIL ||
-							st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_RETEST )
-						{
-							nRetestDvc++;
-						}
-
-					}
-					else //if(nTestSite_THD_Num >= THD_TESTSITE_5 && nTestSite_THD_Num <= THD_TESTSITE_8) //죄측 테스터 , 소켓 기준은 좌측위치 부터  (1회작업)0,1,2,3, (2회작업)4,5,6,7 의 순서로 기준 소켓 위치및 정보 정의됨
-					{
-						nPos = nTestSocket_0_4_Start_Pos + i;
-						if(st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nEnable  == CTL_YES) //socket ON
-						{
-							nDvc++;
-						}
-						if( st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_CONTINUE_FAIL ||
-							st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_RETEST )
-						{
-							nRetestDvc++;
-						}
-					}  
-				}
-				//리테스트 버퍼의 자재 개수를 찾는다
-				nRet_1 = clsFunc.Find_TrayWork_Pos(0, st_sync_info.nRetestBuff_Traget_THD_Work_Site, CTL_YES, m_npFindWorkPosYXCPB, THD_TEST_RBT, m_strFindLotNo);
-				if(nRet_1 == RET_GOOD) //리테스트 버퍼에 작업 가능한 자재가 있다
-				{
-					nRetestDvc = nRetestDvc + m_npFindWorkPosYXCPB[2];
-				}
-
-				if( nDvc <= nRetestDvc )
-				{//리테스트 버퍼의 자재를 픽업한다.
-					m_nSort_Count = 1000;
-				}
-				else
-				{//load buffer에 자재를 요청한다.
-					if (st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_FREE || st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_CLEAR) 
-					{
-						nRet_1 = TestSite_PickPlace_SocketData_LoadBuff_Map_Combine(0, st_sync_info.nTestSite_Target_THD_Work_Site[1], st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]); //버퍼 위치별 작업 가능여부 정보,피커의 사용 유/무 같이 셋팅
-
-						if( nRet_1 == RET_GOOD )
-						{
-							st_sync_info.nSmema_Tray_Input_Req = CTL_YES;//테스터가 요청했다
-							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] = CTL_REQ;
-							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][1] = WORK_PICK; //자재를 집을 수 있게 요청 
-							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][2] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][2]; //st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].nSite_Pos; //1:TESTSITE_LEFT, 2:TESTSITE_RIGHT , //로딩 버퍼의 테스터에 맞는 회전 각도를 정한다
-							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]; //james 2016.0924 추가 
-							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][4] = st_sync_info.nTestSite_Target_THD_Work_Site[1]; //james 2016.0924 추가
-
-							//2017.0319
-							strTemp.Format(_T("[1100_TESTSITE_PICK_LD_BUFF_REQ] Work_Site : %d Start_FixPos : %d"), st_sync_info.nTestSite_Target_THD_Work_Site[1] , st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3]);
-							clsMem.OnNormalMessageWrite(strTemp);
-						}
-						else
-						{
-							if (st_handler_info.cWndMain != NULL)
-							{
-								st_other_info.nBuzYesNo = YES;
-								if(st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 >= 0 )
-								{
-									st_other_info.strBoxMsg.Format(_T("It have to enable 1 over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
-								}
-								else
-								{
-									st_other_info.strBoxMsg = _T("It have to enable 1 over per socket. \r\n Please enable socket.");
-								}
-								st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_MESSAGE_BOX_CREATE_REQ, 0);
-							}
-						}
-					}
-				}
-			}
+// 			if(st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].strLotNo == st_lot_info[m_nLotProcessNum].strLotNo)
+// 			{
+// 				//일단 리테스트르 체트하자 + 언로더 자재중에 리테스트자재가 있느지 체크하자.
+// 				//1.일단 사용가능한 소켓이 몇개인지 체크한다.
+// 				//st_sync_info.nTestSite_Target_THD_Work_Site[1]:작업 소켓
+// 
+// 				//테스트사이트 언로드할때 불량 디바이스를 세어보고, 테스트 사이트에 디바이스가 있는지 확인 후 꼭 4개가 아니라도(먼저 4개이상일때만 확인하자 바쁘다)
+// 				//픽업할 테스트사이트의 넣을 자재가 retest버퍼에 자재가 충분할 경우  일단, 먼저 리테스트 자재를 픽업한다.
+// 
+// 				int nDvc = 0, nRetestDvc = 0, nPos = 0;
+// 				for(i=0; i< 4; i++) //loading 버퍼 수량 4개 
+// 				{
+// 					int nTestSite_THD_Num = st_sync_info.nTestSite_Target_THD_Work_Site[1];
+// 					int nTestSocket_0_4_Start_Pos = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3];
+// 
+// 					if( nTestSite_THD_Num >= THD_TESTSITE_1 && nTestSite_THD_Num <= THD_TESTSITE_4)
+// 					{
+// 						int nPos = (7 - nTestSocket_0_4_Start_Pos) - i;
+// 						if(st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nEnable == CTL_YES) //socket ON
+// 						{
+// 							nDvc++;
+// 						}
+// 						if( st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_CONTINUE_FAIL ||
+// 							st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_RETEST )
+// 						{
+// 							nRetestDvc++;
+// 						}
+// 
+// 					}
+// 					else //if(nTestSite_THD_Num >= THD_TESTSITE_5 && nTestSite_THD_Num <= THD_TESTSITE_8) //죄측 테스터 , 소켓 기준은 좌측위치 부터  (1회작업)0,1,2,3, (2회작업)4,5,6,7 의 순서로 기준 소켓 위치및 정보 정의됨
+// 					{
+// 						nPos = nTestSocket_0_4_Start_Pos + i;
+// 						if(st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nEnable  == CTL_YES) //socket ON
+// 						{
+// 							nDvc++;
+// 						}
+// 						if( st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_CONTINUE_FAIL ||
+// 							st_test_site_info[nTestSite_THD_Num].st_pcb_info[nPos].nBin == BD_DATA_RETEST )
+// 						{
+// 							nRetestDvc++;
+// 						}
+// 					}  
+// 				}
+// 				//리테스트 버퍼의 자재 개수를 찾는다
+// 				nRet_1 = clsFunc.Find_TrayWork_Pos(0, st_sync_info.nRetestBuff_Traget_THD_Work_Site, CTL_YES, m_npFindWorkPosYXCPB, THD_TEST_RBT, m_strFindLotNo);
+// 				if(nRet_1 == RET_GOOD) //리테스트 버퍼에 작업 가능한 자재가 있다
+// 				{
+// 					nRetestDvc = nRetestDvc + m_npFindWorkPosYXCPB[2];
+// 				}
+// 
+// 				if( nDvc <= nRetestDvc )
+// 				{//리테스트 버퍼의 자재를 픽업한다.
+// 					m_nSort_Count = 1000;
+// 				}
+// 				else
+// 				{//load buffer에 자재를 요청한다.
+// 					if (st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_FREE || st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] == CTL_CLEAR) 
+// 					{
+// 						nRet_1 = TestSite_PickPlace_SocketData_LoadBuff_Map_Combine(0, st_sync_info.nTestSite_Target_THD_Work_Site[1], st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]); //버퍼 위치별 작업 가능여부 정보,피커의 사용 유/무 같이 셋팅
+// 
+// 						if( nRet_1 == RET_GOOD )
+// 						{
+// 							st_sync_info.nSmema_Tray_Input_Req = CTL_YES;//테스터가 요청했다
+// 							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][0] = CTL_REQ;
+// 							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][1] = WORK_PICK; //자재를 집을 수 있게 요청 
+// 							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][2] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][2]; //st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[1]].nSite_Pos; //1:TESTSITE_LEFT, 2:TESTSITE_RIGHT , //로딩 버퍼의 테스터에 맞는 회전 각도를 정한다
+// 							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3] = st_sync_info.nTestRbt_Dvc_UnLd_Req[st_sync_info.nTestSite_Target_THD_Work_Site[1]][3]; //james 2016.0924 추가 
+// 							st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][4] = st_sync_info.nTestSite_Target_THD_Work_Site[1]; //james 2016.0924 추가
+// 
+// 							//2017.0319
+// 							strTemp.Format(_T("[1100_TESTSITE_PICK_LD_BUFF_REQ] Work_Site : %d Start_FixPos : %d"), st_sync_info.nTestSite_Target_THD_Work_Site[1] , st_sync_info.nTestRbt_Dvc_Req[THD_LD_BUFF][3]);
+// 							clsMem.OnNormalMessageWrite(strTemp);
+// 						}
+// 						else
+// 						{
+// 							if (st_handler_info.cWndMain != NULL)
+// 							{
+// 								st_other_info.nBuzYesNo = YES;
+// 								if(st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 >= 0 )
+// 								{
+// 									st_other_info.strBoxMsg.Format(_T("It have to enable 1 over per %dth socket. \r\n Please enable socket."), st_sync_info.nTestSite_Target_THD_Work_Site[1]-THD_TESTSITE_1 + 1);
+// 								}
+// 								else
+// 								{
+// 									st_other_info.strBoxMsg = _T("It have to enable 1 over per socket. \r\n Please enable socket.");
+// 								}
+// 								st_handler_info.cWndMain->SendMessage(WM_WORK_COMMAND, MAIN_MESSAGE_BOX_CREATE_REQ, 0);
+// 							}
+// 						}
+// 					}
+// 				}
+// 			}
 			m_nRunStep = 2000;
 			break;
 
@@ -2627,6 +2626,11 @@ void CRunTestSiteRobot::OnRunMove()
 				else 
 				{
 					m_nRunStep = 5600; //남은 자재를 집는다 
+					//2017.1206  체크바람
+					if( nCount > 0 && st_basic_info.nRetest1Pick_Mode == CTL_YES)
+					{
+						m_nRunStep = 7000;
+					}
 				}
 			}
 			else if(nRet_1 == RET_PICKER_NOT_FIND) //피커는 더이상 작업할 내용이 없다.  
@@ -2777,7 +2781,20 @@ void CRunTestSiteRobot::OnRunMove()
 			nRet_1 = Process_DVC_Pick(0, THD_LD_BUFF, st_sync_info.nTestRbt_Dvc_Ld_Req[st_sync_info.nTestSite_Target_THD_Work_Site[2]][2], st_sync_info.nTestRbt_Dvc_Ld_Req[st_sync_info.nTestSite_Target_THD_Work_Site[2]][3]);//st_test_site_info[st_sync_info.nTestSite_Target_THD_Work_Site[2]].nSite_Pos); //로딩 버퍼의 자재를 집는다
 			
 			if(nRet_1 == RET_GOOD)
-			{					
+			{
+				//2017.1121 센서 체크
+				if (st_basic_info.nMissLoading_Mode == CTL_YES)
+				{
+					nRet_1 = FAS_IO.get_in_bit(st_io_info.i_MissLoadingChk1, IO_ON);
+					nRet_2 = FAS_IO.get_in_bit(st_io_info.i_MissLoadingChk2, IO_ON);
+					if(nRet_1 == IO_OFF || nRet_2 == IO_OFF) 
+					{
+						if(nRet_1 == IO_OFF ) m_strAlarmCode.Format(_T("8%d%04d"), IO_ON, st_io_info.i_MissLoadingChk1); //Miss loading 센서 에러
+						else						   m_strAlarmCode.Format(_T("8%d%04d"), IO_ON, st_io_info.i_MissLoadingChk2); //Miss loading 센서 에러
+						CTL_Lib.Alarm_Error_Occurrence(2199, dWARNING, m_strAlarmCode);
+					}
+				}
+
 				m_nRunStep = 7000;
 			}
 			else if(nRet_1 == RET_PICKER_NOT_FIND) //피커는 더이상 작업할 내용이 없다.  
@@ -5233,14 +5250,24 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 				CTL_Lib.Alarm_Error_Occurrence(2460, dWARNING, clsFunc.m_strAlarmCode);		
 				break;
 			}
+			//2017.1206
+			st_handler_info.nAutoDirectionUseChk = CTL_YES;
 		}
 		else 
 		{
 			break;
 		}
 
-
-		if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8)
+		//if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8)
+		//{
+		//	m_nPlace_Step = 2010;
+		//}
+		//else
+		//{
+		//	m_nPlace_Step = 2100;
+		//}
+		//2017.1206
+		if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8 ) || (nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF) )
 		{
 			m_nPlace_Step = 2010;
 		}
@@ -5267,37 +5294,155 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 			break;
 		}
 
-		//2016.1117 direction
+	//	//2016.1117 direction
+	//	if( st_basic_info.nDirectionCheckSkip == CTL_NO || st_handler_info.nAutoDirectionUseChk == CTL_YES )
+	//	{
+	//		//james 2016.0930 
+	//		if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_4)
+	//		{
+	////				m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK];
+	//			//2016.1201
+	//			m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK] + m_dwDirOffset;
+	//			m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK]; // 
+	//		}
+	//		else if(nWork_Site >= THD_TESTSITE_5 && nWork_Site <= THD_TESTSITE_8)
+	//		{
+	////				m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK];
+	//			//2016.1201
+	//			m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK] + m_dwDirOffset;
+	//			m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK]; // 
+	//		}
+	//		//m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_CHK];
+	//		//m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_CHK]; // 
+	//	
+	//		nRet_1 = CTL_Lib.Linear_Move(BOTH_MOVE_FINISH, m_nLinearMove_Index, m_lAxisCnt, m_lpAxisNum, m_dpTargetPosList, COMI.mn_runspeed_rate); 
+	//		if (nRet_1 == BD_GOOD) //좌측으로 이동
+	//		{
+	//			m_bDvcWaitChk_Falg =  false;
+	//			m_nPlace_Step = 2020;
+
+	//			//2016.1117
+	//			//st_sync_info.nSmema_Tray_Input_Req = CTL_NO;
+	//			st_handler_info.nAutoDirectionUseChk = CTL_NO;
+
+	//		}
+	//		else if (nRet_1 == BD_RETRY)
+	//		{
+	//			m_nPlace_Step = 2000;
+	//		}
+	//		else if (nRet_1 == BD_ERROR || nRet_1 == BD_SAFETY)
+	//		{//모터 알람은 이미 처리했으니 이곳에서는 런 상태만 바꾸면 된다
+	//			CTL_Lib.Alarm_Error_Occurrence(2470, dWARNING, st_alarm_info.strCode);
+	//			m_nPlace_Step = 2000;
+	//		}
+	//	}
+	//	else
+	//	{
+	//		m_nPlace_Step = 2100;
+	//	}
+		//2017.1206  //Retest1이 TestSite1~4번 인지 Retest2가 TestSite5~8번 인지 체크
 		if( st_basic_info.nDirectionCheckSkip == CTL_NO || st_handler_info.nAutoDirectionUseChk == CTL_YES )
 		{
-			//james 2016.0930 
-			if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_4)
+// 			if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_4) || nWork_Site == THD_RETEST_1_BUFF )
+// 			{
+// 				m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK] + m_dwDirOffset;
+// 				m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK]; // 
+// 			}
+// 			else if( (nWork_Site >= THD_TESTSITE_5 && nWork_Site <= THD_TESTSITE_8) || nWork_Site == THD_RETEST_2_BUFF )
+// 			{
+// 				m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK] + m_dwDirOffset;
+// 				m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK]; // 
+// 			}
+			//kwlee 20171207
+			if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_4) || nWork_Site == THD_RETEST_1_BUFF )
 			{
-//				m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK];
-				//2016.1201
-				m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK] + m_dwDirOffset;
-				m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK]; // 
+
+				if(nTest_Site == TESTSITE_LEFT)
+				{
+					if ( m_nDirRetry_Cnt == 0)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK];
+					}
+					else if ( m_nDirRetry_Cnt == 1)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK_1];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK_1];
+					}
+					else if ( m_nDirRetry_Cnt == 2)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK_2];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK_2];
+					}
+				}
+				else if (nTest_Site == TESTSITE_RIGHT)
+				{
+					if ( m_nDirRetry_Cnt == 0)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK]; // 
+					}
+					else if ( m_nDirRetry_Cnt == 1)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK_1];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK_1]; // 
+					}
+					else if ( m_nDirRetry_Cnt == 2)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK_2];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK_2]; // 
+					}
+				}
+			
+				 // 
 			}
-			else if(nWork_Site >= THD_TESTSITE_5 && nWork_Site <= THD_TESTSITE_8)
+			else if( (nWork_Site >= THD_TESTSITE_5 && nWork_Site <= THD_TESTSITE_8) || nWork_Site == THD_RETEST_2_BUFF )
 			{
-//				m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK];
-				//2016.1201
-				m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK] + m_dwDirOffset;
-				m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK]; // 
+				
+				if(nTest_Site == TESTSITE_LEFT)
+				{
+					if ( m_nDirRetry_Cnt == 0)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK];
+					}
+					else if ( m_nDirRetry_Cnt == 1)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK_1];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK_1];
+					}
+					else if ( m_nDirRetry_Cnt == 2)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK_2];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK_2];
+					}
+				}
+				else if (nTest_Site == TESTSITE_RIGHT)
+				{
+					if ( m_nDirRetry_Cnt == 0)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK]; // 
+					}
+					else if ( m_nDirRetry_Cnt == 1)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK_1];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK_1]; // 
+					}
+					else if ( m_nDirRetry_Cnt == 2)
+					{
+						m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK_2];
+						m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK_2]; // 
+					}
+				}
 			}
-			//m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_CHK];
-			//m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_CHK]; // 
-		
+			//
 			nRet_1 = CTL_Lib.Linear_Move(BOTH_MOVE_FINISH, m_nLinearMove_Index, m_lAxisCnt, m_lpAxisNum, m_dpTargetPosList, COMI.mn_runspeed_rate); 
 			if (nRet_1 == BD_GOOD) //좌측으로 이동
 			{
 				m_bDvcWaitChk_Falg =  false;
 				m_nPlace_Step = 2020;
-
-				//2016.1117
-				//st_sync_info.nSmema_Tray_Input_Req = CTL_NO;
 				st_handler_info.nAutoDirectionUseChk = CTL_NO;
-
 			}
 			else if (nRet_1 == BD_RETRY)
 			{
@@ -5339,39 +5484,70 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 			m_nPlace_Step = 2040; //정상
 			break;
 		}
-		//kwlee 2016.0908 
-		//if(st_test_site_info[nWork_Site].nSite_Pos == TESTSITE_LEFT)
-		if(nTest_Site == TESTSITE_LEFT) 
+		////kwlee 2016.0908 
+		////if(st_test_site_info[nWork_Site].nSite_Pos == TESTSITE_LEFT)
+		//if(nTest_Site == TESTSITE_LEFT) 
+		//{
+		//	nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_ON);	//left test site 위치 방향임	 
+		//	nRet_2 = FAS_IO.get_in_bit(st_io_info.i_DvcDir2Chk,	IO_OFF);	
+		//	if(nRet_1 == IO_ON && nRet_2 == IO_OFF)
+		//	{
+		//		m_nPlace_Step = 2040; //정상
+		//	}
+		//	else
+		//	{
+		//		m_dwWaitUntil[0] = GetCurrentTime();
+		//		m_nPlace_Step = 2031; //2016.1120
+		//		break;
+		//	}
+		//}
+		////kwlee 20160908
+		////else if(st_test_site_info[nWork_Site].nSite_Pos == TESTSITE_RIGHT)
+		//else if(nTest_Site == TESTSITE_RIGHT) 
+		//{
+		//	nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_OFF);	//fight test site 위치 방향임	 
+		//	nRet_2 = FAS_IO.get_in_bit(st_io_info.i_DvcDir2Chk,	IO_ON);	
+		//	//kwlee 20160908
+		//	//if(nRet_1 == IO_ON && nRet_2 == IO_OFF)
+		//	if( nRet_1 == IO_OFF && nRet_2 == IO_ON)
+		//	{
+		//		m_nPlace_Step = 2040; //정상
+		//	}
+		//	else
+		//	{
+		//		m_dwWaitUntil[0] = GetCurrentTime();
+		//		m_nPlace_Step = 2031; //2016.1120
+		//		break;
+		//	}
+		//}
+		//2017.1206
+		if(nTest_Site == TESTSITE_LEFT || nWork_Site == THD_RETEST_1_BUFF )
 		{
-			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_ON);	//left test site 위치 방향임	 
+			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_ON);
 			nRet_2 = FAS_IO.get_in_bit(st_io_info.i_DvcDir2Chk,	IO_OFF);	
 			if(nRet_1 == IO_ON && nRet_2 == IO_OFF)
 			{
-				m_nPlace_Step = 2040; //정상
+				m_nPlace_Step = 2040;
 			}
 			else
 			{
 				m_dwWaitUntil[0] = GetCurrentTime();
-				m_nPlace_Step = 2031; //2016.1120
+				m_nPlace_Step = 2031;
 				break;
 			}
 		}
-		//kwlee 20160908
-		//else if(st_test_site_info[nWork_Site].nSite_Pos == TESTSITE_RIGHT)
-		else if(nTest_Site == TESTSITE_RIGHT) 
+		else if(nTest_Site == TESTSITE_RIGHT || nWork_Site == THD_RETEST_2_BUFF )
 		{
-			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_OFF);	//fight test site 위치 방향임	 
+			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_OFF);	 
 			nRet_2 = FAS_IO.get_in_bit(st_io_info.i_DvcDir2Chk,	IO_ON);	
-			//kwlee 20160908
-			//if(nRet_1 == IO_ON && nRet_2 == IO_OFF)
 			if( nRet_1 == IO_OFF && nRet_2 == IO_ON)
 			{
-				m_nPlace_Step = 2040; //정상
+				m_nPlace_Step = 2040;
 			}
 			else
 			{
 				m_dwWaitUntil[0] = GetCurrentTime();
-				m_nPlace_Step = 2031; //2016.1120
+				m_nPlace_Step = 2031;
 				break;
 			}
 		} 
@@ -5389,9 +5565,45 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		if( m_dwWaitUntil[2] <= 0 ) m_dwWaitUntil[0] = GetCurrentTime();
 		if(m_dwWaitUntil[2] < (IO_STABLE_WAIT*5))  break; //500msec
 
-		if(nTest_Site == TESTSITE_LEFT) 
+		//if(nTest_Site == TESTSITE_LEFT) 
+		//{
+		//	nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_ON);	//left test site 위치 방향임	 
+		//	nRet_2 = FAS_IO.get_in_bit(st_io_info.i_DvcDir2Chk,	IO_OFF);	
+		//	if(nRet_1 == IO_ON && nRet_2 == IO_OFF)
+		//	{
+		//		m_nPlace_Step = 2040; //정상
+		//	}
+		//	else
+		//	{
+		//		m_dwWaitUntil[0] = GetCurrentTime();
+		//		if(nRet_1 == IO_OFF) m_strAlarmCode.Format(_T("8%d%04d"), IO_ON, st_io_info.i_DvcDir1Chk); 
+		//		else				 m_strAlarmCode.Format(_T("8%d%04d"), IO_OFF, st_io_info.i_DvcDir2Chk);  
+		//		//2016.1201
+		//		m_nPlace_Step = 2035;
+		//		break;
+		//	}
+		//}
+		//else if(nTest_Site == TESTSITE_RIGHT) 
+		//{
+		//	nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_OFF);	//fight test site 위치 방향임	 
+		//	nRet_2 = FAS_IO.get_in_bit(st_io_info.i_DvcDir2Chk,	IO_ON);	
+		//	if( nRet_1 == IO_OFF && nRet_2 == IO_ON)
+		//	{
+		//		m_nPlace_Step = 2040; //정상
+		//	}
+		//	else
+		//	{
+		//		if(nRet_1 == IO_OFF) m_strAlarmCode.Format(_T("8%d%04d"), IO_OFF, st_io_info.i_DvcDir1Chk); 
+		//		else				 m_strAlarmCode.Format(_T("8%d%04d"), IO_ON, st_io_info.i_DvcDir2Chk);  
+		//		//2016.1201
+		//		m_nPlace_Step = 2035;
+		//		break;
+		//	}
+		//}
+		//2017.1206
+		if(nTest_Site == TESTSITE_LEFT || nWork_Site == THD_RETEST_1_BUFF )
 		{
-			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_ON);	//left test site 위치 방향임	 
+			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_ON);
 			nRet_2 = FAS_IO.get_in_bit(st_io_info.i_DvcDir2Chk,	IO_OFF);	
 			if(nRet_1 == IO_ON && nRet_2 == IO_OFF)
 			{
@@ -5402,18 +5614,17 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 				m_dwWaitUntil[0] = GetCurrentTime();
 				if(nRet_1 == IO_OFF) m_strAlarmCode.Format(_T("8%d%04d"), IO_ON, st_io_info.i_DvcDir1Chk); 
 				else				 m_strAlarmCode.Format(_T("8%d%04d"), IO_OFF, st_io_info.i_DvcDir2Chk);  
-				//2016.1201
 				m_nPlace_Step = 2035;
 				break;
 			}
 		}
-		else if(nTest_Site == TESTSITE_RIGHT) 
+		else if(nTest_Site == TESTSITE_RIGHT || nWork_Site == THD_RETEST_2_BUFF )
 		{
-			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_OFF);	//fight test site 위치 방향임	 
+			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_DvcDir1Chk,	IO_OFF);
 			nRet_2 = FAS_IO.get_in_bit(st_io_info.i_DvcDir2Chk,	IO_ON);	
 			if( nRet_1 == IO_OFF && nRet_2 == IO_ON)
 			{
-				m_nPlace_Step = 2040; //정상
+				m_nPlace_Step = 2040; 
 			}
 			else
 			{
@@ -5443,8 +5654,9 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 			}
 			else
 			{
-				if( m_nDirRetry_Cnt == 1 ) m_dwDirOffset = -0.2;
-				if( m_nDirRetry_Cnt == 2 ) m_dwDirOffset = 0.2;
+				//kwlee 20171207 del
+// 				if( m_nDirRetry_Cnt == 1 ) m_dwDirOffset = -0.2;
+// 				if( m_nDirRetry_Cnt == 2 ) m_dwDirOffset = 0.2;
 				st_handler_info.nAutoDirectionUseChk = CTL_YES;
 				m_nPlace_Step = 2036;
 			}
@@ -5461,18 +5673,28 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		break; 
 
 	case 2036://벨트라서 오차가 있다 잠깐 뒤로 빠졌다가 다시 체크 한다. 5mm
-			//james 2016.0930 
-			if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_4)
+			//if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_4)
+			//{
+			//	m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK] + 10.0;
+			//	m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK]; // 
+			//}
+			//else if(nWork_Site >= THD_TESTSITE_5 && nWork_Site <= THD_TESTSITE_8)
+			//{
+			//	m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK] + 10.0;
+			//	m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK]; // 
+			//}
+			//20171206
+			if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_4) || nWork_Site == THD_RETEST_1_BUFF)
 			{
 				m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK] + 10.0;
 				m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK]; // 
 			}
-			else if(nWork_Site >= THD_TESTSITE_5 && nWork_Site <= THD_TESTSITE_8)
+			else if( (nWork_Site >= THD_TESTSITE_5 && nWork_Site <= THD_TESTSITE_8) || nWork_Site == THD_RETEST_2_BUFF)
 			{
 				m_dpTargetPosList[0] = st_motor_info[m_nRobot_Y].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK] + 10.0;
 				m_dpTargetPosList[1] = st_motor_info[m_nRobot_X].d_pos[P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK]; // 
 			}
-		
+
 			nRet_1 = CTL_Lib.Linear_Move(BOTH_MOVE_FINISH, m_nLinearMove_Index, m_lAxisCnt, m_lpAxisNum, m_dpTargetPosList, COMI.mn_runspeed_rate); 
 			if (nRet_1 == BD_GOOD) //좌측으로 이동
 			{
@@ -5956,28 +6178,78 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		break;
 
 	case 4100:
-		if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8)
-		{
-			m_nPlace_Step = 4110;
-		}
-		else
-		{
-			m_nPlace_Step = 4200;
-			//2016.1117
-			//kwlee 2017.0918 자재 파손 관련 del
-// 			if(nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF)
+// 		if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8)
+// 		{
+// 			m_nPlace_Step = 4110;
+// 			//2017.1119 MISS LOADING CHECK
+// 			m_nPlace_Step = 4106;
+// 		}
+// 		else
+// 		{
+// 			m_nPlace_Step = 4200;
+// 
+// 			//2016.1117
+// 			//kwlee 2017.0918 자재 파손 관련 del
+// // 			if(nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF)
+// // 			{
+// // 				m_nPlace_Step = 4102;
+// // 			}
+// // 			else
+// // 			{
+// // 				m_nPlace_Step = 4200;
+// // 			}
+// 		}
+// 		//2017.1119 
+// 		if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8) || ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF ) )
+// 		{
+// 			
+// // 			m_nPlace_Step = 4110;
+// // 			//2017.1119 MISS LOADING CHECK
+// // 			m_nPlace_Step = 4106;
+// 			//kwlee 20171119
+// 			if (st_basic_info.nMissLoading_Mode == CTL_NO)
 // 			{
-// 				m_nPlace_Step = 4102;
+// 				m_nPlace_Step = 4110;
 // 			}
 // 			else
 // 			{
-// 				m_nPlace_Step = 4200;
+// 				//2017.1119 MISS LOADING CHECK
+// 				m_nPlace_Step = 4106;
 // 			}
+// 			
+// 			
+// 		}
+// 		else
+// 		{
+// 			m_nPlace_Step = 4200;
+// 		}
+// 		break;
+		//2017.1120
+		if (st_basic_info.nMissLoading_Mode == CTL_NO)
+		{
+			if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8)
+			{
+				m_nPlace_Step = 4110;
+			}
+			else
+			{
+				m_nPlace_Step = 4200;
+			}
+		}
+		else
+		{
+			if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8) || ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF ) )
+			{
+				m_nPlace_Step = 4106;
+			}
+			else
+			{
+				m_nPlace_Step = 4200;
+			}
 		}
 		break;
-
 		//2017.0918 Retest Buffer Place 후 확인 수정 예정.
-		
+
 	case 4102:
 		if(nWork_Site == THD_RETEST_1_BUFF )// || nWork_Site == THD_RETEST_2_BUFF)
 		{
@@ -6044,6 +6316,98 @@ int CRunTestSiteRobot::Process_DVC_Place(int nMode, int nWork_Site, int nTest_Si
 		}
 		m_nPlace_Step = 4200;
 		break;
+
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//2017.1119 MISS LOADING CHECK
+		//Missloading 티칭한 높이로 상승후 체크
+	case 4106:
+
+		if (st_basic_info.nMissLoading_Mode == CTL_YES)
+		{
+			nRet_1 = FAS_IO.get_in_bit(st_io_info.i_MissLoadingChk1, IO_ON);
+			nRet_2 = FAS_IO.get_in_bit(st_io_info.i_MissLoadingChk2, IO_ON);
+			if(nRet_1 == IO_ON || nRet_2 == IO_ON) 
+			{
+				m_strAlarmCode.Format(_T("8%d%04d"), IO_ON, st_io_info.i_MissLoadingChk1); //Miss loading 센서 에러
+				CTL_Lib.Alarm_Error_Occurrence(2889, dWARNING, m_strAlarmCode);
+				COMI.Set_MotStop(1, m_nRobot_Z);
+				break;
+			}
+		}
+
+
+		if( ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF ) )
+		{
+			nRet_1 = CTL_Lib.Single_Move(BOTH_MOVE_FINISH, m_nRobot_Z, st_motor_info[m_nRobot_Z].d_pos[P_TESTRBT_Z_RETEST_MISSLOAD_CHECK], COMI.mn_runspeed_rate);
+		}
+		else
+		{
+			nRet_1 = CTL_Lib.Single_Move(BOTH_MOVE_FINISH, m_nRobot_Z, st_motor_info[m_nRobot_Z].d_pos[P_TESTRBT_Z_TESTSITE_MISSLOAD_CHECK], COMI.mn_runspeed_rate);
+		}
+		if (nRet_1 == BD_GOOD) //좌측으로 이동
+		{
+			m_dwWaitUntil[0] = GetCurrentTime();
+			m_nPlace_Step = 4107;
+		}
+		else if (nRet_1 == BD_RETRY)
+		{
+			m_nPlace_Step = 4106;
+		}
+		else if (nRet_1 == BD_ERROR || nRet_1 == BD_SAFETY)
+		{//모터 알람은 이미 처리했으니 이곳에서는 런 상태만 바꾸면 된다
+			CTL_Lib.Alarm_Error_Occurrence(2730, dWARNING, st_alarm_info.strCode);
+			m_nPlace_Step = 4106;
+		}		
+		break;
+
+	case 4107:
+		nRet_1 = FAS_IO.get_in_bit(st_io_info.i_MissLoadingChk1, IO_ON);
+		nRet_2 = FAS_IO.get_in_bit(st_io_info.i_MissLoadingChk2, IO_ON);
+
+		//if(nRet_1 == IO_ON && nRet_2 == IO_ON)
+		//kwlee 20171119 감지 시 알람.
+		if(nRet_1 == IO_OFF && nRet_2 == IO_OFF) 
+		{
+			if( (nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_8) )
+			{
+				m_nPlace_Step = 4110;
+			}
+			else// || ( nWork_Site == THD_RETEST_1_BUFF || nWork_Site == THD_RETEST_2_BUFF )
+			{
+				m_nPlace_Step = 4200;
+			}
+		}
+		else
+		{
+			m_dwWaitUntil[1] = GetCurrentTime();
+			m_dwWaitUntil[2] = m_dwWaitUntil[1] - m_dwWaitUntil[0];
+			if(m_dwWaitUntil[2] < IO_STABLE_WAIT) break;
+			m_nPlace_Step = 4109;
+		}
+		break;
+
+
+	case 4109:
+		nRet_1 = CTL_Lib.Single_Move(BOTH_MOVE_FINISH, m_nRobot_Z, st_motor_info[m_nRobot_Z].d_pos[P_TESTRBT_Z_SAFETY], COMI.mn_runspeed_rate);
+		if (nRet_1 == BD_GOOD) //좌측으로 이동
+		{
+			m_strAlarmCode.Format(_T("8%d%04d"), IO_ON, st_io_info.i_MissLoadingChk1); //Miss loading 센서 에러
+			CTL_Lib.Alarm_Error_Occurrence(2733, dWARNING, m_strAlarmCode);
+			//m_nPlace_Step = 4106;
+			//kwlee 20171119
+			m_nPlace_Step = 4100;
+		}
+		else if (nRet_1 == BD_RETRY)
+		{
+			m_nPlace_Step = 4109;
+		}
+		else if (nRet_1 == BD_ERROR || nRet_1 == BD_SAFETY)
+		{//모터 알람은 이미 처리했으니 이곳에서는 런 상태만 바꾸면 된다
+			CTL_Lib.Alarm_Error_Occurrence(2731, dWARNING, st_alarm_info.strCode);
+			m_nPlace_Step = 4109;
+		}		
+		break;
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	case 4110: //test site 자재 INSERT 
 		if(nWork_Site >= THD_TESTSITE_1 && nWork_Site <= THD_TESTSITE_4)

@@ -2180,6 +2180,12 @@ void CMyBasicData::OnBasic_Data_Load(int nMode)
 	strTemp.Format(_T("%s"), chData);
 	st_basic_info.nLotEndSkipMode = _wtoi(strTemp);
 
+
+	//2017.1206
+	:: GetPrivateProfileString(_T("BASIC"), _T("nRetest1Pick"), _T("10"), (LPWSTR)chData, 20, st_path_info.strFileBasic);
+	strTemp.Format(_T("%s"), chData);
+	st_basic_info.nRetest1Pick_Mode = _wtoi(strTemp);
+
 	//kwlee 2017.0110
 	:: GetPrivateProfileString(_T("BASIC_SCREEN"), _T("m_iVisionOffSetAutoMode"), _T("0"), (LPWSTR)chData, 5, st_path_info.strFileBasic);
 	strTemp.Format(_T("%s"), chData);
@@ -2194,6 +2200,10 @@ void CMyBasicData::OnBasic_Data_Load(int nMode)
 	st_recipe_info.nTestRetest_Count = _wtoi(strTemp);
 	
 	
+	//kwlee 2017.1119
+	:: GetPrivateProfileString(_T("BASIC"), _T("nMissLoading_Mode"), _T(""), (LPWSTR)chData, 5, st_path_info.strFileBasic);
+	strTemp.Format(_T("%s"), chData);
+	st_basic_info.nMissLoading_Mode = _wtoi(strTemp);
 
 	// jtkim 20160124
 	:: GetPrivateProfileString(_T("BASIC_SCREEN"), _T("nAbortPer"), _T("10"), (LPWSTR)chData, 20, st_path_info.strFileBasic);
@@ -3016,6 +3026,14 @@ void CMyBasicData::OnBasic_Data_Save()
 	//kwlee 2017.0225
 	str_tmp.Format(_T("%d"), st_basic_info.nLotEndSkipMode);
 	:: WritePrivateProfileString(_T("BASIC"), _T("nLotEndSkipMode"), str_tmp, st_path_info.strFileBasic);
+	
+	//2017.1206
+	str_tmp.Format(_T("%d"), st_basic_info.nRetest1Pick_Mode);
+	:: WritePrivateProfileString(_T("BASIC"), _T("nRetest1Pick"), str_tmp, st_path_info.strFileBasic);
+
+	//kwlee 2017.1119
+	str_tmp.Format(_T("%d"), st_basic_info.nMissLoading_Mode);
+	:: WritePrivateProfileString(_T("BASIC"), _T("nMissLoading_Mode"), str_tmp, st_path_info.strFileBasic);
 	
 	// jtkim 20151229 사용관련
 	//kwlee 2016.1021

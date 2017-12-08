@@ -1810,7 +1810,7 @@ void CScreenMotor::OnMotorCellClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 	int nResponse;
 	int nLen;
 	double dKey;
-	double dCurr; //kwlee 2017.0918
+	double dCurr = 0; //kwlee 2017.0918
 
 	double value;
 

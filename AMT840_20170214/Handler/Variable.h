@@ -1123,6 +1123,9 @@ struct tagBASIC_INFO
 	int nMCID;
 	double dVolt[10];
 	double dResistance[10];
+	int nMissLoading_Mode; //kwlee 20171119
+	int nRetest1Pick_Mode;
+
 
 } ;
 extern  tagBASIC_INFO  st_basic_info;
@@ -1737,8 +1740,9 @@ struct tagIO_INFO
 	int i_TestRbtPicker2GripDvcExistChk;	//PS2501
 	int i_TestRbtPicker3GripDvcExistChk;	//PS2502
 	int i_TestRbtPicker4GripDvcExistChk;	//PS2503
-	//PS2504
-	//PS2505
+	// 2017.1119 MISLOADING CHECK SENSOR
+	int i_MissLoadingChk1;//PS2504
+	int i_MissLoadingChk2;//PS2505
 	//PS2506
 	//PS2507
 
@@ -3892,6 +3896,10 @@ enum M_TEST_RBT_X_Y //20~21 ธ๐ลอ
 	P_TESTRBT_XY_AUTOTEACH_VISION_TEST_3_RIGHT				 ,
 	P_TESTRBT_XY_AUTOTEACH_VISION_TEST_4_RIGHT				 ,
 	 /////
+	 P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK_1				 ,
+	 P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK_1				 ,
+	 P_TESTRBT_XY_DVC_DIRECTION_LEFTSITE_CHK_2				 ,
+	 P_TESTRBT_XY_DVC_DIRECTION_RIGHTSITE_CHK_2				 ,
 	
 };
 enum M_TEST_RBT_Z //22
@@ -3964,7 +3972,9 @@ enum M_TEST_RBT_Z //22
 	P_TESTRBT_Z_TESTSITE_8_RIGHT_PLACE		   ,
 	P_TESTRBT_Z_TESTSITE_8_RIGHT_INSERT		   ,
 	P_TESTRBT_Z_TESTSITE_8_RIGHT_EJECT	   ,
-	
+
+	P_TESTRBT_Z_TESTSITE_MISSLOAD_CHECK, //2017.1119
+	P_TESTRBT_Z_RETEST_MISSLOAD_CHECK,	
 };
 enum M_TEST_DVC_EJECTOR_Z //23
 {

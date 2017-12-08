@@ -15,6 +15,7 @@
 #include "BtnST.h"
 #include "GradientStatic.h"
 #include "Digit.h"
+#include "afxwin.h"
 
 
 class CScreenBasic : public CFormView
@@ -56,6 +57,9 @@ public:
 	int                 m_nAutoLoadMode[2]; 
 	//kwlee 2017.0225
 	int                m_nLotEndMode[2];
+	int                m_nMissLoadingMode[2]; //kwlee 20171119
+	int					m_nRetest1Pick_Mode[2];//2017.1206
+
 	//
 	int					m_nRejectStackerTrayCnt[2]; //kwlee 2017.0609
 
@@ -131,7 +135,36 @@ public:
 	
 	CDigit				m_dgtBcrBank;
 	CDigit				 m_dgtGmsTime;
-	
+	CXPGroupBox			 m_groupManualStart;
+	CButtonST			m_btnTester1;
+	CButtonST			m_btnTester2;
+	CButtonST			m_btnTester3;
+	CButtonST			m_btnTester4;
+	CButtonST			m_btnTester6;
+	CButtonST			m_btnTester5;
+	CButtonST			m_btnTester7;
+	CButtonST			 m_btnTester8;
+	CButtonST			 m_btnLotendUse;
+	CXPGroupBox			m_group_MissLoading;
+	CButtonST			m_btn_MissLoading; //kwlee 20171119
+	CButtonST			 m_btnChamber_1;
+	CButtonST			 m_Chamber_2;
+	CButtonST			 m_btnChamber_3;
+	CButtonST			 m_btnChamber_4;
+	CButtonST			 m_btnChamber_5;
+	CButtonST			 m_btnChamber_6;
+	CButtonST			 m_btnChamber_7;
+	CButtonST			 m_btnChamber_8;
+	CXPGroupBox			 m_groupManualChamberDoor;
+	CXPGroupBox			 m_groupLotEndUse;
+	CDigit				m_dgtAlarmDelayCnt;
+	CGradientStatic		m_msgAlarmDelayCnt;
+	CXPGroupBox			m_groupDirection;
+	CButtonST			m_btnDirection;
+	CXPGroupBox			m_groupAutoLoad;
+	CButtonST			m_btnAutoLoad;
+	CButtonST			m_btn_Retest1Pick;
+
 	void				OnInitGroupBox();
 	void				OnInitLabel();
 	void				OnInitButton();
@@ -209,15 +242,7 @@ public:
 	
 	afx_msg void OnStnClickedDgtStackerTrayCnt();
 
-	CXPGroupBox m_groupManualStart;
-	CButtonST m_btnTester1;
-	CButtonST m_btnTester2;
-	CButtonST m_btnTester3;
-	CButtonST m_btnTester4;
-	CButtonST m_btnTester6;
-	CButtonST m_btnTester5;
-	CButtonST m_btnTester7;
-	CButtonST m_btnTester8;
+	
 	afx_msg void OnBnClickedBtnTest1();
 	afx_msg void OnBnClickedBtnTest2();
 	afx_msg void OnBnClickedBtnTest3();
@@ -234,28 +259,18 @@ public:
 	afx_msg void OnBnClickedBtnChamber6();
 	afx_msg void OnBnClickedBtnChamber7();
 	afx_msg void OnBnClickedBtnChamber8();
-	CButtonST m_btnChamber_1;
-	CButtonST m_Chamber_2;
-	CButtonST m_btnChamber_3;
-	CButtonST m_btnChamber_4;
-	CButtonST m_btnChamber_5;
-	CButtonST m_btnChamber_6;
-	CButtonST m_btnChamber_7;
-	CButtonST m_btnChamber_8;
-	CXPGroupBox m_groupManualChamberDoor;
+	
 	afx_msg void OnBnClickedBtnDirection();
 	afx_msg void OnStnClickedDgtAlarmDelayCnt();
-	CDigit m_dgtAlarmDelayCnt;
-	CGradientStatic m_msgAlarmDelayCnt;
-	CXPGroupBox m_groupDirection;
-	CButtonST m_btnDirection;
-	CXPGroupBox m_groupAutoLoad;
-	CButtonST m_btnAutoLoad;
+	
 	afx_msg void OnBnClickedBtnAutoload();
-	CXPGroupBox m_groupLotEndUse;
+
 	afx_msg void OnBnClickedBtnLotendUse();
-	CButtonST m_btnLotendUse;
+	
 	afx_msg void OnStnClickedDgtRejectStackerTray();
+	afx_msg void OnBnClickedBtnMissloadingUse();
+
+	afx_msg void OnBnClickedBtnRetest1pickUse();
 };
 
 

@@ -116,6 +116,9 @@ void CScreenBasic::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BTN_LOTEND_USE, m_btnLotendUse);
 	DDX_Control(pDX, IDC_MSG_REJECT_STACKER_TRAY, m_msg_Reject_Tray_Cnt);
 	DDX_Control(pDX, IDC_DGT_REJECT_STACKER_TRAY, m_dgtRejectTrayCnt);
+	DDX_Control(pDX, IDC_GROUP_MISSLOADING_USE, m_group_MissLoading);
+	DDX_Control(pDX, IDC_BTN_MISSLOADING_USE, m_btn_MissLoading);
+	DDX_Control(pDX, IDC_BTN_RETEST_1PICK_USE, m_btn_Retest1Pick);
 }
 
 BEGIN_MESSAGE_MAP(CScreenBasic, CFormView)
@@ -168,6 +171,8 @@ BEGIN_MESSAGE_MAP(CScreenBasic, CFormView)
 	ON_BN_CLICKED(IDC_BTN_AUTOLOAD, &CScreenBasic::OnBnClickedBtnAutoload)
 	ON_BN_CLICKED(IDC_BTN_LOTEND_USE, &CScreenBasic::OnBnClickedBtnLotendUse)
 	ON_STN_CLICKED(IDC_DGT_REJECT_STACKER_TRAY, &CScreenBasic::OnStnClickedDgtRejectStackerTray)
+	ON_BN_CLICKED(IDC_BTN_MISSLOADING_USE, &CScreenBasic::OnBnClickedBtnMissloadingUse)
+	ON_BN_CLICKED(IDC_BTN_RETEST_1PICK_USE, &CScreenBasic::OnBnClickedBtnRetest1pickUse)
 END_MESSAGE_MAP()
 
 
@@ -325,6 +330,13 @@ void CScreenBasic::OnInitGroupBox()
 	m_groupAutoLoad.SetBorderColor(ORANGE_C);
 	m_groupAutoLoad.SetBackgroundColor(WINDOW_UP1);
 	m_groupAutoLoad.SetFontBold(TRUE);
+
+	//kwlee 2016.1201
+	m_group_MissLoading.SetFont(clsFunc.OnLogFont(16));
+	m_group_MissLoading.SetCatptionTextColor(BLUE_C);
+	m_group_MissLoading.SetBorderColor(ORANGE_C);
+	m_group_MissLoading.SetBackgroundColor(WINDOW_UP1);
+	m_group_MissLoading.SetFontBold(TRUE);
 }
 
 
@@ -748,6 +760,25 @@ void CScreenBasic::OnInitButton()
 	m_btnLotendUse.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, BLUE_C);
 	m_btnLotendUse.SetFont(clsFunc.m_pFont[3]);
 
+	//kwlee 2016.0225
+	m_btn_MissLoading.SetBitmaps(IDC_BTN_LOTEND_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+	m_btn_MissLoading.SetColor(CButtonST::BTNST_COLOR_BK_IN, WINDOW_DN);
+	m_btn_MissLoading.SetColor(CButtonST::BTNST_COLOR_BK_OUT, WINDOW_UP);
+	m_btn_MissLoading.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, WINDOW_UP);
+	m_btn_MissLoading.SetColor(CButtonST::BTNST_COLOR_FG_IN, BLACK_C);
+	m_btn_MissLoading.SetColor(CButtonST::BTNST_COLOR_FG_OUT, BLUE_C);
+	m_btn_MissLoading.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, BLUE_C);
+	m_btn_MissLoading.SetFont(clsFunc.m_pFont[3]);
+
+	m_btn_Retest1Pick.SetBitmaps(IDC_BTN_RETEST_1PICK_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+	m_btn_Retest1Pick.SetColor(CButtonST::BTNST_COLOR_BK_IN, WINDOW_DN);
+	m_btn_Retest1Pick.SetColor(CButtonST::BTNST_COLOR_BK_OUT, WINDOW_UP);
+	m_btn_Retest1Pick.SetColor(CButtonST::BTNST_COLOR_BK_FOCUS, WINDOW_UP);
+	m_btn_Retest1Pick.SetColor(CButtonST::BTNST_COLOR_FG_IN, BLACK_C);
+	m_btn_Retest1Pick.SetColor(CButtonST::BTNST_COLOR_FG_OUT, BLUE_C);
+	m_btn_Retest1Pick.SetColor(CButtonST::BTNST_COLOR_FG_FOCUS, BLUE_C);
+	m_btn_Retest1Pick.SetFont(clsFunc.m_pFont[3]);
+
 	// kwlee 20160929
 	if (st_handler_info.nAutoMode == YES)
 	{
@@ -804,6 +835,31 @@ void CScreenBasic::OnInitButton()
 		m_btnLotendUse.SetBitmaps(IDC_BTN_LOTEND_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
 		m_btnLotendUse.SetWindowTextW(_T("Lot End Use(서버랑 통신 함)"));
 	}
+
+	//kwlee 2017.1119
+	if (st_basic_info.nMissLoading_Mode == YES)
+	{
+		m_btn_MissLoading.SetBitmaps(IDC_BTN_MISSLOADING_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+		m_btn_MissLoading.SetWindowTextW(_T("Miss Loading 사용"));
+	}
+	else
+	{
+		m_btn_MissLoading.SetBitmaps(IDC_BTN_MISSLOADING_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+		m_btn_MissLoading.SetWindowTextW(_T("Miss Loading 사용 않함"));
+	}
+
+	//2017.1206
+	if (st_basic_info.nRetest1Pick_Mode == YES)
+	{
+		m_btn_Retest1Pick.SetBitmaps(IDC_BTN_RETEST_1PICK_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+		m_btn_Retest1Pick.SetWindowTextW(_T("Retest 1Pick 사용"));
+	}
+	else
+	{
+		m_btn_Retest1Pick.SetBitmaps(IDC_BTN_RETEST_1PICK_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+		m_btn_Retest1Pick.SetWindowTextW(_T("Retest 1Pick 사용 않함"));
+	}
+
 }
 //kwlee 2016.0809
 void CScreenBasic::OnInitGridPgmMode()
@@ -2384,6 +2440,30 @@ void CScreenBasic::OnDataApply()
 
 		clsLog.LogConfig(_T("BASIC"), _T("CHANGE"), st_basic_info.strDeviceName, 3, m_strLogKey, m_strLogData);
 	}
+	//kwlee 2017.1119
+	if (st_basic_info.nMissLoading_Mode	!= m_nMissLoadingMode[1])
+	{
+		m_strLogKey[0]	= _T("TYPE");
+		m_strLogData[0]	= _T("MISS LOADING MODE");
+		m_strLogKey[1]	= _T("OLD");
+		m_strLogData[1].Format(_T("%d"), st_basic_info.nMissLoading_Mode);
+		m_strLogKey[2]	= _T("NEW");
+		m_strLogData[2].Format(_T("%d"), m_nMissLoadingMode[1]);
+
+		clsLog.LogConfig(_T("BASIC"), _T("CHANGE"), st_basic_info.strDeviceName, 3, m_strLogKey, m_strLogData);
+	}
+	//2017.1206
+	if (st_basic_info.nRetest1Pick_Mode	!= m_nRetest1Pick_Mode[1])
+	{
+		m_strLogKey[0]	= _T("TYPE");
+		m_strLogData[0]	= _T("RETEST 1PCIK MODE");
+		m_strLogKey[1]	= _T("OLD");
+		m_strLogData[1].Format(_T("%d"), st_basic_info.nRetest1Pick_Mode);
+		m_strLogKey[2]	= _T("NEW");
+		m_strLogData[2].Format(_T("%d"), m_nRetest1Pick_Mode[1]);
+
+		clsLog.LogConfig(_T("BASIC"), _T("CHANGE"), st_basic_info.strDeviceName, 3, m_strLogKey, m_strLogData);
+	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	st_basic_info.nModeDevice		= m_nModeDevice[1];	// [Title Bar 상태 표시] < WHIT/WHIT OUT ㅡ MODE 표시	>
@@ -2429,6 +2509,9 @@ void CScreenBasic::OnDataApply()
 	st_basic_info.nDirectionCheckSkip = m_nDirectionCheck[1]; //kwlee 2016.1124
 	st_basic_info.nAutoLoadMode = m_nAutoLoadMode[1]; //kwlee 2016.1201
 	st_basic_info.nLotEndSkipMode = m_nLotEndMode[1]; //kwlee 2017.0225
+	st_basic_info.nMissLoading_Mode = m_nMissLoadingMode[1]; //kwlee 2017.1119
+
+	st_basic_info.nRetest1Pick_Mode = m_nRetest1Pick_Mode[1];//2017.1206
 
 }
 
@@ -2496,13 +2579,15 @@ void CScreenBasic::OnDataInit()
 	//st_basic_info.nUldGoodTrayStack_Count = m_nStackerTrayCnt[1];
 	m_nAbortTime[1]						= st_recipe_info.nAbortTime;
 	m_nBarcodeCnt[1]					= st_recipe_info.nBarcodeCnt;
-	m_nStackerTrayCnt[1]                = st_basic_info.nUldGoodTrayStack_Count; //kwlee 2016.0930
-	m_nRejectStackerTrayCnt[1]          = st_basic_info.nRejectStackerTray_Cnt; //kwlee 2017.0613
-	m_nModeTestInterface[1]				= st_basic_info.nModeTestInterface;
-	m_nAlarmDelayCnt[1]                = st_basic_info.nAlarmDelayCnt; //kwlee 2016.1124
-	m_nDirectionCheck[1]                = st_basic_info.nDirectionCheckSkip; //kwlee 2016.1124
-	m_nAutoLoadMode[1]                = st_basic_info.nAutoLoadMode; //kwlee 2016.1201
-	m_nLotEndMode[1]                = st_basic_info.nLotEndSkipMode; //kwlee 2016.1201
+	m_nStackerTrayCnt[1]				= st_basic_info.nUldGoodTrayStack_Count; //kwlee 2016.0930
+	m_nRejectStackerTrayCnt[1]		= st_basic_info.nRejectStackerTray_Cnt; //kwlee 2017.0613
+	m_nModeTestInterface[1]			= st_basic_info.nModeTestInterface;
+	m_nAlarmDelayCnt[1]				= st_basic_info.nAlarmDelayCnt; //kwlee 2016.1124
+	m_nDirectionCheck[1]				= st_basic_info.nDirectionCheckSkip; //kwlee 2016.1124
+	m_nAutoLoadMode[1]				= st_basic_info.nAutoLoadMode; //kwlee 2016.1201
+	m_nLotEndMode[1]					= st_basic_info.nLotEndSkipMode; //kwlee 2016.1201
+	m_nMissLoadingMode[1]			= st_basic_info.nMissLoading_Mode; //kwlee 2017.1119
+	m_nRetest1Pick_Mode[1]			= st_basic_info.nRetest1Pick_Mode	;//2017.1206
 	OnDataBackup();
 }
 
@@ -3846,7 +3931,7 @@ void CScreenBasic::OnStnClickedDgtAlarmDelayCnt()
 void CScreenBasic::OnBnClickedBtnAutoload()
 {
 
-
+	return; //kwlee 20171207 임시 막음. 추후 사용 예정.
 	if (m_nAutoLoadMode[1] == YES)
 	{	
 		m_nAutoLoadMode[1] = NO;
@@ -3898,4 +3983,40 @@ void CScreenBasic::OnStnClickedDgtRejectStackerTray()
 		m_nRejectStackerTrayCnt[1] = _wtoi(dlgKeyPad.m_strNewVal);
 		m_dgtRejectTrayCnt.SetVal(m_nRejectStackerTrayCnt[1]);
 	}
+}
+
+
+void CScreenBasic::OnBnClickedBtnMissloadingUse()
+{
+	if (m_nMissLoadingMode[1] == YES)
+	{	
+		m_nMissLoadingMode[1] = NO;
+		m_btn_MissLoading.SetBitmaps(IDC_BTN_LOTEND_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+		m_btn_MissLoading.SetWindowTextW(_T("MissLoading 사용 않함"));
+	}
+	else
+	{
+		m_nMissLoadingMode[1] = YES;
+		m_btn_MissLoading.SetBitmaps(IDC_BTN_LOTEND_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+		m_btn_MissLoading.SetWindowTextW(_T("MissLoading 사용"));
+	}
+	Invalidate(FALSE);
+}
+
+//2017.1206
+void CScreenBasic::OnBnClickedBtnRetest1pickUse()
+{	
+	if (m_nRetest1Pick_Mode[1] == YES)
+	{	
+		m_nRetest1Pick_Mode[1] = NO;
+		m_btn_Retest1Pick.SetBitmaps(IDC_BTN_RETEST_1PICK_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+		m_btn_Retest1Pick.SetWindowTextW(_T("Retest 1Pick 사용 않함"));
+	}
+	else
+	{
+		m_nRetest1Pick_Mode[1] = YES;
+		m_btn_Retest1Pick.SetBitmaps(IDC_BTN_RETEST_1PICK_USE, IDB_BITMAP_APPLY_DN, WINDOW_DN, IDB_BITMAP_APPLY_UP, WINDOW_UP);
+		m_btn_Retest1Pick.SetWindowTextW(_T("Retest 1Pick 사용"));
+	}
+	Invalidate(FALSE);
 }

@@ -1,0 +1,20 @@
+2017-11-19 오후 12:30:33:545 : AMT Vision DLL MainForm Load
+2017-11-19 오후 12:30:33:546 : Camera Mode = 0 Load Start
+2017-11-19 오후 12:30:33:589 : Camera Mode = 0 Load Complete
+2017-11-19 오후 12:30:33:590 : Camera Mode = 0 ChangeChennel Combo 0
+2017-11-19 오후 12:30:33:592 : AMT Vision DLL MainForm Load Complete
+2017-11-19 오후 12:35:19:741 : AMT Vision DLL MainForm Load
+2017-11-19 오후 12:35:19:741 : Camera Mode = 0 Load Start
+2017-11-19 오후 12:35:19:778 : Camera Mode = 0 Load Complete
+2017-11-19 오후 12:35:19:781 : Camera Mode = 0 ChangeChennel Combo 0
+2017-11-19 오후 12:35:19:782 : AMT Vision DLL MainForm Load Complete
+2017-11-19 오후 12:38:14:588 : AMT Vision DLL MainForm Load
+2017-11-19 오후 12:38:14:588 : Camera Mode = 0 Load Start
+2017-11-19 오후 12:38:14:623 : Camera Mode = 0 Load Complete
+2017-11-19 오후 12:38:14:625 : Camera Mode = 0 ChangeChennel Combo 0
+2017-11-19 오후 12:38:14:627 : AMT Vision DLL MainForm Load Complete
+2017-11-19 오후 12:38:55:78 : AMT Vision DLL MainForm Load
+2017-11-19 오후 12:38:55:78 : Camera Mode = 0 Load Start
+2017-11-19 오후 12:38:55:113 : Camera Mode = 0 Load Complete
+2017-11-19 오후 12:38:55:115 : Camera Mode = 0 ChangeChennel Combo 0
+2017-11-19 오후 12:38:55:116 : AMT Vision DLL MainForm Load Complete

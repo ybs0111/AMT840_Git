@@ -3330,8 +3330,9 @@ void CFastechPublic_IO::Initialize_Map()
 	st_io_info.i_TestRbtPickerGripDvcExistChk[1]	=	st_io_info.i_TestRbtPicker2GripDvcExistChk	=	2509;	//PS2501
 	st_io_info.i_TestRbtPickerGripDvcExistChk[2]	=	st_io_info.i_TestRbtPicker3GripDvcExistChk	=	2510;	//PS2502
 	st_io_info.i_TestRbtPickerGripDvcExistChk[3]	=	st_io_info.i_TestRbtPicker4GripDvcExistChk	=	2511;	//PS2503
-	//PS2504
-	//PS2505
+	//2017.1119 MISSLOADING CHECK SENSOR
+	st_io_info.i_MissLoadingChk1 = 2512; //PS2504
+	st_io_info.i_MissLoadingChk2 = 2513;//PS2505
 	//PS2506
 	//PS2507
 
